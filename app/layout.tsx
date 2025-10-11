@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { ToastProvider } from "@/components/toast";
 
 const manrope = Manrope({
   weight: ["400"],
@@ -29,7 +32,9 @@ export default function RootLayout({
           href="/images/logo-3.png"
         />
       </head>
-      <body className={manrope.className}>{children}</body>
+      <body className={manrope.className}>
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }
