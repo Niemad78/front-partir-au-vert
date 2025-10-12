@@ -1,9 +1,28 @@
-"use client";
-
 import Image from "next/image";
 import LoginForm from "./_components/form";
+import { redirect } from "next/navigation";
+import { NEXT_PUBLIC_HOST } from "@/lib/constants";
+import { cookies } from "next/headers";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
+
+  if (token) {
+    const res = await fetch(`${NEXT_PUBLIC_HOST}/api/login`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+        cache: "no-store",
+      },
+    });
+
+    if (res.ok) {
+      redirect("/admin");
+    }
+  }
+
   return (
     <section className="flex h-[100vh] w-[100vw] items-center justify-center">
       <div className="bg-primary flex w-[500px] flex-col items-center gap-[20px] rounded-lg p-[30px]">

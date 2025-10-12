@@ -1,9 +1,11 @@
+"use client";
+
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { Bouton } from "@/components/bouton";
 import { LoginSchema } from "@/lib/schema/schema";
+import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 import { message } from "@/components/message";
 
@@ -21,6 +23,9 @@ export default function LoginForm() {
     onSubmit: async (values) => {
       const res = await fetch("/api/login", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(values),
       });
 
@@ -32,6 +37,7 @@ export default function LoginForm() {
         });
 
         router.push("/admin");
+        router.refresh();
       } else {
         show({
           severity: "error",

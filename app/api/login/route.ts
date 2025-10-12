@@ -1,8 +1,34 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { login } from "@/lib/api/resources/auth";
+import { login, verifyMe } from "@/lib/api/resources/auth";
 import { NODE_ENV } from "@/lib/constants";
+import { cookies } from "next/headers";
+
+export async function GET() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
+
+  if (!token) {
+    return NextResponse.json(
+      { status: 401, errorMessage: "Non authentifié" },
+      { status: 401 },
+    );
+  }
+
+  const response = await verifyMe(token);
+
+  if (response.status !== 200) {
+    return NextResponse.json(
+      {
+        status: response.status ?? 500,
+        errorMessage: response.errorMessage ?? "Une erreur est survenue",
+      },
+      { status: response.status ?? 500 },
+    );
+  }
+
+  return NextResponse.json({ status: 200 });
+}
 
 export async function POST(request: NextRequest) {
   const data = await request.json();
@@ -26,14 +52,17 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const cookiesStore = await cookies();
-  cookiesStore.set({
+  const res = NextResponse.json({ status: 200 });
+
+  res.cookies.set({
     name: "session",
     value: response.token,
-    httpOnly: NODE_ENV === "production",
+    httpOnly: true,
     secure: NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: NODE_ENV === "production" ? "none" : "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
   });
 
-  return NextResponse.json({ status: 200 });
+  return res;
 }
