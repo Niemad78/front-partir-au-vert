@@ -4,7 +4,6 @@ import { ToastProvider } from "@/components/toast";
 import "./globals.css";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { cn } from "@/lib/utils/cn";
 
 const manrope = Manrope({
   weight: ["400"],
@@ -42,7 +41,7 @@ export default function RootLayout({
           href="/images/logo-3.png"
         />
       </head>
-      <body className={cn(manrope.className)}>
+      <body className={manrope.className}>
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

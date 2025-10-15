@@ -1,4 +1,4 @@
-import { Bouton } from "./bouton";
+import { BoutonLogout } from "@/app/admin/_components/boutonLogout";
 
 export function AdminMenu() {
   return (
@@ -15,9 +15,7 @@ export function AdminMenu() {
           </a>
         </li>
         <li>
-          <Bouton type="button" variant="secondary">
-            Déconnexion
-          </Bouton>
+          <BoutonLogout />
         </li>
       </ul>
     </nav>

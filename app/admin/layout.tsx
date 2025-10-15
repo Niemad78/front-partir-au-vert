@@ -11,11 +11,9 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
-      <body>
-        <AdminMenu />
-        <div className="ml-[300px] px-[20px] py-[30px]">{children}</div>
-      </body>
-    </html>
+    <section>
+      <AdminMenu />
+      <div className="ml-[300px] px-[20px] py-[30px]">{children}</div>
+    </section>
   );
 }

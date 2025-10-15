@@ -49,3 +49,23 @@ export async function verifyMe(token: string): Promise<VerifyMeResult> {
       : undefined,
   };
 }
+
+type LogoutResult = {
+  status: number;
+  errorMessage?: string;
+};
+
+export async function logout(): Promise<LogoutResult> {
+  const response = await POST<LogoutResult>("/auth/logout", undefined, {
+    credentials: "include",
+  });
+
+  const isError = response.status !== 200;
+
+  return {
+    status: response.status ?? 200,
+    errorMessage: isError
+      ? (response.errorMessage ?? "Une erreur est survenue")
+      : undefined,
+  };
+}
