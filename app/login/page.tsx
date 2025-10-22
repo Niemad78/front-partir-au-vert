@@ -1,22 +1,15 @@
 import Image from "next/image";
-import LoginForm from "./_components/form";
-import { redirect } from "next/navigation";
-import { NEXT_PUBLIC_HOST } from "@/lib/constants";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { verifyMe } from "@/lib/api/resources/auth";
+import LoginForm from "./_components/form";
 
 export default async function LoginPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   if (token) {
-    const res = await fetch(`${NEXT_PUBLIC_HOST}/api/login`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
-        cache: "no-store",
-      },
-    });
+    const res = await verifyMe(token);
 
     if (res.ok) {
       redirect("/admin");

@@ -5,6 +5,21 @@ export enum RequestType {
   DELETE = "delete",
 }
 
+export type Json = Record<string, unknown> | unknown[];
+
+type BaseOptions = {
+  headers?: HeadersInit;
+  cache?: RequestCache;
+  revalidateSeconds?: number;
+  timeoutMs?: number;
+  retries?: number;
+  credentials?: RequestCredentials;
+};
+
+export type RequestOptions<TBody> = BaseOptions & {
+  body?: TBody;
+};
+
 export type ClientResponse<T> = {
   data?: T;
   status: number;
