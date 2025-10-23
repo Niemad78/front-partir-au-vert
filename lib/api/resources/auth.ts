@@ -1,4 +1,4 @@
-import { GET, POST } from "../client";
+import { GET, PUT, POST } from "../client";
 
 type LoginData = {
   email: string;
@@ -41,7 +41,7 @@ type VerifyMeResult = {
 };
 
 export async function verifyMe(token: string): Promise<VerifyMeResult> {
-  const response = await GET<VerifyMeResult>("/auth/me", {
+  const response = await GET<VerifyMeResult>("/auth/me/verify", {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -84,8 +84,8 @@ export async function changePassword({
     email: data.email,
     password: data.password,
   };
-  const response = await POST<ChangePasswordResult, LoginData>(
-    "/auth/change-password",
+  const response = await PUT<ChangePasswordResult, LoginData>(
+    "/auth/me/modify",
     values,
     {
       credentials: "include",
@@ -96,6 +96,7 @@ export async function changePassword({
       cache: "no-store",
     },
   );
+  console.log("🚀 ~ changePassword ~ response:", response);
 
   if (!response.ok) {
     return {

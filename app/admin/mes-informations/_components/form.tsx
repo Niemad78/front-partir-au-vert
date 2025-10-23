@@ -27,7 +27,7 @@ export default function MesInformationsForm() {
         password: values.password,
       };
       const res = await fetch("/api/mes-informations", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },

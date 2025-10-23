@@ -70,3 +70,17 @@ export async function POST<
     body: payload,
   });
 }
+
+export async function PUT<
+  TResponse,
+  TPayload extends Json | undefined = undefined,
+>(
+  endpoint: string,
+  payload: TPayload,
+  options: Omit<RequestOptions<TPayload>, "body"> = {},
+): Promise<TResponse> {
+  return client<TResponse, TPayload>(RequestType.PUT, endpoint, {
+    ...options,
+    body: payload,
+  });
+}

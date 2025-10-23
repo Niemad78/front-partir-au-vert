@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { changePassword } from "@/lib/api/resources/auth";
 
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
