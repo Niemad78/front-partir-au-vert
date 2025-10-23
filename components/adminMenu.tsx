@@ -2,7 +2,7 @@ import { BoutonLogout } from "@/app/admin/_components/boutonLogout";
 
 export function AdminMenu() {
   return (
-    <nav className="bg-primary absolute top-0 left-0 h-[100vh] w-[300px] text-white">
+    <nav className="bg-primary fixed top-0 left-0 h-[100vh] w-[300px] text-white">
       <ul className="flex h-full flex-col items-center justify-center space-y-[20px]">
         <li>
           <a href="/admin/mes-informations" className="hover:underline">

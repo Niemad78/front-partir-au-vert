@@ -13,7 +13,7 @@ export default function AdminLayout({
   return (
     <section>
       <AdminMenu />
-      <div className="ml-[300px] px-[20px] py-[30px]">{children}</div>
+      <div className="ml-[300px] px-[30px] py-[30px]">{children}</div>
     </section>
   );
 }

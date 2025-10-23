@@ -7,7 +7,6 @@ import { Password } from "primereact/password";
 import { LoginSchema } from "@/lib/schema/schema";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
-import { message } from "@/components/message";
 
 export default function LoginForm() {
   const { show } = useToast();
@@ -29,11 +28,13 @@ export default function LoginForm() {
         body: JSON.stringify(values),
       });
 
-      if (res.ok) {
+      const result = await res.json();
+
+      if (result.ok) {
         show({
           severity: "success",
           summary: "Succès",
-          detail: "Connexion réussie",
+          detail: result.message,
         });
 
         router.push("/admin");
@@ -42,7 +43,7 @@ export default function LoginForm() {
         show({
           severity: "error",
           summary: "Erreur",
-          detail: `${res.status} - ${message(res.statusText)}`,
+          detail: `${result.status} - ${result.errorMessage}`,
         });
       }
     },

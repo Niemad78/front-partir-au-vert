@@ -1,4 +1,4 @@
-import { GET, POST } from "../client";
+import { GET, PUT, POST } from "../client";
 
 type LoginData = {
   email: string;
@@ -6,8 +6,10 @@ type LoginData = {
 };
 
 type LoginResult = {
-  status: number;
+  ok?: boolean;
+  status?: number;
   token?: string;
+  message?: string;
   errorMessage?: string;
 };
 
@@ -15,24 +17,31 @@ export async function login(values: LoginData): Promise<LoginResult> {
   const response = await POST<LoginResult, LoginData>("/auth/login", values, {
     credentials: "include",
   });
-  const isError = response.status !== 200;
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
 
   return {
-    status: response.status ?? 200,
+    ok: response.ok,
     token: response.token,
-    errorMessage: isError
-      ? (response.errorMessage ?? "Une erreur est survenue")
-      : undefined,
+    message: response.message,
   };
 }
 
 type VerifyMeResult = {
-  status: number;
+  ok?: boolean;
+  status?: number;
+  message?: string;
   errorMessage?: string;
 };
 
 export async function verifyMe(token: string): Promise<VerifyMeResult> {
-  const response = await GET<VerifyMeResult>("/auth/me", {
+  const response = await GET<VerifyMeResult>("/auth/me/verify", {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -40,32 +49,65 @@ export async function verifyMe(token: string): Promise<VerifyMeResult> {
     },
     cache: "no-store",
   });
-  const isError = response.status !== 200;
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
 
   return {
-    status: response.status ?? 200,
-    errorMessage: isError
-      ? (response.errorMessage ?? "Une erreur est survenue")
-      : undefined,
+    ok: response.ok,
+    message: response.message,
   };
 }
 
-type LogoutResult = {
-  status: number;
+type ChangePasswordProps = {
+  data: LoginData;
+  token?: string;
+};
+
+type ChangePasswordResult = {
+  ok?: boolean;
+  status?: number;
+  message?: string;
   errorMessage?: string;
 };
 
-export async function logout(): Promise<LogoutResult> {
-  const response = await POST<LogoutResult>("/auth/logout", undefined, {
-    credentials: "include",
-  });
+export async function changePassword({
+  data,
+  token,
+}: ChangePasswordProps): Promise<ChangePasswordResult> {
+  const values = {
+    email: data.email,
+    password: data.password,
+  };
+  const response = await PUT<ChangePasswordResult, LoginData>(
+    "/auth/me/modify",
+    values,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+  console.log("🚀 ~ changePassword ~ response:", response);
 
-  const isError = response.status !== 200;
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
 
   return {
-    status: response.status ?? 200,
-    errorMessage: isError
-      ? (response.errorMessage ?? "Une erreur est survenue")
-      : undefined,
+    ok: response.ok,
+    message: response.message,
   };
 }
