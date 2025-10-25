@@ -34,3 +34,8 @@ export type Client = <TBodyResponse, TData = unknown>(
   data?: TData,
   headers?: HeadersInit,
 ) => Promise<ClientResponse<TBodyResponse>>;
+
+export type LoginData = {
+  email: string;
+  password: string;
+};
