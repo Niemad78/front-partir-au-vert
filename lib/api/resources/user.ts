@@ -1,4 +1,4 @@
-import { GET, PUT } from "../client";
+import { GET, POST, PUT } from "../client";
 import { LoginData } from "../type";
 
 type ChangePasswordProps = {
@@ -64,6 +64,41 @@ export async function verifyMe(token: string): Promise<VerifyMeResult> {
     },
     cache: "no-store",
   });
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
+  };
+}
+
+export async function nouvelUtilisateur({
+  data,
+  token,
+}: ChangePasswordProps): Promise<ChangePasswordResult> {
+  const values = {
+    email: data.email,
+    password: data.password,
+  };
+  const response = await POST<ChangePasswordResult, LoginData>(
+    "/users/new-user",
+    values,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
 
   if (!response.ok) {
     return {

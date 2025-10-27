@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { LoginSchema } from "@/lib/schema/utilisateurs";
+import { NouvelUtilisateurSchema } from "@/lib/schema/utilisateurs";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 
-export default function LoginForm() {
+export default function Form() {
   const { show } = useToast();
   const router = useRouter();
 
@@ -17,10 +17,10 @@ export default function LoginForm() {
       email: "",
       password: "",
     },
-    validationSchema: LoginSchema,
+    validationSchema: NouvelUtilisateurSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const res = await fetch("/api/login", {
+      const res = await fetch("/api/nouvel-utilisateur", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export default function LoginForm() {
           detail: result.message,
         });
 
-        router.push("/admin");
+        router.push("/admin/utilisateurs");
         router.refresh();
       } else {
         show({
@@ -52,7 +52,7 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex w-[80%] flex-col items-center gap-[20px]"
+      className="flex w-[30%] flex-col items-center gap-[20px]"
     >
       <div className="w-full">
         <InputText
@@ -87,7 +87,7 @@ export default function LoginForm() {
         </span>
       </div>
       <Bouton variant="secondary" className="w-[150px]">
-        Se connecter
+        Ajouter
       </Bouton>
     </form>
   );

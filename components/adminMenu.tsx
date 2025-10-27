@@ -11,7 +11,7 @@ export function AdminMenu() {
         </li>
         <li>
           <a href="/admin/utilisateurs" className="hover:underline">
-            <h3>Nouvel utilisateur</h3>
+            <h3>Utilisateurs</h3>
           </a>
         </li>
         <li>
