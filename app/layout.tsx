@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Amatic_SC, Manrope } from "next/font/google";
+import { ToastProvider } from "@/components/toast";
 import "./globals.css";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 const manrope = Manrope({
   weight: ["400"],
   variable: "--font-manrope",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const amatic = Amatic_SC({
+  weight: ["400"],
+  variable: "--font-amatic",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +41,9 @@ export default function RootLayout({
           href="/images/logo-3.png"
         />
       </head>
-      <body className={manrope.className}>{children}</body>
+      <body className={manrope.className}>
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }
