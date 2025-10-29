@@ -1,6 +1,6 @@
-import { verifyMe } from "@/lib/api/resources/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { verifyMe } from "./lib/api/resources/user";
 
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();

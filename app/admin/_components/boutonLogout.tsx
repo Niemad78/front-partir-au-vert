@@ -7,7 +7,7 @@ export const BoutonLogout = () => {
   const router = useRouter();
 
   const logout = () => {
-    fetch("/api/logout", {
+    fetch("/api/auth/logout", {
       method: "POST",
     }).then(() => {
       router.push("/login");

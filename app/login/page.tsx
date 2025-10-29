@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { verifyMe } from "@/lib/api/resources/auth";
+import { verifyMe } from "@/lib/api/resources/user";
 import LoginForm from "./_components/form";
 
 export default async function LoginPage() {

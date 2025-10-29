@@ -6,14 +6,14 @@ type BoutonProps = {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary" | "danger";
 };
 
 export function Bouton({
   children,
   className,
   onClick,
-  type,
+  type = "submit",
   disabled = false,
   variant = "primary",
 }: BoutonProps) {
@@ -22,6 +22,10 @@ export function Bouton({
       "bg-primary text-white font-bold px-[20px] py-[10px] rounded hover:cursor-pointer",
     secondary:
       "bg-tertiary text-primary font-bold px-[20px] py-[10px] rounded hover:cursor-pointer",
+    tertiary:
+      "bg-transparent text-primary font-bold px-[20px] py-[10px] rounded hover:cursor-pointer border border-primary",
+    danger:
+      "bg-danger text-white font-bold px-[20px] py-[10px] rounded hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
   };
 
   return (

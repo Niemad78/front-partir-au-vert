@@ -84,3 +84,10 @@ export async function PUT<
     body: payload,
   });
 }
+
+export async function DELETE<TResponse>(
+  endpoint: string,
+  options?: Omit<RequestOptions<never>, "body">,
+): Promise<TResponse> {
+  return client<TResponse>(RequestType.DELETE, endpoint, options);
+}

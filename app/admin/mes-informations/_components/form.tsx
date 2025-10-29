@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { FloatLabel } from "primereact/floatlabel";
-import { MesInformationsSchema } from "@/lib/schema/schema";
+import { MesInformationsSchema } from "@/lib/schema/utilisateurs";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 
@@ -26,7 +26,7 @@ export default function MesInformationsForm() {
         email: values.email,
         password: values.password,
       };
-      const res = await fetch("/api/mes-informations", {
+      const res = await fetch("/api/utilisateurs/mes-informations", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
