@@ -4,6 +4,7 @@
   --color-primary: #587e61;
   --color-secondary: #bfcfcb;
   --color-tertiary: #f4de7e;
+  --color-danger: #ff4d4f;
 }
 
 @layer base {

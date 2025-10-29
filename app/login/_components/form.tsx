@@ -20,7 +20,7 @@ export default function LoginForm() {
     validationSchema: LoginSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const res = await fetch("/api/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

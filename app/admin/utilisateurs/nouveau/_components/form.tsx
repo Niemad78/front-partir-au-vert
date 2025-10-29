@@ -20,7 +20,7 @@ export default function Form() {
     validationSchema: NouvelUtilisateurSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const res = await fetch("/api/nouvel-utilisateur", {
+      const res = await fetch("/api/utilisateurs/nouvel-utilisateur", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

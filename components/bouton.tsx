@@ -6,7 +6,7 @@ type BoutonProps = {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
-  variant?: "primary" | "secondary" | "tertiary";
+  variant?: "primary" | "secondary" | "tertiary" | "danger";
 };
 
 export function Bouton({
@@ -24,6 +24,8 @@ export function Bouton({
       "bg-tertiary text-primary font-bold px-[20px] py-[10px] rounded hover:cursor-pointer",
     tertiary:
       "bg-transparent text-primary font-bold px-[20px] py-[10px] rounded hover:cursor-pointer border border-primary",
+    danger:
+      "bg-danger text-white font-bold px-[20px] py-[10px] rounded hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
   };
 
   return (

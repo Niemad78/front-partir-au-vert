@@ -1,27 +1,20 @@
-import { GET, POST, PUT } from "../client";
-import { LoginData } from "../type";
+import { DELETE, GET, POST, PUT } from "../client";
+import { BaseResult, LoginData } from "../type";
 
 type ChangePasswordProps = {
   data: LoginData;
   token?: string;
 };
 
-type ChangePasswordResult = {
-  ok?: boolean;
-  status?: number;
-  message?: string;
-  errorMessage?: string;
-};
-
 export async function changePassword({
   data,
   token,
-}: ChangePasswordProps): Promise<ChangePasswordResult> {
+}: ChangePasswordProps): Promise<BaseResult> {
   const values = {
     email: data.email,
     password: data.password,
   };
-  const response = await PUT<ChangePasswordResult, LoginData>(
+  const response = await PUT<BaseResult, LoginData>(
     "/users/me/modify",
     values,
     {
@@ -48,15 +41,8 @@ export async function changePassword({
   };
 }
 
-type VerifyMeResult = {
-  ok?: boolean;
-  status?: number;
-  message?: string;
-  errorMessage?: string;
-};
-
-export async function verifyMe(token: string): Promise<VerifyMeResult> {
-  const response = await GET<VerifyMeResult>("/users/me/verify", {
+export async function verifyMe(token: string): Promise<BaseResult> {
+  const response = await GET<BaseResult>("/users/me/verify", {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -82,12 +68,12 @@ export async function verifyMe(token: string): Promise<VerifyMeResult> {
 export async function nouvelUtilisateur({
   data,
   token,
-}: ChangePasswordProps): Promise<ChangePasswordResult> {
+}: ChangePasswordProps): Promise<BaseResult> {
   const values = {
     email: data.email,
     password: data.password,
   };
-  const response = await POST<ChangePasswordResult, LoginData>(
+  const response = await POST<BaseResult, LoginData>(
     "/users/new-user",
     values,
     {
@@ -99,6 +85,61 @@ export async function nouvelUtilisateur({
       cache: "no-store",
     },
   );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
+  };
+}
+
+type UserList = BaseResult & {
+  users: {
+    id: string;
+    email: string;
+  }[];
+};
+
+export async function getUsers(token: string) {
+  const response = await GET<UserList>("/users/list", {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Cookie: `session=${token}`,
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    data: response.users,
+  };
+}
+
+export async function deleteUser(userId: string, token: string) {
+  const response = await DELETE<BaseResult>(`/users/delete/${userId}`, {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Cookie: `session=${token}`,
+    },
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     return {
