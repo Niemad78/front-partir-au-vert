@@ -65,6 +65,34 @@ export async function verifyMe(token: string): Promise<BaseResult> {
   };
 }
 
+type RoleResult = BaseResult & {
+  role?: string;
+};
+
+export async function getMyRole(token: string): Promise<RoleResult> {
+  const response = await GET<RoleResult>("/users/me/role", {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Cookie: `session=${token}`,
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    role: response.role,
+  };
+}
+
 export async function nouvelUtilisateur({
   data,
   token,
