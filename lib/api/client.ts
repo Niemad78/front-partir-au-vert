@@ -15,13 +15,23 @@ async function client<TResponse, TBody = unknown>(
 
   const url = makeUrl(endpoint);
 
+  const isFormData = body instanceof FormData;
+
+  const finalHeaders: Record<string, string> = {
+    ...(headersInit as Record<string, string>),
+    ...(headers as Record<string, string>),
+  };
+
+  if (isFormData) {
+    delete finalHeaders["Content-Type"];
+  }
+
+  const finalBody = isFormData ? body : body ? JSON.stringify(body) : undefined;
+
   const params: RequestInit & { next?: { revalidate?: number } } = {
     method,
-    headers: {
-      ...headersInit,
-      ...headers,
-    },
-    body: body ? JSON.stringify(body) : undefined,
+    headers: finalHeaders,
+    body: finalBody,
     cache,
     credentials,
     next:
@@ -59,7 +69,7 @@ export async function GET<TResponse>(
 
 export async function POST<
   TResponse,
-  TPayload extends Json | undefined = undefined,
+  TPayload extends Json | FormData | undefined = undefined,
 >(
   endpoint: string,
   payload: TPayload,

@@ -23,6 +23,11 @@ export async function AdminMenu() {
           </li>
         )}
         <li>
+          <a href="/admin/themes" className="hover:underline">
+            <h3>Thèmes</h3>
+          </a>
+        </li>
+        <li>
           <BoutonLogout />
         </li>
       </ul>
