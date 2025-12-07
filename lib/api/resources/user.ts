@@ -15,7 +15,7 @@ export async function changePassword({
     password: data.password,
   };
   const response = await PUT<BaseResult, LoginData>(
-    "/users/me/modify",
+    "/utilisateurs/me/modification",
     values,
     {
       credentials: "include",
@@ -42,7 +42,7 @@ export async function changePassword({
 }
 
 export async function verifyMe(token: string): Promise<BaseResult> {
-  const response = await GET<BaseResult>("/users/me/verify", {
+  const response = await GET<BaseResult>("/utilisateurs/me/verification", {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ type RoleResult = BaseResult & {
 };
 
 export async function getMyRole(token: string): Promise<RoleResult> {
-  const response = await GET<RoleResult>("/users/me/role", {
+  const response = await GET<RoleResult>("/utilisateurs/me/role", {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -102,7 +102,7 @@ export async function nouvelUtilisateur({
     password: data.password,
   };
   const response = await POST<BaseResult, LoginData>(
-    "/users/new-user",
+    "/utilisateurs/nouvel-utilisateur",
     values,
     {
       credentials: "include",
@@ -136,7 +136,7 @@ type UserList = BaseResult & {
 };
 
 export async function getUsers(token: string) {
-  const response = await GET<UserList>("/users/list", {
+  const response = await GET<UserList>("/utilisateurs/liste", {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -160,14 +160,17 @@ export async function getUsers(token: string) {
 }
 
 export async function deleteUser(userId: string, token: string) {
-  const response = await DELETE<BaseResult>(`/users/delete/${userId}`, {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
+  const response = await DELETE<BaseResult>(
+    `/utilisateurs/suppression/${userId}`,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!response.ok) {
     return {

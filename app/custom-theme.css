@@ -1,0 +1,142 @@
+:root {
+  --color-primary: #587e61;
+  --color-secondary: #bfcfcb;
+  --color-tertiary: #f4de7e;
+  --color-danger: #ff4d4f;
+
+  --primary-color: var(--color-primary);
+  --primary-color-text: #ffffff;
+
+  --surface-ground: #f6f7f7;
+  --surface-section: #ffffff;
+  --surface-card: #ffffff;
+  --surface-border: #d4ded9;
+  --surface-hover: #edf2f0;
+
+  --highlight-bg: var(--color-secondary);
+  --highlight-text-color: #27312b;
+
+  --danger-color: var(--color-danger);
+  --danger-color-text: #ffffff;
+}
+
+.p-button,
+.p-button.p-button-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.p-button:not(:disabled):hover {
+  filter: brightness(1.05);
+}
+
+.p-button.p-button-outlined {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.p-button.p-button-outlined:not(:disabled):hover {
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+.p-button.p-button-text {
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-primary);
+}
+
+.p-button.p-button-text:not(:disabled):hover {
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+.p-button.p-button-danger {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+  color: #ffffff;
+}
+
+.p-button.p-button-danger.p-button-outlined {
+  background: transparent;
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.p-inputtext,
+.p-inputtextarea,
+.p-dropdown,
+.p-multiselect,
+.p-calendar,
+.p-inputnumber,
+.p-password {
+  border-color: var(--surface-border);
+}
+
+.p-inputtext:focus,
+.p-inputtextarea:focus,
+.p-inputwrapper-focus .p-inputtext,
+.p-focus {
+  box-shadow: 0 0 0 1px var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight,
+.p-radiobutton .p-radiobutton-box.p-highlight,
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background: var(--surface-hover);
+}
+
+.p-highlight {
+  background: var(--color-secondary) !important;
+  color: #27312b !important;
+}
+
+.p-paginator .p-paginator-page.p-highlight {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.p-message.p-message-error,
+.p-toast-message.p-toast-message-error {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+  color: #ffffff;
+}
+
+/* .p-tag,
+.p-badge {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.p-tag-warning {
+  background: var(--color-tertiary);
+  border-color: var(--color-tertiary);
+  color: #5a4a00;
+} */
+
+.p-menubar,
+.p-menu,
+.p-tieredmenu,
+.p-contextmenu {
+  background: #ffffff;
+  border-color: var(--surface-border);
+}
+
+.p-menuitem-link:not(.p-disabled):hover,
+.p-menuitem-link.p-menuitem-link-active {
+  background: var(--color-secondary);
+  color: #27312b;
+}
+
+.p-menuitem-link .p-menuitem-icon {
+  color: var(--color-primary);
+}

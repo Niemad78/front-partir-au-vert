@@ -46,3 +46,12 @@ export type BaseResult = {
   message?: string;
   errorMessage?: string;
 };
+export type Image = {
+  id: string;
+  nom: string;
+};
+
+export type Theme = {
+  nom: string;
+  imageId: string;
+};
