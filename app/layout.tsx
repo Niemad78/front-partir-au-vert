@@ -3,7 +3,8 @@ import { Amatic_SC, Manrope } from "next/font/google";
 import { ToastProvider } from "@/components/toast";
 import "./globals.css";
 import "primereact/resources/primereact.min.css";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/themes/lara-light-teal/theme.css";
+import "./custom-theme.css";
 
 const manrope = Manrope({
   weight: ["400"],
