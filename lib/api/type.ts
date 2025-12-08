@@ -52,6 +52,8 @@ export type Image = {
 };
 
 export type Theme = {
+  id?: string;
   nom: string;
   imageId: string;
+  image?: Image;
 };

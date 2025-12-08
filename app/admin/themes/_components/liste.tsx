@@ -7,6 +7,10 @@ import * as Table from "@/components/table";
 import { useState } from "react";
 import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
+import { Bouton } from "@/components/bouton";
+import { FaPen } from "react-icons/fa";
+import Link from "next/link";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 type ListeThemesProps = {
   themes: {
@@ -21,6 +25,8 @@ export function ListeThemes({ themes }: ListeThemesProps) {
 
   return (
     <>
+      <ConfirmDialog />
+
       <div className="my-[20px] w-[500px]">
         <FloatLabel>
           <InputText
@@ -70,6 +76,15 @@ export function ListeThemes({ themes }: ListeThemesProps) {
                   )}
                 </Table.Cell>
                 <Table.Cell>
+                  <Link href={`/admin/themes/${theme.id}`}>
+                    <Bouton
+                      type="button"
+                      variant="secondary"
+                      className="mr-[10px] p-[8px]"
+                    >
+                      <FaPen />
+                    </Bouton>
+                  </Link>
                   <SuppressionTheme themeId={theme.id} />
                 </Table.Cell>
               </Table.Row>
