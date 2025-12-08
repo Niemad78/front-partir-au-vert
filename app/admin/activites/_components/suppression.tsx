@@ -6,28 +6,28 @@ import { confirmDialog } from "primereact/confirmdialog";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 
-type SuppressionThemeProps = {
-  themeId: string;
+type SuppressionActiviteProps = {
+  activiteId: string;
 };
 
-export function SuppressionTheme({ themeId }: SuppressionThemeProps) {
+export function SuppressionActivite({ activiteId }: SuppressionActiviteProps) {
   const { show } = useToast();
   const router = useRouter();
 
   const accept = async () => {
-    const response = await fetch("/api/themes/suppression", {
+    const response = await fetch("/api/activites/suppression", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ themeId }),
+      body: JSON.stringify({ activiteId }),
     }).then((res) => res.json());
 
     if (!response.ok) {
       show({
         severity: "error",
         summary: "Erreur",
-        detail: `Échec de la suppression du thème : ${response.errorMessage}`,
+        detail: `Échec de la suppression de l'activité : ${response.errorMessage}`,
       });
       return;
     }
@@ -35,7 +35,7 @@ export function SuppressionTheme({ themeId }: SuppressionThemeProps) {
     show({
       severity: "warn",
       summary: "Confirmé",
-      detail: "Thème supprimé",
+      detail: "Activité supprimée",
     });
 
     router.refresh();
@@ -44,13 +44,13 @@ export function SuppressionTheme({ themeId }: SuppressionThemeProps) {
   const reject = () => {
     show({
       severity: "info",
-      detail: "Thème non supprimé",
+      detail: "Activité non supprimée",
     });
   };
 
   const confirm = () => {
     confirmDialog({
-      message: "Êtes-vous sûr de vouloir supprimer ce thème ?",
+      message: "Êtes-vous sûr de vouloir supprimer cette activité ?",
       header: "Confirmation de suppression",
       defaultFocus: "accept",
       acceptClassName: "p-button-danger",
