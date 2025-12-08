@@ -8,25 +8,31 @@ import { useToast } from "@/components/toast";
 import { NouveauThemeSchema } from "@/lib/schema/themes";
 import { ImageUploader } from "@/components/imageUploader";
 import { FloatLabel } from "primereact/floatlabel";
+import { Theme } from "@/lib/api/type";
+import { ImageNext } from "@/components/image";
 
-export default function Form() {
+export default function Form({ theme }: { theme: Theme }) {
   const { show } = useToast();
   const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
-      nom: "",
-      imageId: "",
+      nom: theme.nom,
+      imageId: theme.image?.id || "",
     },
     validationSchema: NouveauThemeSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const res = await fetch("/api/themes/nouveau-theme", {
-        method: "POST",
+      const data = {
+        id: theme.id,
+        ...values,
+      };
+      const res = await fetch("/api/themes/modification", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(data),
       });
 
       const result = await res.json();
@@ -73,6 +79,14 @@ export default function Form() {
         </FloatLabel>
       </div>
       <div className="w-full">
+        <ImageNext
+          src={theme.image?.nom}
+          alt={theme.nom}
+          width={150}
+          height={150}
+        />
+      </div>
+      <div className="w-full">
         <ImageUploader
           onUploaded={(imageId) => formik.setFieldValue("imageId", imageId)}
           chooseLabel="Choisir"
@@ -83,7 +97,7 @@ export default function Form() {
         </span>
       </div>
       <Bouton variant="secondary" className="w-[150px]">
-        Ajouter
+        Modifier
       </Bouton>
     </form>
   );

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { BoutonLogout } from "@/app/admin/_components/boutonLogout";
 import { getMyRole } from "@/lib/api/resources/user";
+import Link from "next/link";
 
 export async function AdminMenu() {
   const cookieStore = await cookies();
@@ -11,21 +12,21 @@ export async function AdminMenu() {
     <nav className="bg-primary fixed top-0 left-0 h-[100vh] w-[300px] text-white">
       <ul className="flex h-full flex-col items-center justify-center space-y-[20px]">
         <li>
-          <a href="/admin/mes-informations" className="hover:underline">
+          <Link href="/admin/mes-informations" className="hover:underline">
             <h3>Mes informations</h3>
-          </a>
+          </Link>
         </li>
         {role.role === "super_admin" && (
           <li>
-            <a href="/admin/utilisateurs" className="hover:underline">
+            <Link href="/admin/utilisateurs" className="hover:underline">
               <h3>Utilisateurs</h3>
-            </a>
+            </Link>
           </li>
         )}
         <li>
-          <a href="/admin/themes" className="hover:underline">
+          <Link href="/admin/themes" className="hover:underline">
             <h3>Thèmes</h3>
-          </a>
+          </Link>
         </li>
         <li>
           <BoutonLogout />
