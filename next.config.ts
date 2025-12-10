@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "back.api.ledonjondehoudan.fr",
+        hostname: "back.api.partirauvert.fr",
       },
     ],
   },
