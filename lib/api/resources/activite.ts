@@ -1,5 +1,5 @@
 import { GET, POST } from "../client";
-import { Activite, BaseResult } from "../type";
+import { Activite, BaseResult, Theme } from "../type";
 
 type ActiviteListe = BaseResult & {
   activites: {
@@ -10,7 +10,7 @@ type ActiviteListe = BaseResult & {
     ville: string;
     departement: string;
     nbPersonnesMax: number;
-    themeId: string;
+    theme: Theme;
   }[];
 };
 

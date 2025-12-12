@@ -1,11 +1,10 @@
 "use client";
 
 import { SuppressionTheme } from "./suppressionTheme";
-import { Image } from "@/lib/api/type";
+import { Theme } from "@/lib/api/type";
 import { ImageNext } from "@/components/image";
 import * as Table from "@/components/table";
 import { useState } from "react";
-import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
 import { FaPen } from "react-icons/fa";
@@ -13,11 +12,7 @@ import Link from "next/link";
 import { ConfirmDialog } from "primereact/confirmdialog";
 
 type ListeThemesProps = {
-  themes: {
-    id: string;
-    nom: string;
-    image?: Image;
-  }[];
+  themes: Theme[];
 };
 
 export function ListeThemes({ themes }: ListeThemesProps) {
@@ -27,28 +22,30 @@ export function ListeThemes({ themes }: ListeThemesProps) {
     <>
       <ConfirmDialog />
 
-      <div className="my-[20px] w-[500px]">
-        <FloatLabel>
-          <InputText
-            id="filtre"
-            name="filtre"
-            value={filtre}
-            onChange={(e) => setFiltre(e.target.value)}
-            className="w-full"
-          />
-          <label htmlFor="filtre">Rechercher</label>
-        </FloatLabel>
-      </div>
-
-      <Table.Table>
-        <Table.Header>
-          <Table.Cell className="w-[500px] border-none text-left">
-            Nom
-          </Table.Cell>
-          <Table.Cell className="border-none">Image</Table.Cell>
-          <Table.Cell className="border-none">Actions</Table.Cell>
+      <Table.Table className="text-primary mt-[50px] w-full">
+        <Table.Header className="bg-secondary">
+          <Table.Row>
+            <Table.Cell className="p-[10px]">
+              <InputText
+                id="filtre"
+                name="filtre"
+                value={filtre}
+                onChange={(e) => setFiltre(e.target.value)}
+                className="h-full w-[300px]"
+                placeholder="Rechercher"
+              />
+            </Table.Cell>
+            <Table.Cell className="w-[250px]" />
+            <Table.Cell className="w-[250px] p-[10px] text-right">
+              <Link href="/admin/themes/nouveau">
+                <Bouton type="button" variant="primary">
+                  + Ajouter un thème
+                </Bouton>
+              </Link>
+            </Table.Cell>
+          </Table.Row>
         </Table.Header>
-        <Table.Rows>
+        <Table.Body>
           {themes
             .filter((theme) =>
               theme.nom
@@ -62,20 +59,25 @@ export function ListeThemes({ themes }: ListeThemesProps) {
                     .replace(/[\u0300-\u036f]/g, ""),
                 ),
             )
-            .map((theme) => (
-              <Table.Row key={theme.id}>
-                <Table.Cell className="text-left">{theme.nom}</Table.Cell>
-                <Table.Cell>
+            .map((theme, index) => (
+              <Table.Row
+                key={theme.id}
+                className={index % 2 === 1 ? "bg-secondary" : ""}
+              >
+                <Table.Cell className="p-[10px]">{theme.nom}</Table.Cell>
+                <Table.Cell className="flex justify-center">
                   {theme.image && (
-                    <ImageNext
-                      src={theme.image.nom}
-                      alt={theme.nom}
-                      width={60}
-                      height={60}
-                    />
+                    <div className="relative m-[10px] h-[40px] w-[40px]">
+                      <ImageNext
+                        src={theme.image.nom}
+                        alt={theme.nom}
+                        fill
+                        className="rounded-md object-cover"
+                      />
+                    </div>
                   )}
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell className="text-center">
                   <Link href={`/admin/themes/${theme.id}`}>
                     <Bouton
                       type="button"
@@ -85,11 +87,11 @@ export function ListeThemes({ themes }: ListeThemesProps) {
                       <FaPen />
                     </Bouton>
                   </Link>
-                  <SuppressionTheme themeId={theme.id} />
+                  <SuppressionTheme themeId={theme.id ?? ""} />
                 </Table.Cell>
               </Table.Row>
             ))}
-        </Table.Rows>
+        </Table.Body>
       </Table.Table>
     </>
   );

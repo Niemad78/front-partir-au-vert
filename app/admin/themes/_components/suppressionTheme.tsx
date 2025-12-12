@@ -6,11 +6,7 @@ import { confirmDialog } from "primereact/confirmdialog";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 
-type SuppressionThemeProps = {
-  themeId: string;
-};
-
-export function SuppressionTheme({ themeId }: SuppressionThemeProps) {
+export function SuppressionTheme({ themeId }: { themeId: string }) {
   const { show } = useToast();
   const router = useRouter();
 

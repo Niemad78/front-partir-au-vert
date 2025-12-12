@@ -1,10 +1,9 @@
 "use client";
 
 import { SuppressionActivite } from "./suppression";
-import { Image } from "@/lib/api/type";
+import { Image, Theme } from "@/lib/api/type";
 import * as Table from "@/components/table";
 import { useState } from "react";
-import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
 import { FaPen } from "react-icons/fa";
@@ -20,8 +19,8 @@ type ListeActivitesProps = {
     ville: string;
     departement: string;
     nbPersonnesMax: number;
-    themeId: string;
-    image?: Image[];
+    theme: Theme;
+    images?: Image[];
   }[];
 };
 
@@ -32,28 +31,32 @@ export function ListeActivites({ activites }: ListeActivitesProps) {
     <>
       <ConfirmDialog />
 
-      <div className="my-[20px] w-[500px]">
-        <FloatLabel>
-          <InputText
-            id="filtre"
-            name="filtre"
-            value={filtre}
-            onChange={(e) => setFiltre(e.target.value)}
-            className="w-full"
-          />
-          <label htmlFor="filtre">Rechercher</label>
-        </FloatLabel>
-      </div>
-
-      <Table.Table>
-        <Table.Header>
-          <Table.Cell className="w-[500px] border-none text-left">
-            Nom
-          </Table.Cell>
-          <Table.Cell className="border-none">Image</Table.Cell>
-          <Table.Cell className="border-none">Actions</Table.Cell>
+      <Table.Table className="text-primary mt-[50px] w-full">
+        <Table.Header className="bg-secondary">
+          <Table.Row>
+            <Table.Cell className="p-[10px]">
+              <InputText
+                id="filtre"
+                name="filtre"
+                value={filtre}
+                onChange={(e) => setFiltre(e.target.value)}
+                className="h-full w-[300px]"
+                placeholder="Rechercher"
+              />
+            </Table.Cell>
+            <Table.Cell className="w-[60px]" />
+            <Table.Cell className="w-[250px]" />
+            <Table.Cell className="w-[250px]" />
+            <Table.Cell className="w-[250px] p-[10px] text-right">
+              <Link href="/admin/activites/nouveau">
+                <Bouton type="button" variant="primary">
+                  + Ajouter une activité
+                </Bouton>
+              </Link>
+            </Table.Cell>
+          </Table.Row>
         </Table.Header>
-        <Table.Rows>
+        <Table.Body>
           {activites
             .filter((activite) =>
               activite.nom
@@ -67,11 +70,22 @@ export function ListeActivites({ activites }: ListeActivitesProps) {
                     .replace(/[\u0300-\u036f]/g, ""),
                 ),
             )
-            .map((activite) => (
-              <Table.Row key={activite.id}>
-                <Table.Cell className="text-left">{activite.nom}</Table.Cell>
-                <Table.Cell className="text-left">{activite.ville}</Table.Cell>
-                <Table.Cell>
+            .map((activite, index) => (
+              <Table.Row
+                key={activite.id}
+                className={index % 2 === 1 ? "bg-secondary" : ""}
+              >
+                <Table.Cell className="p-[10px]">{activite.nom}</Table.Cell>
+                <Table.Cell className="text-center">
+                  {activite.departement}
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  {activite.ville}
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  {activite.theme.nom}
+                </Table.Cell>
+                <Table.Cell className="text-center">
                   <Link href={`/admin/activites/${activite.id}`}>
                     <Bouton
                       type="button"
@@ -85,7 +99,7 @@ export function ListeActivites({ activites }: ListeActivitesProps) {
                 </Table.Cell>
               </Table.Row>
             ))}
-        </Table.Rows>
+        </Table.Body>
       </Table.Table>
     </>
   );
