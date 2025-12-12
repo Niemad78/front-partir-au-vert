@@ -10,9 +10,7 @@ export default async function ThemesPage() {
   return (
     <section>
       <h1 className="text-primary">Thèmes</h1>
-      {themes.ok && themes.data?.length > 0 && (
-        <ListeThemes themes={themes.data} />
-      )}
+      {themes.ok && <ListeThemes themes={themes.data} />}
     </section>
   );
 }

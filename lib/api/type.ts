@@ -51,6 +51,11 @@ export type Image = {
   nom: string;
 };
 
+export type PointFort = {
+  id?: string;
+  nom: string;
+};
+
 export type Theme = {
   id?: string;
   nom: string;
@@ -64,8 +69,9 @@ export type Activite = {
   description: string;
   prix: number;
   ville: string;
-  departement: string;
+  departement: number;
   nbPersonnesMax: number;
   themeId: string;
   image?: Image[];
+  pointFort?: PointFort[];
 };

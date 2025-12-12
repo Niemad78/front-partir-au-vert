@@ -1,4 +1,4 @@
-import { GET, POST } from "../client";
+import { DELETE, GET, POST, PUT } from "../client";
 import { Activite, BaseResult, Theme } from "../type";
 
 type ActiviteListe = BaseResult & {
@@ -14,13 +14,8 @@ type ActiviteListe = BaseResult & {
   }[];
 };
 
-export async function getActivites(token: string) {
+export async function getActivites() {
   const response = await GET<ActiviteListe>("/activites/liste", {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
-    },
     cache: "no-store",
   });
 
@@ -38,18 +33,105 @@ export async function getActivites(token: string) {
   };
 }
 
+type ActiviteUnique = BaseResult & {
+  activite: Activite;
+};
+
+export async function getActiviteById(activiteId: string) {
+  const response = await GET<ActiviteUnique>(`/activites/${activiteId}`, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    data: response.activite,
+  };
+}
+
 type NouvelleActivite = {
   data: Activite;
   token?: string;
 };
 
+type CreationActiviteResult = BaseResult & {
+  activite: {
+    id: string;
+  };
+};
+
 export async function nouvelleActivite({
   data,
   token,
-}: NouvelleActivite): Promise<BaseResult> {
-  const response = await POST<BaseResult, Activite>(
+}: NouvelleActivite): Promise<BaseResult & { id?: string }> {
+  const response = await POST<CreationActiviteResult, Activite>(
     "/activites/creation",
     data,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    id: response.activite.id,
+  };
+}
+
+export async function modificationActivite({
+  data,
+  token,
+}: NouvelleActivite): Promise<BaseResult> {
+  const response = await PUT<BaseResult, Activite>(
+    `/activites/modification/${data.id}`,
+    data,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
+  };
+}
+
+export async function deleteActivite(activiteId: string, token: string) {
+  const response = await DELETE<BaseResult>(
+    `/activites/suppression/${activiteId}`,
     {
       credentials: "include",
       headers: {

@@ -9,33 +9,34 @@ import { useToast } from "@/components/toast";
 import { FloatLabel } from "primereact/floatlabel";
 import { NouvelleActiviteSchema } from "@/lib/schema/activites";
 import { MultiSelect } from "primereact/multiselect";
-import { Theme } from "@/lib/api/type";
+import { Activite, Theme } from "@/lib/api/type";
 import Quill from "@/components/quill";
 
 type Props = {
+  activite: Activite;
   themes: Theme[];
 };
 
-export default function Form({ themes }: Props) {
+export default function Form({ activite, themes }: Props) {
   const { show } = useToast();
   const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
-      nom: "",
-      description: "",
-      prix: null,
-      ville: "",
-      departement: null,
-      nbPersonnesMax: null,
-      themeId: "",
+      nom: activite.nom || "",
+      description: activite.description || "",
+      prix: activite.prix || null,
+      ville: activite.ville || "",
+      departement: activite.departement || null,
+      nbPersonnesMax: activite.nbPersonnesMax || null,
+      themeId: activite.themeId ? [activite.themeId] : [],
     },
     validationSchema: NouvelleActiviteSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const data = { ...values, themeId: values.themeId?.[0] || null };
-      const res = await fetch("/api/activites/nouvelle-activite", {
-        method: "POST",
+      const data = { ...values, id: activite.id, themeId: values.themeId[0] };
+      const res = await fetch("/api/activites/modification", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -51,7 +52,6 @@ export default function Form({ themes }: Props) {
           detail: result.message,
         });
 
-        router.push(`/admin/activites/${result.id}`);
         router.refresh();
       } else {
         show({
@@ -66,7 +66,7 @@ export default function Form({ themes }: Props) {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex w-[75%] flex-col items-center gap-[25px]"
+      className="mt-[20px] flex w-full flex-col items-center gap-[25px]"
     >
       <div className="w-[350px]">
         <FloatLabel>
@@ -180,7 +180,7 @@ export default function Form({ themes }: Props) {
           {formik.errors.themeId}
         </span>
       </div>
-      <div className="w-full">
+      <div className="w-[80%]">
         <Quill
           name="description"
           value={formik.values.description}
@@ -190,7 +190,7 @@ export default function Form({ themes }: Props) {
         />
       </div>
       <Bouton variant="secondary" className="w-[150px]">
-        Ajouter
+        Modifier
       </Bouton>
     </form>
   );
