@@ -57,3 +57,15 @@ export type Theme = {
   imageId: string;
   image?: Image;
 };
+
+export type Activite = {
+  id?: string;
+  nom: string;
+  description: string;
+  prix: number;
+  ville: string;
+  departement: string;
+  nbPersonnesMax: number;
+  themeId: string;
+  image?: Image[];
+};

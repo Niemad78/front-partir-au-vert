@@ -1,5 +1,5 @@
-import { GET } from "../client";
-import { BaseResult } from "../type";
+import { GET, POST } from "../client";
+import { Activite, BaseResult } from "../type";
 
 type ActiviteListe = BaseResult & {
   activites: {
@@ -35,5 +35,41 @@ export async function getActivites(token: string) {
   return {
     ok: response.ok,
     data: response.activites,
+  };
+}
+
+type NouvelleActivite = {
+  data: Activite;
+  token?: string;
+};
+
+export async function nouvelleActivite({
+  data,
+  token,
+}: NouvelleActivite): Promise<BaseResult> {
+  const response = await POST<BaseResult, Activite>(
+    "/activites/creation",
+    data,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
   };
 }

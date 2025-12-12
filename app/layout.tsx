@@ -5,6 +5,7 @@ import "./globals.css";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-teal/theme.css";
 import "./custom-theme.css";
+import "primeicons/primeicons.css";
 
 const manrope = Manrope({
   weight: ["400"],
