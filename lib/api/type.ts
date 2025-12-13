@@ -72,6 +72,6 @@ export type Activite = {
   departement: number;
   nbPersonnesMax: number;
   themeId: string;
-  image?: Image[];
+  images?: Image[];
   pointFort?: PointFort[];
 };

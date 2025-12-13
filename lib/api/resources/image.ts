@@ -44,3 +44,49 @@ export async function nouvelleImage({
     imageId: response.imageId,
   };
 }
+
+type NouvellesImages = {
+  images: File[];
+  token?: string;
+};
+
+type ImagesResult = BaseResult & {
+  imageIds?: string[];
+};
+
+export async function nouvellesImages({
+  images,
+  token,
+}: NouvellesImages): Promise<ImagesResult> {
+  const formData = new FormData();
+
+  images.forEach((image) => {
+    formData.append("images", image);
+  });
+
+  const response = await POST<ImagesResult, FormData>(
+    "/images/telecharger-plusieurs",
+    formData,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    imageIds: response.imageIds,
+  };
+}

@@ -129,6 +129,47 @@ export async function modificationActivite({
   };
 }
 
+type AjoutImageActiviteProps = {
+  data: { id: string; imageIds: string[] };
+  token?: string;
+};
+
+type ActiviteAjoutImage = {
+  imageIds?: string[];
+};
+
+export async function ajoutImageActivite({
+  data,
+  token,
+}: AjoutImageActiviteProps): Promise<BaseResult> {
+  const values = { imageIds: data.imageIds };
+  const response = await PUT<BaseResult, ActiviteAjoutImage>(
+    `/activites/modification-images/${data.id}`,
+    values,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
+  };
+}
+
 export async function deleteActivite(activiteId: string, token: string) {
   const response = await DELETE<BaseResult>(
     `/activites/suppression/${activiteId}`,

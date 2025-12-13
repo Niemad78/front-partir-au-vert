@@ -2,6 +2,7 @@ import { TabView, TabPanel } from "primereact/tabview";
 import { Activite, Theme } from "@/lib/api/type";
 import Form from "./form";
 import PointFort from "./point-fort";
+import ActiviteImages from "./images";
 
 type Props = {
   activite: Activite;
@@ -18,7 +19,7 @@ export default function Panel({ activite, themes }: Props) {
         <PointFort activite={activite} />
       </TabPanel>
       <TabPanel header="Images">
-        <Form activite={activite} themes={themes} />
+        <ActiviteImages activite={activite} />
       </TabPanel>
     </TabView>
   );
