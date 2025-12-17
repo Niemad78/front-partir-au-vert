@@ -1,6 +1,7 @@
 import { getActiviteById } from "@/lib/api/resources/activite";
 import { getThemes } from "@/lib/api/resources/theme";
 import Panel from "./_components/panel";
+import Breadcrumb from "@/components/breadcrumb";
 
 export default async function Activite({
   params,
@@ -33,9 +34,15 @@ export default async function Activite({
     );
   }
 
+  const breadcrumbItems = [
+    { label: "Activités", href: "/admin/activites" },
+    { label: activite.data.nom },
+  ];
+
   return (
     <section>
       <h1 className="text-primary mb-[30px]">Modification activité</h1>
+      <Breadcrumb items={breadcrumbItems} />
       <Panel activite={activite.data} themes={themes.data} />
     </section>
   );
