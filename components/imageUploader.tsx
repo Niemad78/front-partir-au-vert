@@ -9,7 +9,7 @@ import Image from "next/image";
 type UploadStatus = "idle" | "uploading" | "done" | "error";
 
 interface ImageUploaderProps {
-  onUploaded: (imageId: string) => void;
+  onUploaded: (imageIds: string[]) => void;
   chooseLabel?: string;
   cancelLabel?: string;
   multiple?: boolean;
@@ -46,27 +46,56 @@ export function ImageUploader({
     setUploadStatus("uploading");
 
     const form = new FormData();
-    form.append("image", e.files[0]);
 
-    const resultat = await fetch("/api/images/upload", {
-      method: "POST",
-      body: form,
-    });
+    if (multiple) {
+      for (const file of e.files) {
+        form.append("images", file);
+      }
 
-    const res = await resultat.json();
-
-    if (!res.ok) {
-      setUploadStatus("error");
-      show({
-        severity: "error",
-        summary: "Erreur",
-        detail: `${res.status} - ${res.errorMessage}`,
+      const resultat = await fetch("/api/images/uploads", {
+        method: "POST",
+        body: form,
       });
-      return;
-    }
 
-    setUploadStatus("done");
-    onUploaded(res.imageId);
+      const res = await resultat.json();
+
+      if (!res.ok) {
+        setUploadStatus("error");
+        show({
+          severity: "error",
+          summary: "Erreur",
+          detail: `${res.status} - ${res.errorMessage}`,
+        });
+        return;
+      }
+
+      setUploadStatus("done");
+      const onUploadedIds: string[] = [];
+      (res.imageIds as string[]).forEach((id) => onUploadedIds.push(id));
+      onUploaded(onUploadedIds);
+    } else {
+      form.append("image", e.files[0]);
+
+      const resultat = await fetch("/api/images/upload", {
+        method: "POST",
+        body: form,
+      });
+
+      const res = await resultat.json();
+
+      if (!res.ok) {
+        setUploadStatus("error");
+        show({
+          severity: "error",
+          summary: "Erreur",
+          detail: `${res.status} - ${res.errorMessage}`,
+        });
+        return;
+      }
+
+      setUploadStatus("done");
+      onUploaded(res.imageId);
+    }
   };
 
   const itemTemplate = (file: any) => {
@@ -87,7 +116,7 @@ export function ImageUploader({
     return (
       <div className="flex w-full items-center justify-between px-2 py-1">
         <div className="flex items-center gap-3">
-          {previewUrl && (
+          {previewUrl && !multiple && (
             <div className="relative h-[100px] w-[100px] overflow-hidden rounded">
               <Image
                 src={previewUrl}

@@ -1,8 +1,7 @@
 "use client";
 
-import { SuppressionTheme } from "./suppressionTheme";
-import { Theme } from "@/lib/api/type";
-import { ImageNext } from "@/components/image";
+import { SuppressionActivite } from "./suppression";
+import { Image, Theme } from "@/lib/api/type";
 import * as Table from "@/components/table";
 import { useState } from "react";
 import { InputText } from "primereact/inputtext";
@@ -11,11 +10,21 @@ import { FaPen } from "react-icons/fa";
 import Link from "next/link";
 import { ConfirmDialog } from "primereact/confirmdialog";
 
-type ListeThemesProps = {
-  themes: Theme[];
+type ListeActivitesProps = {
+  activites: {
+    id: string;
+    nom: string;
+    description: string;
+    prix: number;
+    ville: string;
+    departement: string;
+    nbPersonnesMax: number;
+    theme: Theme;
+    images?: Image[];
+  }[];
 };
 
-export function ListeThemes({ themes }: ListeThemesProps) {
+export function ListeActivites({ activites }: ListeActivitesProps) {
   const [filtre, setFiltre] = useState("");
 
   return (
@@ -35,20 +44,22 @@ export function ListeThemes({ themes }: ListeThemesProps) {
                 placeholder="Rechercher"
               />
             </Table.Cell>
+            <Table.Cell className="w-[60px]" />
+            <Table.Cell className="w-[250px]" />
             <Table.Cell className="w-[250px]" />
             <Table.Cell className="w-[250px] p-[10px] text-right">
-              <Link href="/admin/themes/nouveau">
+              <Link href="/admin/activites/nouveau">
                 <Bouton type="button" variant="primary">
-                  + Ajouter un thème
+                  + Ajouter une activité
                 </Bouton>
               </Link>
             </Table.Cell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {themes
-            .filter((theme) =>
-              theme.nom
+          {activites
+            .filter((activite) =>
+              activite.nom
                 .toLowerCase()
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "")
@@ -59,26 +70,23 @@ export function ListeThemes({ themes }: ListeThemesProps) {
                     .replace(/[\u0300-\u036f]/g, ""),
                 ),
             )
-            .map((theme, index) => (
+            .map((activite, index) => (
               <Table.Row
-                key={theme.id}
+                key={activite.id}
                 className={index % 2 === 1 ? "bg-secondary" : ""}
               >
-                <Table.Cell className="p-[10px]">{theme.nom}</Table.Cell>
-                <Table.Cell className="flex justify-center">
-                  {theme.image && (
-                    <div className="relative m-[10px] h-[40px] w-[40px]">
-                      <ImageNext
-                        src={theme.image.nom}
-                        alt={theme.nom}
-                        fill
-                        className="rounded-md object-cover"
-                      />
-                    </div>
-                  )}
+                <Table.Cell className="p-[10px]">{activite.nom}</Table.Cell>
+                <Table.Cell className="text-center">
+                  {activite.departement}
                 </Table.Cell>
                 <Table.Cell className="text-center">
-                  <Link href={`/admin/themes/${theme.id}`}>
+                  {activite.ville}
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  {activite.theme.nom}
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  <Link href={`/admin/activites/${activite.id}`}>
                     <Bouton
                       type="button"
                       variant="secondary"
@@ -87,7 +95,7 @@ export function ListeThemes({ themes }: ListeThemesProps) {
                       <FaPen />
                     </Bouton>
                   </Link>
-                  <SuppressionTheme themeId={theme.id ?? ""} />
+                  <SuppressionActivite activiteId={activite.id} />
                 </Table.Cell>
               </Table.Row>
             ))}

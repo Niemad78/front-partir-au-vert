@@ -6,7 +6,7 @@ type ImageStrapiProps = {
   alt: string;
   width?: number;
   height?: number;
-  sizes?: string;
+  fill?: boolean;
   overrideSrc?: string;
   className?: string;
   blurDataUrl?: string;
@@ -17,7 +17,7 @@ export const ImageNext = ({
   alt,
   width,
   height,
-  sizes,
+  fill,
   overrideSrc,
   className,
   blurDataUrl,
@@ -28,7 +28,7 @@ export const ImageNext = ({
       alt={alt}
       width={width}
       height={height}
-      sizes={sizes}
+      fill={fill}
       overrideSrc={overrideSrc}
       className={className}
       placeholder="blur"
