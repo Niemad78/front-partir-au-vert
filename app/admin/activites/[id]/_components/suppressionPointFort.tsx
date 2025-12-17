@@ -6,24 +6,30 @@ import { confirmDialog } from "primereact/confirmdialog";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 
-export function SuppressionTheme({ themeId }: { themeId: string }) {
+type SuppressionPointFortProps = {
+  pointFortId: string;
+};
+
+export function SuppressionPointFort({
+  pointFortId,
+}: SuppressionPointFortProps) {
   const { show } = useToast();
   const router = useRouter();
 
   const accept = async () => {
-    const response = await fetch("/api/themes/suppression", {
+    const response = await fetch("/api/point-fort/suppression", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ themeId }),
+      body: JSON.stringify({ pointFortId }),
     }).then((res) => res.json());
 
     if (!response.ok) {
       show({
         severity: "error",
         summary: "Erreur",
-        detail: `Échec de la suppression du thème : ${response.errorMessage}`,
+        detail: `Échec de la suppression du point fort : ${response.errorMessage}`,
       });
       return;
     }
@@ -31,7 +37,7 @@ export function SuppressionTheme({ themeId }: { themeId: string }) {
     show({
       severity: "warn",
       summary: "Confirmé",
-      detail: "Thème supprimé",
+      detail: "Point fort supprimé",
     });
 
     router.refresh();
@@ -40,13 +46,13 @@ export function SuppressionTheme({ themeId }: { themeId: string }) {
   const reject = () => {
     show({
       severity: "info",
-      detail: "Thème non supprimé",
+      detail: "Point fort non supprimé",
     });
   };
 
   const confirm = () => {
     confirmDialog({
-      message: "Êtes-vous sûr de vouloir supprimer ce thème ?",
+      message: "Êtes-vous sûr de vouloir supprimer ce point fort ?",
       header: "Confirmation de suppression",
       defaultFocus: "accept",
       acceptClassName: "p-button-danger",
@@ -63,7 +69,7 @@ export function SuppressionTheme({ themeId }: { themeId: string }) {
         type="button"
         onClick={confirm}
         variant="danger"
-        className="p-[8px]"
+        className="flex h-[50px] w-[50px] items-center justify-center p-[8px]"
       >
         <FaTrashAlt />
       </Bouton>

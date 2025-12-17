@@ -2,13 +2,10 @@ import { DELETE, GET, POST, PUT } from "../client";
 import { BaseResult, Theme } from "../type";
 
 type ThemeListe = BaseResult & {
-  themes: {
-    id: string;
-    nom: string;
-  }[];
+  themes: Theme[];
 };
 
-export async function getThemes(token: string) {
+export async function getThemes(token?: string) {
   const response = await GET<ThemeListe>("/themes/liste", {
     credentials: "include",
     headers: {
