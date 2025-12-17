@@ -1,13 +1,14 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { ajoutImageActivite } from "@/lib/api/resources/activite";
+import { deleteImage } from "@/lib/api/resources/image";
 
-export async function POST(request: NextRequest) {
+export async function DELETE(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   const data = await request.json();
-  const response = await ajoutImageActivite({ data, token });
+
+  const response = await deleteImage(data.imageId, token || "");
 
   if (!response.ok) {
     return new Response(

@@ -143,8 +143,8 @@ export async function ajoutImageActivite({
   token,
 }: AjoutImageActiviteProps): Promise<BaseResult> {
   const values = { imageIds: data.imageIds };
-  const response = await PUT<BaseResult, ActiviteAjoutImage>(
-    `/activites/modification-images/${data.id}`,
+  const response = await POST<BaseResult, ActiviteAjoutImage>(
+    `/activites/ajout-images/${data.id}`,
     values,
     {
       credentials: "include",

@@ -1,4 +1,4 @@
-import { POST } from "../client";
+import { DELETE, POST } from "../client";
 import { BaseResult } from "../type";
 
 type NouvelleImage = {
@@ -88,5 +88,29 @@ export async function nouvellesImages({
   return {
     ok: response.ok,
     imageIds: response.imageIds,
+  };
+}
+
+export async function deleteImage(imageId: string, token: string) {
+  const response = await DELETE<BaseResult>(`/images/suppression/${imageId}`, {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Cookie: `session=${token}`,
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
   };
 }
