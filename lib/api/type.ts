@@ -75,3 +75,9 @@ export type Activite = {
   images?: Image[];
   pointFort?: PointFort[];
 };
+
+export type Faq = {
+  id?: string;
+  question: string;
+  reponse: string;
+};
