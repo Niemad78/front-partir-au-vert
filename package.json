@@ -40,8 +40,8 @@
   },
   "lint-staged": {
     "**/*": [
-      "npm run lint --fix",
-      "npm run format"
+      "pnpm run lint --fix",
+      "pnpm run format"
     ]
   }
 }
