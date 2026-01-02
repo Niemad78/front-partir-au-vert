@@ -7,6 +7,7 @@ import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 import { FloatLabel } from "primereact/floatlabel";
 import { Faq } from "@/lib/api/type";
+import { InputTextarea } from "primereact/inputtextarea";
 import { NouvelleFaqSchema } from "@/lib/schema/faq";
 
 export default function Form({ faq }: { faq: Faq }) {
@@ -78,9 +79,10 @@ export default function Form({ faq }: { faq: Faq }) {
       </div>
       <div className="w-full">
         <FloatLabel>
-          <InputText
+          <InputTextarea
             id="reponse"
             name="reponse"
+            rows={3}
             value={formik.values.reponse}
             onChange={formik.handleChange}
             invalid={!!formik.errors.reponse}
