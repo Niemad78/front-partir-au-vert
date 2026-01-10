@@ -42,3 +42,10 @@
 body {
   background: white;
 }
+
+.background-campagne {
+  background-image: url("/images/campagne.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
