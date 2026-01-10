@@ -3,18 +3,22 @@
 import { ImageNext } from "@/components/image";
 import { ImageUploader } from "@/components/imageUploader";
 import { useToast } from "@/components/toast";
-import { Activite } from "@/lib/api/type";
+import { Publication } from "@/lib/api/type";
 import { useRouter } from "next/navigation";
 import { SuppressionImage } from "./suppressionImage";
 import { ConfirmDialog } from "primereact/confirmdialog";
 
-export default function ActiviteImages({ activite }: { activite: Activite }) {
+export default function PublicationImages({
+  publication,
+}: {
+  publication: Publication;
+}) {
   const { show } = useToast();
   const router = useRouter();
 
   const uploadImage = async (imageIds: string[]) => {
-    const data = { id: activite.id, imageIds };
-    const res = await fetch("/api/activites/ajout-images", {
+    const data = { id: publication.id, imageIds };
+    const res = await fetch("/api/publications/ajout-images", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,9 +56,9 @@ export default function ActiviteImages({ activite }: { activite: Activite }) {
             multiple
           />
         </div>
-        {activite.images && activite.images.length > 0 && (
+        {publication.images && publication.images.length > 0 && (
           <div className="mt-[30px] flex flex-wrap justify-center gap-[20px]">
-            {activite.images.map((image) => (
+            {publication.images.map((image) => (
               <div
                 key={image.id}
                 className="flex flex-col items-center gap-y-[10px]"
