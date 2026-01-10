@@ -2,6 +2,7 @@ import { getPublicationById } from "@/lib/api/resources/publication";
 import Form from "./_components/form";
 import Breadcrumb from "@/components/breadcrumb";
 import PublicationImages from "./_components/images";
+import Panel from "./_components/panel";
 
 export default async function Modifier({
   params,
@@ -31,10 +32,7 @@ export default async function Modifier({
     <section>
       <h1 className="text-primary mb-[30px]">Modifier une publication</h1>
       <Breadcrumb items={breadcrumbItems} />
-      <div className="mt-[20px] flex w-full flex-col items-center gap-y-[20px]">
-        <Form publication={publication.data} />
-        <PublicationImages publication={publication.data} />
-      </div>
+      <Panel publication={publication.data} />
     </section>
   );
 }
