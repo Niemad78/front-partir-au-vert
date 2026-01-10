@@ -81,3 +81,17 @@ export type Faq = {
   question: string;
   reponse: string;
 };
+
+export type Publication = {
+  id: string;
+  titre: string;
+  contenu: string;
+  type: TypePublication;
+  images?: Image[];
+};
+
+export enum TypePublication {
+  histoire = "histoire",
+  seminaire = "seminaire",
+  autre = "autre",
+}
