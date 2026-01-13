@@ -13,7 +13,7 @@ export default function Home() {
           height={50}
           priority
         />
-        <p className="mt-8">
+        <p className="mt-8 text-center">
           Vous pouvez toujours nous contacter sur{" "}
           <a href="mailto:contact@partirauvert.com">contact@partirauvert.com</a>
         </p>
