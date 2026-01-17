@@ -95,3 +95,9 @@ export enum TypePublication {
   seminaire = "seminaire",
   autre = "autre",
 }
+
+export type Partenaire = {
+  id?: string;
+  nom: string;
+  image: Image;
+};
