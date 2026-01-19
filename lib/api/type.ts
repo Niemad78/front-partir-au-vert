@@ -101,3 +101,10 @@ export type Partenaire = {
   nom: string;
   image: Image;
 };
+
+export type Equipe = {
+  id: string;
+  nom: string;
+  description: string;
+  image: Image;
+};

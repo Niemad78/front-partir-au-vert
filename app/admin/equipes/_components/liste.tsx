@@ -1,20 +1,21 @@
 "use client";
 
-import { SuppressionPartenaire } from "./suppression";
-import { Partenaire } from "@/lib/api/type";
+import { SuppressionEquipe } from "./suppressionTheme";
+import { Equipe } from "@/lib/api/type";
+import { ImageNext } from "@/components/image";
 import * as Table from "@/components/table";
 import { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
+import { FaPen } from "react-icons/fa";
 import Link from "next/link";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import { ImageNext } from "@/components/image";
 
-type ListePartenaireProps = {
-  partenaires: Partenaire[];
+type ListeEquipesProps = {
+  equipes: Equipe[];
 };
 
-export function ListePartenaire({ partenaires }: ListePartenaireProps) {
+export function ListeEquipes({ equipes }: ListeEquipesProps) {
   const [filtre, setFiltre] = useState("");
 
   return (
@@ -34,20 +35,20 @@ export function ListePartenaire({ partenaires }: ListePartenaireProps) {
                 placeholder="Rechercher"
               />
             </Table.Cell>
-            <Table.Cell className="w-[200px]" />
+            <Table.Cell className="w-[250px]" />
             <Table.Cell className="w-[250px] p-[10px] text-right">
-              <Link href="/admin/partenaires/nouveau">
+              <Link href="/admin/equipes/nouveau">
                 <Bouton type="button" variant="primary">
-                  + Ajouter un partenaire
+                  + Ajouter un membre
                 </Bouton>
               </Link>
             </Table.Cell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {partenaires
-            .filter((partenaire) =>
-              partenaire.nom
+          {equipes
+            .filter((equipe) =>
+              equipe.nom
                 .toLowerCase()
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "")
@@ -58,18 +59,18 @@ export function ListePartenaire({ partenaires }: ListePartenaireProps) {
                     .replace(/[\u0300-\u036f]/g, ""),
                 ),
             )
-            .map((partenaire, index) => (
+            .map((equipe, index) => (
               <Table.Row
-                key={partenaire.id}
+                key={equipe.id}
                 className={index % 2 === 1 ? "bg-secondary" : ""}
               >
-                <Table.Cell className="p-[10px]">{partenaire.nom}</Table.Cell>
+                <Table.Cell className="p-[10px]">{equipe.nom}</Table.Cell>
                 <Table.Cell className="flex justify-center">
-                  {partenaire.image && (
+                  {equipe.image && (
                     <div className="relative m-[10px] h-[40px] w-[40px]">
                       <ImageNext
-                        src={partenaire.image.nom}
-                        alt={partenaire.nom}
+                        src={equipe.image.nom}
+                        alt={equipe.nom}
                         fill
                         className="rounded-md object-cover"
                       />
@@ -77,7 +78,16 @@ export function ListePartenaire({ partenaires }: ListePartenaireProps) {
                   )}
                 </Table.Cell>
                 <Table.Cell className="text-center">
-                  <SuppressionPartenaire partenaireId={partenaire.id ?? ""} />
+                  <Link href={`/admin/equipes/${equipe.id}`}>
+                    <Bouton
+                      type="button"
+                      variant="secondary"
+                      className="mr-[10px] p-[8px]"
+                    >
+                      <FaPen />
+                    </Bouton>
+                  </Link>
+                  <SuppressionEquipe equipeId={equipe.id ?? ""} />
                 </Table.Cell>
               </Table.Row>
             ))}
