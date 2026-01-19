@@ -49,6 +49,11 @@ export async function AdminMenu() {
           </Link>
         </li>
         <li>
+          <Link href="/admin/equipes" className="hover:underline">
+            <h3>Équipes</h3>
+          </Link>
+        </li>
+        <li>
           <BoutonLogout />
         </li>
       </ul>
