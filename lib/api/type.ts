@@ -108,3 +108,19 @@ export type Equipe = {
   description: string;
   image: Image;
 };
+
+export type Utilisateur = {
+  id: string;
+  nom: string;
+  prenom: string;
+  email: string;
+};
+
+export type Article = {
+  id: string;
+  titre: string;
+  contenu: string;
+  createdAt: string;
+  images: Image[];
+  user: Utilisateur;
+};

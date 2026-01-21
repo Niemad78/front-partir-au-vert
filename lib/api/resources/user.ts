@@ -1,5 +1,5 @@
 import { DELETE, GET, POST, PUT } from "../client";
-import { BaseResult, LoginData } from "../type";
+import { BaseResult, LoginData, Utilisateur } from "../type";
 
 type ChangePasswordProps = {
   data: LoginData;
@@ -129,10 +129,7 @@ export async function nouvelUtilisateur({
 }
 
 type UserList = BaseResult & {
-  users: {
-    id: string;
-    email: string;
-  }[];
+  users: Utilisateur[];
 };
 
 export async function getUsers(token: string) {
