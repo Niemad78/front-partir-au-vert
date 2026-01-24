@@ -4,7 +4,7 @@ import Panel from "./_components/panel";
 import Breadcrumb from "@/components/breadcrumb";
 import { getArticleById } from "@/lib/api/resources/blog";
 import { cookies } from "next/headers";
-import { getUsers } from "@/lib/api/resources/user";
+import { getUtilisateurs } from "@/lib/api/resources/user";
 
 export default async function Article({
   params,
@@ -15,7 +15,7 @@ export default async function Article({
   const article = await getArticleById(id);
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
-  const auteurs = await getUsers(token ?? "");
+  const auteurs = await getUtilisateurs(token ?? "");
 
   if (!article.data) {
     return (

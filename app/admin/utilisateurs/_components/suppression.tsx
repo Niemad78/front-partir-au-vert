@@ -7,11 +7,11 @@ import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 
 type SuppressionUtilisateurProps = {
-  userId: string;
+  utilisateurId: string;
 };
 
 export function SuppressionUtilisateur({
-  userId,
+  utilisateurId,
 }: SuppressionUtilisateurProps) {
   const { show } = useToast();
   const router = useRouter();
@@ -22,7 +22,7 @@ export function SuppressionUtilisateur({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId }),
+      body: JSON.stringify({ utilisateurId }),
     }).then((res) => res.json());
 
     if (!response.ok) {

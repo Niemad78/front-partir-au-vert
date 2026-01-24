@@ -38,6 +38,8 @@ export type Client = <TBodyResponse, TData = unknown>(
 export type LoginData = {
   email: string;
   password: string;
+  nom?: string;
+  prenom?: string;
 };
 
 export type BaseResult = {
@@ -114,6 +116,13 @@ export type Utilisateur = {
   nom: string;
   prenom: string;
   email: string;
+};
+
+export type UtilisateurDto = {
+  nom: string;
+  prenom: string;
+  email: string;
+  password: string;
 };
 
 export type Article = {

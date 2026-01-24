@@ -1,4 +1,4 @@
-import { getUsers } from "@/lib/api/resources/user";
+import { getUtilisateurs } from "@/lib/api/resources/user";
 import Form from "./_components/form";
 import Breadcrumb from "@/components/breadcrumb";
 import { cookies } from "next/headers";
@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export default async function Nouveau() {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
-  const auteurs = await getUsers(token ?? "");
+  const auteurs = await getUtilisateurs(token ?? "");
   const breadcrumbItems = [
     { label: "Articles", href: "/admin/blog" },
     { label: "Nouvel article" },

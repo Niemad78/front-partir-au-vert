@@ -93,7 +93,6 @@ export async function modificationArticle({
   data,
   token,
 }: NouvelArticle): Promise<BaseResult> {
-  console.log("🚀 ~ modificationArticle ~ data:", data);
   const response = await PUT<BaseResult, Article>(
     `/articles/modification/${data.id}`,
     data,

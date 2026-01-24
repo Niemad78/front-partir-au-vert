@@ -1,31 +1,19 @@
 import { DELETE, GET, POST, PUT } from "../client";
-import { BaseResult, LoginData, Utilisateur } from "../type";
+import { BaseResult, Utilisateur, UtilisateurDto } from "../type";
 
-type ChangePasswordProps = {
-  data: LoginData;
-  token?: string;
+type UtilisateurListe = BaseResult & {
+  users: Utilisateur[];
 };
 
-export async function changePassword({
-  data,
-  token,
-}: ChangePasswordProps): Promise<BaseResult> {
-  const values = {
-    email: data.email,
-    password: data.password,
-  };
-  const response = await PUT<BaseResult, LoginData>(
-    "/utilisateurs/me/modification",
-    values,
-    {
-      credentials: "include",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
-      },
-      cache: "no-store",
+export async function getUtilisateurs(token: string) {
+  const response = await GET<UtilisateurListe>("/utilisateurs/liste", {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Cookie: `session=${token}`,
     },
-  );
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     return {
@@ -37,7 +25,35 @@ export async function changePassword({
 
   return {
     ok: response.ok,
-    message: response.message,
+    data: response.users,
+  };
+}
+
+type UtilisateurUnique = BaseResult & {
+  utilisateur: Utilisateur;
+};
+
+export async function getUtilisateurById(token: string) {
+  const response = await GET<UtilisateurUnique>("/utilisateurs/me", {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Cookie: `session=${token}`,
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    data: response.utilisateur,
   };
 }
 
@@ -65,19 +81,20 @@ export async function verifyMe(token: string): Promise<BaseResult> {
   };
 }
 
-type RoleResult = BaseResult & {
-  role?: string;
-};
-
-export async function getMyRole(token: string): Promise<RoleResult> {
-  const response = await GET<RoleResult>("/utilisateurs/me/role", {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
+export async function getMyRole(
+  token: string,
+): Promise<BaseResult & { role?: string }> {
+  const response = await GET<BaseResult & { role?: string }>(
+    "/utilisateurs/me/role",
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!response.ok) {
     return {
@@ -93,17 +110,27 @@ export async function getMyRole(token: string): Promise<RoleResult> {
   };
 }
 
+type NouvelUtilisateur = {
+  data: {
+    email: string;
+    password: string;
+    nom: string;
+    prenom: string;
+  };
+  token?: string;
+};
+
+type CreationUtilisateurResult = BaseResult & {
+  utilisateur: Utilisateur;
+};
+
 export async function nouvelUtilisateur({
   data,
   token,
-}: ChangePasswordProps): Promise<BaseResult> {
-  const values = {
-    email: data.email,
-    password: data.password,
-  };
-  const response = await POST<BaseResult, LoginData>(
+}: NouvelUtilisateur): Promise<BaseResult & { id?: string }> {
+  const response = await POST<CreationUtilisateurResult, UtilisateurDto>(
     "/utilisateurs/nouvel-utilisateur",
-    values,
+    data,
     {
       credentials: "include",
       headers: {
@@ -128,19 +155,29 @@ export async function nouvelUtilisateur({
   };
 }
 
-type UserList = BaseResult & {
-  users: Utilisateur[];
+type modificationPassword = {
+  data: {
+    password: string;
+  };
+  token?: string;
 };
 
-export async function getUsers(token: string) {
-  const response = await GET<UserList>("/utilisateurs/liste", {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
+export async function updatePassword({
+  data,
+  token,
+}: modificationPassword): Promise<BaseResult> {
+  const response = await PUT<BaseResult, { password: string }>(
+    "/utilisateurs/me/password",
+    data,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!response.ok) {
     return {
@@ -152,13 +189,98 @@ export async function getUsers(token: string) {
 
   return {
     ok: response.ok,
-    data: response.users,
+    message: response.message,
   };
 }
 
-export async function deleteUser(userId: string, token: string) {
+type modificationEmail = {
+  data: {
+    email: string;
+  };
+  token?: string;
+};
+
+export async function updateEmail({
+  data,
+  token,
+}: modificationEmail): Promise<BaseResult> {
+  const response = await PUT<BaseResult, { email: string }>(
+    "/utilisateurs/me/email",
+    data,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
+  };
+}
+
+type modificationInfos = {
+  data: {
+    nom: string;
+    prenom: string;
+  };
+  token?: string;
+};
+
+export async function updateInfos({
+  data,
+  token,
+}: modificationInfos): Promise<BaseResult> {
+  const response = await PUT<BaseResult, { nom: string; prenom: string }>(
+    "/utilisateurs/me/infos",
+    data,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Cookie: `session=${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
+  };
+}
+
+type SuppressionUtilisateur = {
+  utilisateurId: string;
+  token?: string;
+};
+
+export async function deleteUser({
+  utilisateurId,
+  token,
+}: SuppressionUtilisateur) {
   const response = await DELETE<BaseResult>(
-    `/utilisateurs/suppression/${userId}`,
+    `/utilisateurs/suppression/${utilisateurId}`,
     {
       credentials: "include",
       headers: {

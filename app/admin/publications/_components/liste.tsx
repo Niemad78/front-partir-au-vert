@@ -1,7 +1,6 @@
 "use client";
 
 import { SuppressionPublication } from "./suppression";
-import { Image, Theme } from "@/lib/api/type";
 import * as Table from "@/components/table";
 import { useState } from "react";
 import { InputText } from "primereact/inputtext";

@@ -18,6 +18,8 @@ export default function MesInformationsForm() {
       email: "",
       password: "",
       passwordVerification: "",
+      nom: "",
+      prenom: "",
     },
     validationSchema: MesInformationsSchema,
     validateOnChange: false,
@@ -114,6 +116,40 @@ export default function MesInformationsForm() {
           <label htmlFor="passwordVerification">
             Vérification mot de passe
           </label>
+        </FloatLabel>
+      </div>
+      <div className="w-full">
+        <FloatLabel>
+          <InputText
+            id="nom"
+            name="nom"
+            value={formik.values.nom}
+            onChange={formik.handleChange}
+            invalid={!!formik.errors.nom}
+            aria-errormessage={formik.errors.nom}
+            className="w-full"
+          />
+          <span id="nom-error" className="p-error pl-[5px]">
+            {formik.errors.nom}
+          </span>
+          <label htmlFor="nom">Nom</label>
+        </FloatLabel>
+      </div>
+      <div className="w-full">
+        <FloatLabel>
+          <InputText
+            id="prenom"
+            name="prenom"
+            value={formik.values.prenom}
+            onChange={formik.handleChange}
+            invalid={!!formik.errors.prenom}
+            aria-errormessage={formik.errors.prenom}
+            className="w-full"
+          />
+          <span id="prenom-error" className="p-error pl-[5px]">
+            {formik.errors.prenom}
+          </span>
+          <label htmlFor="prenom">Prenom</label>
         </FloatLabel>
       </div>
       <Bouton type="submit" className="w-[150px]">
