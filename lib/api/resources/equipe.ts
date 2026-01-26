@@ -1,5 +1,5 @@
 import { DELETE, GET, POST, PUT } from "../client";
-import { BaseResult, Equipe, Theme } from "../type";
+import { BaseResult, Equipe } from "../type";
 
 type EquipeListe = BaseResult & {
   equipes: Equipe[];

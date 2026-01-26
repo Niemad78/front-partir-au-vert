@@ -14,7 +14,6 @@ const manrope = Manrope({
   display: "swap",
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const amatic = Amatic_SC({
   weight: ["400"],
   variable: "--font-amatic",

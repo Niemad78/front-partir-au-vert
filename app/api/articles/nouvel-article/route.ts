@@ -1,16 +1,13 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { deleteUser } from "@/lib/api/resources/user";
+import { nouvelArticle } from "@/lib/api/resources/blog";
 
-export async function DELETE(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   const data = await request.json();
-  const response = await deleteUser({
-    utilisateurId: data.utilisateurId,
-    token: token || "",
-  });
+  const response = await nouvelArticle({ data, token });
 
   if (!response.ok) {
     return new Response(

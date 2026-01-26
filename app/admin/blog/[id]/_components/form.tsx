@@ -3,28 +3,30 @@
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useToast } from "@/components/toast";
-import FormEquipe from "../../_components/form";
-import { Equipe } from "@/lib/api/type";
-import { NouvelleEquipeSchema } from "@/lib/schema/equipes";
+import { Article, Utilisateur } from "@/lib/api/type";
+import FormArticle from "../../_components/form";
+import { NouvelArticleSchema } from "@/lib/schema/articles";
 
-export default function Form({ equipe }: { equipe: Equipe }) {
+type Props = {
+  article: Article;
+  auteurs: Utilisateur[];
+};
+
+export default function Form({ article, auteurs }: Props) {
   const { show } = useToast();
   const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
-      nom: equipe.nom,
-      description: equipe.description,
-      imageId: equipe.image?.id || "",
+      titre: article.titre,
+      contenu: article.contenu,
+      userId: article.user.id,
     },
-    validationSchema: NouvelleEquipeSchema,
+    validationSchema: NouvelArticleSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const data = {
-        id: equipe.id,
-        ...values,
-      };
-      const res = await fetch("/api/equipes/modification", {
+      const data = { ...values, id: article.id };
+      const res = await fetch("/api/articles/modification", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +43,6 @@ export default function Form({ equipe }: { equipe: Equipe }) {
           detail: result.message,
         });
 
-        router.push("/admin/equipes");
         router.refresh();
       } else {
         show({
@@ -53,5 +54,9 @@ export default function Form({ equipe }: { equipe: Equipe }) {
     },
   });
 
-  return <FormEquipe formik={formik} equipe={equipe} fonction="modifier" />;
+  return (
+    <div className="mt-[20px] flex justify-center">
+      <FormArticle formik={formik} auteurs={auteurs} fonction="modifier" />
+    </div>
+  );
 }

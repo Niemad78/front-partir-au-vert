@@ -1,10 +1,7 @@
-import { getThemes } from "@/lib/api/resources/theme";
 import Form from "./_components/form";
 import Breadcrumb from "@/components/breadcrumb";
 
 export default async function Nouveau() {
-  const themes = await getThemes();
-
   const breadcrumbItems = [
     { label: "Publications", href: "/admin/publications" },
     { label: "Nouvelle publication" },

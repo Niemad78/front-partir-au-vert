@@ -3,33 +3,33 @@
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useToast } from "@/components/toast";
-import FormEquipe from "../../_components/form";
-import { Equipe } from "@/lib/api/type";
-import { NouvelleEquipeSchema } from "@/lib/schema/equipes";
+import { NouvelArticleSchema } from "@/lib/schema/articles";
+import { Utilisateur } from "@/lib/api/type";
+import FormArticle from "../../_components/form";
 
-export default function Form({ equipe }: { equipe: Equipe }) {
+type FormProps = {
+  auteurs: Utilisateur[];
+};
+
+export default function Form({ auteurs }: FormProps) {
   const { show } = useToast();
   const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
-      nom: equipe.nom,
-      description: equipe.description,
-      imageId: equipe.image?.id || "",
+      titre: "",
+      contenu: "",
+      userId: "",
     },
-    validationSchema: NouvelleEquipeSchema,
+    validationSchema: NouvelArticleSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const data = {
-        id: equipe.id,
-        ...values,
-      };
-      const res = await fetch("/api/equipes/modification", {
-        method: "PUT",
+      const res = await fetch("/api/articles/nouvel-article", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(values),
       });
 
       const result = await res.json();
@@ -41,7 +41,7 @@ export default function Form({ equipe }: { equipe: Equipe }) {
           detail: result.message,
         });
 
-        router.push("/admin/equipes");
+        router.push(`/admin/blog/${result.id}`);
         router.refresh();
       } else {
         show({
@@ -53,5 +53,5 @@ export default function Form({ equipe }: { equipe: Equipe }) {
     },
   });
 
-  return <FormEquipe formik={formik} equipe={equipe} fonction="modifier" />;
+  return <FormArticle formik={formik} auteurs={auteurs} fonction="ajouter" />;
 }
