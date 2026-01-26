@@ -2,31 +2,28 @@
 
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
-import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { FloatLabel } from "primereact/floatlabel";
-import { MesInformationsSchema } from "@/lib/schema/utilisateurs";
+import { PasswordSchema } from "@/lib/schema/utilisateurs";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 
-export default function MesInformationsForm() {
+export default function FormPassword() {
   const { show } = useToast();
   const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
-      email: "",
       password: "",
       passwordVerification: "",
     },
-    validationSchema: MesInformationsSchema,
+    validationSchema: PasswordSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
       const data = {
-        email: values.email,
         password: values.password,
       };
-      const res = await fetch("/api/utilisateurs/mes-informations", {
+      const res = await fetch("/api/utilisateurs/password", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -59,23 +56,6 @@ export default function MesInformationsForm() {
       onSubmit={formik.handleSubmit}
       className="flex w-[80%] w-[400px] flex-col items-center gap-[30px]"
     >
-      <div className="w-full">
-        <FloatLabel>
-          <InputText
-            id="email"
-            name="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            invalid={!!formik.errors.email}
-            aria-errormessage={formik.errors.email}
-            className="w-full"
-          />
-          <span id="email-error" className="p-error pl-[5px]">
-            {formik.errors.email}
-          </span>
-          <label htmlFor="email">Email</label>
-        </FloatLabel>
-      </div>
       <div className="w-full">
         <FloatLabel>
           <Password

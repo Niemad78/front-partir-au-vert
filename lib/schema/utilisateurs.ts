@@ -6,7 +6,15 @@ export const LoginSchema = Yup.object().shape({
 });
 
 export const MesInformationsSchema = Yup.object().shape({
+  nom: Yup.string().required("Nom requis"),
+  prenom: Yup.string().required("Prénom requis"),
+});
+
+export const EmailSchema = Yup.object().shape({
   email: Yup.string().email("Email invalide").required("Email requis"),
+});
+
+export const PasswordSchema = Yup.object().shape({
   password: Yup.string()
     .min(8, "Le mot de passe doit contenir au moins 8 caractères")
     .matches(
@@ -35,4 +43,6 @@ export const NouvelUtilisateurSchema = Yup.object().shape({
       "Le mot de passe doit contenir au moins 8 caractères et des caractères spéciaux",
     )
     .required("Mot de passe requis"),
+  nom: Yup.string().required("Nom requis"),
+  prenom: Yup.string().required("Prénom requis"),
 });

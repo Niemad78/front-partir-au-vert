@@ -6,30 +6,28 @@ import { confirmDialog } from "primereact/confirmdialog";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 
-type SuppressionUtilisateurProps = {
-  userId: string;
+type SuppressionArticleProps = {
+  articleId: string;
 };
 
-export function SuppressionUtilisateur({
-  userId,
-}: SuppressionUtilisateurProps) {
+export function SuppressionArticle({ articleId }: SuppressionArticleProps) {
   const { show } = useToast();
   const router = useRouter();
 
   const accept = async () => {
-    const response = await fetch("/api/utilisateurs/suppression", {
+    const response = await fetch("/api/articles/suppression", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId }),
+      body: JSON.stringify({ articleId }),
     }).then((res) => res.json());
 
     if (!response.ok) {
       show({
         severity: "error",
         summary: "Erreur",
-        detail: `Échec de la suppression de l'utilisateur : ${response.errorMessage}`,
+        detail: `Échec de la suppression de l'article : ${response.errorMessage}`,
       });
       return;
     }
@@ -37,7 +35,7 @@ export function SuppressionUtilisateur({
     show({
       severity: "warn",
       summary: "Confirmé",
-      detail: "Utilisateur supprimé",
+      detail: "Article supprimé",
     });
 
     router.refresh();
@@ -46,13 +44,13 @@ export function SuppressionUtilisateur({
   const reject = () => {
     show({
       severity: "info",
-      detail: "Utilisateur non supprimé",
+      detail: "Article non supprimé",
     });
   };
 
   const confirm = () => {
     confirmDialog({
-      message: "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+      message: "Êtes-vous sûr de vouloir supprimer cet article ?",
       header: "Confirmation de suppression",
       defaultFocus: "accept",
       acceptClassName: "p-button-danger",

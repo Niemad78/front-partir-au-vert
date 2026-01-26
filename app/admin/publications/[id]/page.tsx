@@ -1,7 +1,5 @@
 import { getPublicationById } from "@/lib/api/resources/publication";
-import Form from "./_components/form";
 import Breadcrumb from "@/components/breadcrumb";
-import PublicationImages from "./_components/images";
 import Panel from "./_components/panel";
 
 export default async function Modifier({
