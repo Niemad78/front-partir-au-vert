@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import { Bouton } from "@/components/bouton";
 import { getUtilisateurs } from "@/lib/api/resources/user";
 import { ListeUtilisateurs } from "./_components/liste";
 import Breadcrumb from "@/components/breadcrumb";

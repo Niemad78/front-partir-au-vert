@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import { FaPen } from "react-icons/fa";
 import * as Table from "@/components/table";
 import { SuppressionUtilisateur } from "./suppression";
 import { Utilisateur } from "@/lib/api/type";

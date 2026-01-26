@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import Form from "./_components/form";
-import { getThemeById } from "@/lib/api/resources/theme";
 import Breadcrumb from "@/components/breadcrumb";
 import { getEquipeById } from "@/lib/api/resources/equipe";
 

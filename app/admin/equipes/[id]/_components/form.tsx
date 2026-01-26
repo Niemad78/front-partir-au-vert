@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useToast } from "@/components/toast";
-import { NouveauThemeSchema } from "@/lib/schema/themes";
 import FormEquipe from "../../_components/form";
 import { Equipe } from "@/lib/api/type";
 import { NouvelleEquipeSchema } from "@/lib/schema/equipes";

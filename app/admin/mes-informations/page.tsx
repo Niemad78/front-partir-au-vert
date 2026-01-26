@@ -1,5 +1,4 @@
 import Breadcrumb from "@/components/breadcrumb";
-import FormEmail from "./_components/formEmail";
 import { cookies } from "next/headers";
 import { getUtilisateurById } from "@/lib/api/resources/user";
 import Panel from "./_components/panel";

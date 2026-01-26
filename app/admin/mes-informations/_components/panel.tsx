@@ -1,6 +1,5 @@
 import { TabView, TabPanel } from "primereact/tabview";
-import { Activite, Theme, Utilisateur } from "@/lib/api/type";
-import Form from "./formEmail";
+import { Utilisateur } from "@/lib/api/type";
 import FormEmail from "./formEmail";
 import FormPassword from "./formPassword";
 import FormNomPrenom from "./formNomPrenom";
@@ -15,7 +14,7 @@ export default function Panel({ utilisateur }: Props) {
         <FormEmail utilisateur={utilisateur} />
       </TabPanel>
       <TabPanel header="Mot de passe" className="mt-[30px] flex justify-center">
-        <FormPassword utilisateur={utilisateur} />
+        <FormPassword />
       </TabPanel>
       <TabPanel header="Nom & prénom" className="mt-[30px] flex justify-center">
         <FormNomPrenom utilisateur={utilisateur} />

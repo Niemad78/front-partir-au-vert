@@ -7,15 +7,8 @@ import { FloatLabel } from "primereact/floatlabel";
 import { PasswordSchema } from "@/lib/schema/utilisateurs";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
-import { Utilisateur } from "@/lib/api/type";
 
-type MesInformationsFormProps = {
-  utilisateur: Utilisateur;
-};
-
-export default function FormPassword({
-  utilisateur,
-}: MesInformationsFormProps) {
+export default function FormPassword() {
   const { show } = useToast();
   const router = useRouter();
 

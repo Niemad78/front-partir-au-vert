@@ -1,5 +1,5 @@
 import { DELETE, GET, POST, PUT } from "../client";
-import { BaseResult, Publication, Theme, TypePublication } from "../type";
+import { BaseResult, Publication, TypePublication } from "../type";
 
 type PublicationListe = BaseResult & {
   publications: {
