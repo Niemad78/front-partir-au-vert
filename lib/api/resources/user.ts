@@ -30,7 +30,7 @@ export async function getUtilisateurs(token: string) {
 }
 
 type UtilisateurUnique = BaseResult & {
-  utilisateur: Utilisateur;
+  user: Utilisateur;
 };
 
 export async function getUtilisateurById(token: string) {
@@ -53,7 +53,7 @@ export async function getUtilisateurById(token: string) {
 
   return {
     ok: response.ok,
-    data: response.utilisateur,
+    data: response.user,
   };
 }
 
