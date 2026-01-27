@@ -73,10 +73,19 @@ export type Activite = {
   ville: string;
   departement: number;
   nbPersonnesMax: number;
+  duree: DureeKey | null;
   themeId: string;
   images?: Image[];
   pointFort?: PointFort[];
 };
+
+export enum Duree {
+  journee = "Journée",
+  matinee = "Matinée",
+  apres_midi = "Après-midi",
+}
+
+export type DureeKey = keyof typeof Duree;
 
 export type Faq = {
   id?: string;
@@ -93,9 +102,9 @@ export type Publication = {
 };
 
 export enum TypePublication {
-  histoire = "histoire",
-  seminaire = "seminaire",
-  autre = "autre",
+  histoire = "Histoire",
+  seminaire = "Séminaire",
+  autre = "Autre",
 }
 
 export type Partenaire = {

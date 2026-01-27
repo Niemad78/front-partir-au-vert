@@ -9,6 +9,7 @@ import { Bouton } from "@/components/bouton";
 import { FaPen } from "react-icons/fa";
 import Link from "next/link";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { dureeFormatee, DureeKey } from "@/lib/utils/formatDuree";
 
 type ListeActivitesProps = {
   activites: {
@@ -21,6 +22,7 @@ type ListeActivitesProps = {
     nbPersonnesMax: number;
     theme: Theme;
     images?: Image[];
+    duree: DureeKey | null;
   }[];
 };
 
@@ -45,8 +47,9 @@ export function ListeActivites({ activites }: ListeActivitesProps) {
               />
             </Table.Cell>
             <Table.Cell className="w-[60px]" />
-            <Table.Cell className="w-[250px]" />
-            <Table.Cell className="w-[250px]" />
+            <Table.Cell className="w-[200px]" />
+            <Table.Cell className="w-[200px]" />
+            <Table.Cell className="w-[200px]" />
             <Table.Cell className="w-[250px] p-[10px] text-right">
               <Link href="/admin/activites/nouveau">
                 <Bouton type="button" variant="primary">
@@ -84,6 +87,9 @@ export function ListeActivites({ activites }: ListeActivitesProps) {
                 </Table.Cell>
                 <Table.Cell className="text-center">
                   {activite.theme.nom}
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  {activite.duree ? dureeFormatee(activite.duree) : "N/A"}
                 </Table.Cell>
                 <Table.Cell className="text-center">
                   <Link href={`/admin/activites/${activite.id}`}>

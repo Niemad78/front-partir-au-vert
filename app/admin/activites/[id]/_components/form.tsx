@@ -11,6 +11,8 @@ import { NouvelleActiviteSchema } from "@/lib/schema/activites";
 import { MultiSelect } from "primereact/multiselect";
 import { Activite, Theme } from "@/lib/api/type";
 import Quill from "@/components/quill";
+import { Dropdown } from "primereact/dropdown";
+import { dureeOptions } from "@/lib/utils/formatDuree";
 
 type Props = {
   activite: Activite;
@@ -30,11 +32,17 @@ export default function Form({ activite, themes }: Props) {
       departement: activite.departement || null,
       nbPersonnesMax: activite.nbPersonnesMax || null,
       themeId: activite.themeId ? [activite.themeId] : [],
+      duree: activite.duree || "",
     },
     validationSchema: NouvelleActiviteSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const data = { ...values, id: activite.id, themeId: values.themeId[0] };
+      const data = {
+        ...values,
+        id: activite.id,
+        themeId: values.themeId[0],
+        duree: values.duree,
+      };
       const res = await fetch("/api/activites/modification", {
         method: "PUT",
         headers: {
@@ -178,6 +186,20 @@ export default function Form({ activite, themes }: Props) {
         />
         <span id="themeId-error" className="p-error pl-[5px]">
           {formik.errors.themeId}
+        </span>
+      </div>
+      <div className="w-[350px]">
+        <Dropdown
+          id="duree"
+          name="duree"
+          value={formik.values.duree}
+          onChange={formik.handleChange}
+          options={dureeOptions}
+          placeholder="Durée"
+          className="w-full"
+        />
+        <span id="duree-error" className="p-error pl-[5px]">
+          {formik.errors.duree}
         </span>
       </div>
       <div className="w-[80%]">

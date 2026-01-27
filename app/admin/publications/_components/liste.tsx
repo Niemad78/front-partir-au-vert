@@ -8,13 +8,17 @@ import { Bouton } from "@/components/bouton";
 import { FaPen } from "react-icons/fa";
 import Link from "next/link";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import {
+  publicationFormatee,
+  TypePublicationKey,
+} from "@/lib/utils/formatPublication";
 
 type ListePublicationsProps = {
   publications: {
     id: string;
     titre: string;
     contenu: string;
-    type: string;
+    type: TypePublicationKey | null;
   }[];
 };
 
@@ -71,7 +75,9 @@ export function ListePublications({ publications }: ListePublicationsProps) {
                   {publication.titre}
                 </Table.Cell>
                 <Table.Cell className="text-center">
-                  {publication.type}
+                  {publication.type
+                    ? publicationFormatee(publication.type)
+                    : "N/A"}
                 </Table.Cell>
                 <Table.Cell className="text-center">
                   <Link href={`/admin/publications/${publication.id}`}>

@@ -11,6 +11,8 @@ import { NouvelleActiviteSchema } from "@/lib/schema/activites";
 import { MultiSelect } from "primereact/multiselect";
 import { Theme } from "@/lib/api/type";
 import Quill from "@/components/quill";
+import { Dropdown } from "primereact/dropdown";
+import { dureeOptions } from "@/lib/utils/formatDuree";
 
 type Props = {
   themes: Theme[];
@@ -29,6 +31,7 @@ export default function Form({ themes }: Props) {
       departement: null,
       nbPersonnesMax: null,
       themeId: "",
+      duree: "",
     },
     validationSchema: NouvelleActiviteSchema,
     validateOnChange: false,
@@ -178,6 +181,20 @@ export default function Form({ themes }: Props) {
         />
         <span id="themeId-error" className="p-error pl-[5px]">
           {formik.errors.themeId}
+        </span>
+      </div>
+      <div className="w-[350px]">
+        <Dropdown
+          id="duree"
+          name="duree"
+          value={formik.values.duree}
+          onChange={formik.handleChange}
+          options={dureeOptions}
+          placeholder="Durée"
+          className="w-full"
+        />
+        <span id="duree-error" className="p-error pl-[5px]">
+          {formik.errors.duree}
         </span>
       </div>
       <div className="w-full">
