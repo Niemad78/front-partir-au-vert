@@ -1,5 +1,5 @@
 import { DELETE, GET, POST, PUT } from "../client";
-import { Activite, BaseResult, Theme } from "../type";
+import { Activite, BaseResult, DureeKey, Theme } from "../type";
 
 type ActiviteListe = BaseResult & {
   activites: {
@@ -11,6 +11,7 @@ type ActiviteListe = BaseResult & {
     departement: string;
     nbPersonnesMax: number;
     theme: Theme;
+    duree: DureeKey | null;
   }[];
 };
 

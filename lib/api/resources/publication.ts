@@ -1,3 +1,4 @@
+import { TypePublicationKey } from "@/lib/utils/formatPublication";
 import { DELETE, GET, POST, PUT } from "../client";
 import { BaseResult, Publication, TypePublication } from "../type";
 
@@ -6,7 +7,7 @@ type PublicationListe = BaseResult & {
     id: string;
     titre: string;
     contenu: string;
-    type: string;
+    type: TypePublicationKey;
   }[];
 };
 
