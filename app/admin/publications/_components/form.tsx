@@ -5,7 +5,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import Quill from "@/components/quill";
 import { Bouton } from "@/components/bouton";
-import { TypePublication } from "@/lib/api/type";
+import { publicationOptions } from "@/lib/utils/formatPublication";
 
 type FormProps = {
   formik: any;
@@ -35,14 +35,13 @@ export default function FormPublication({ formik, fonction }: FormProps) {
           <label htmlFor="titre">Titre</label>
         </FloatLabel>
       </div>
-
       <div className="w-[350px]">
         <Dropdown
           id="type"
           name="type"
           value={formik.values.type}
           onChange={formik.handleChange}
-          options={Object.values(TypePublication)}
+          options={publicationOptions}
           placeholder="Type de publication"
           className="w-full"
         />
