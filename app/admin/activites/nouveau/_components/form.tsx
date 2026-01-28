@@ -30,19 +30,18 @@ export default function Form({ themes }: Props) {
       ville: "",
       departement: null,
       nbPersonnesMax: null,
-      themeId: "",
-      duree: "",
+      themeIds: [],
+      duree: null,
     },
     validationSchema: NouvelleActiviteSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      const data = { ...values, themeId: values.themeId?.[0] || null };
       const res = await fetch("/api/activites/nouvelle-activite", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(values),
       });
 
       const result = await res.json();
@@ -166,9 +165,9 @@ export default function Form({ themes }: Props) {
       </div>
       <div className="w-[350px]">
         <MultiSelect
-          id="themeId"
-          name="themeId"
-          value={formik.values.themeId}
+          id="themeIds"
+          name="themeIds"
+          value={formik.values.themeIds}
           onChange={formik.handleChange}
           options={themes.map((theme) => ({
             label: theme.nom,
@@ -176,11 +175,11 @@ export default function Form({ themes }: Props) {
           }))}
           filter
           placeholder="Thème"
-          selectionLimit={1}
+          selectionLimit={3}
           className="w-full"
         />
-        <span id="themeId-error" className="p-error pl-[5px]">
-          {formik.errors.themeId}
+        <span id="themeIds-error" className="p-error pl-[5px]">
+          {formik.errors.themeIds}
         </span>
       </div>
       <div className="w-[350px]">

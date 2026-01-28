@@ -31,8 +31,8 @@ export default function Form({ activite, themes }: Props) {
       ville: activite.ville || "",
       departement: activite.departement || null,
       nbPersonnesMax: activite.nbPersonnesMax || null,
-      themeId: activite.themeId ? [activite.themeId] : [],
-      duree: activite.duree || "",
+      themeIds: activite.themes.map((theme) => theme.id) || [],
+      duree: activite.duree || null,
     },
     validationSchema: NouvelleActiviteSchema,
     validateOnChange: false,
@@ -40,7 +40,7 @@ export default function Form({ activite, themes }: Props) {
       const data = {
         ...values,
         id: activite.id,
-        themeId: values.themeId[0],
+        themeIds: values.themeIds,
         duree: values.duree,
       };
       const res = await fetch("/api/activites/modification", {
@@ -171,9 +171,9 @@ export default function Form({ activite, themes }: Props) {
       </div>
       <div className="w-[350px]">
         <MultiSelect
-          id="themeId"
-          name="themeId"
-          value={formik.values.themeId}
+          id="themeIds"
+          name="themeIds"
+          value={formik.values.themeIds}
           onChange={formik.handleChange}
           options={themes.map((theme) => ({
             label: theme.nom,
@@ -181,11 +181,11 @@ export default function Form({ activite, themes }: Props) {
           }))}
           filter
           placeholder="Thème"
-          selectionLimit={1}
+          selectionLimit={3}
           className="w-full"
         />
-        <span id="themeId-error" className="p-error pl-[5px]">
-          {formik.errors.themeId}
+        <span id="themeIds-error" className="p-error pl-[5px]">
+          {formik.errors.themeIds}
         </span>
       </div>
       <div className="w-[350px]">

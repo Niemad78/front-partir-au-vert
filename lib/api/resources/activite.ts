@@ -10,7 +10,7 @@ type ActiviteListe = BaseResult & {
     ville: string;
     departement: string;
     nbPersonnesMax: number;
-    theme: Theme;
+    themes: Theme[];
     duree: DureeKey | null;
   }[];
 };
