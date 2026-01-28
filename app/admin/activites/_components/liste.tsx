@@ -20,7 +20,7 @@ type ListeActivitesProps = {
     ville: string;
     departement: string;
     nbPersonnesMax: number;
-    theme: Theme;
+    themes: Theme[];
     images?: Image[];
     duree: DureeKey | null;
   }[];
@@ -86,7 +86,7 @@ export function ListeActivites({ activites }: ListeActivitesProps) {
                   {activite.ville}
                 </Table.Cell>
                 <Table.Cell className="text-center">
-                  {activite.theme.nom}
+                  {activite.themes.map((theme) => theme.nom).join(", ")}
                 </Table.Cell>
                 <Table.Cell className="text-center">
                   {activite.duree ? dureeFormatee(activite.duree) : "N/A"}

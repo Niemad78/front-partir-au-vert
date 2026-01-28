@@ -7,7 +7,7 @@ export const NouvelleActiviteSchema = Yup.object().shape({
   ville: Yup.string().required("Ville requise"),
   departement: Yup.number().required("Département requis"),
   nbPersonnesMax: Yup.number().required("Nombre de personnes maximum requis"),
-  themeId: Yup.array().min(1, "Thème requis").required("Thème requis"),
+  themeIds: Yup.array().min(1, "Thème requis").required("Thème requis"),
   duree: Yup.string()
     .oneOf(["journee", "matinee", "apres_midi"])
     .required("Durée requise"),
