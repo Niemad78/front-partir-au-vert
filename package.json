@@ -13,7 +13,7 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
-    "next": "15.5.9",
+    "next": "16.1.5",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.7",
     "quill": "^2.0.3",
