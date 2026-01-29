@@ -12,6 +12,7 @@ type QuillProps = Omit<
   touched?: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   containerClassName?: string;
+  placeholder?: string;
 };
 
 export default function Quill({
@@ -21,6 +22,7 @@ export default function Quill({
   touched,
   onChange,
   containerClassName,
+  placeholder,
   className,
   ...editorProps
 }: QuillProps) {
@@ -93,6 +95,7 @@ export default function Quill({
           className={`${className ?? ""} ${
             hasError ? "p-invalid border border-red-500" : ""
           }`}
+          placeholder={placeholder}
         />
       </div>
 

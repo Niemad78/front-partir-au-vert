@@ -11,4 +11,8 @@ export const NouvelleActiviteSchema = Yup.object().shape({
   duree: Yup.string()
     .oneOf(["journee", "matinee", "apres_midi"])
     .required("Durée requise"),
+  latitude: Yup.number().required("Latitude requise"),
+  longitude: Yup.number().required("Longitude requise"),
+  adresse: Yup.string().required("Adresse requise"),
+  accessibilite: Yup.string().required("Accessibilité requise"),
 });
