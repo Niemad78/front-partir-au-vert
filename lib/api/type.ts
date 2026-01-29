@@ -77,6 +77,10 @@ export type Activite = {
   themes: Theme[];
   images?: Image[];
   pointFort?: PointFort[];
+  latitude: number | null;
+  longitude: number | null;
+  adresse: string | null;
+  accessibilite: string | null;
 };
 
 export enum Duree {
