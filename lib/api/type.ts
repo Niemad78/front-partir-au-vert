@@ -109,6 +109,7 @@ export enum TypePublication {
   histoire = "Histoire",
   seminaire = "Séminaire",
   autre = "Autre",
+  mentions_legales = "Mentions légales",
 }
 
 export type Partenaire = {
