@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { BoutonLogout } from "@/app/admin/_components/boutonLogout";
+import { BoutonLogout } from "@/app/(admin)/admin/_components/boutonLogout";
 import { getMyRole } from "@/lib/api/resources/user";
 import Link from "next/link";
 

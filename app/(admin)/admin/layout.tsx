@@ -1,4 +1,4 @@
-import { AdminMenu } from "@/components/adminMenu";
+import { AdminMenu } from "@/app/(admin)/admin/_components/adminMenu";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
