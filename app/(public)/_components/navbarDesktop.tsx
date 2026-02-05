@@ -10,11 +10,11 @@ export async function NavbarDesktop() {
   const publications = resultData.ok ? resultData.data : [];
 
   return (
-    <div className="bg-primary flex h-[80px] items-center justify-between px-[100px]">
+    <div className="bg-primary hidden h-[80px] items-center justify-between px-[100px] lg:flex">
       <Link href="/">
         <Image
           src="/images/logo-1.jpg"
-          alt="Partir au Vert revient bientôt"
+          alt="Partir au Vert"
           width={60}
           height={60}
           priority
