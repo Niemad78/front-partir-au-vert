@@ -13,7 +13,8 @@ type PublicationListe = BaseResult & {
 
 export async function getPublications() {
   const response = await GET<PublicationListe>("/publications/liste", {
-    cache: "no-store",
+    cache: "force-cache",
+    tags: ["publications"],
   });
 
   if (!response.ok) {
@@ -33,6 +34,7 @@ export async function getPublications() {
 export async function getPublicationsByType(type: TypePublication) {
   const response = await GET<PublicationListe>(`/publications/liste/${type}`, {
     cache: "no-store",
+    tags: ["publications"],
   });
 
   if (!response.ok) {
@@ -58,6 +60,7 @@ export async function getPublicationById(publicationId: string) {
     `/publications/${publicationId}`,
     {
       cache: "no-store",
+      tags: ["publications"],
     },
   );
 

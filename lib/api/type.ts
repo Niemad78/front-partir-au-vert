@@ -15,6 +15,7 @@ type BaseOptions = {
   timeoutMs?: number;
   retries?: number;
   credentials?: RequestCredentials;
+  tags?: string[];
 };
 
 export type RequestOptions<TBody> = BaseOptions & {
