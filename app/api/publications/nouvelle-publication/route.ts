@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
   const data: Publication = await request.json();
 
-  if (data.type !== TypePublication.autre) {
+  if (data.type !== ("autre" as TypePublication)) {
     const verification = await getPublicationsByType(data.type);
 
     if (verification.ok && verification.data.length >= 1) {

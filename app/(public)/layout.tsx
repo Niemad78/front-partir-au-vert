@@ -1,5 +1,6 @@
 import { NavbarDesktop } from "@/app/(public)/_components/navbarDesktop";
 import NavbarMobile from "./_components/navbarMobile";
+import FooterDesktop from "./_components/footerDesktop";
 
 export default function HomeLayout({
   children,
@@ -11,6 +12,7 @@ export default function HomeLayout({
       <NavbarDesktop />
       <NavbarMobile />
       {children}
+      <FooterDesktop />
     </section>
   );
 }
