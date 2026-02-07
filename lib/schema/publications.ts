@@ -4,6 +4,6 @@ export const NouvellePublicationSchema = Yup.object().shape({
   titre: Yup.string().required("Titre requis"),
   contenu: Yup.string().required("Contenu requis"),
   type: Yup.string()
-    .oneOf(["histoire", "seminaire", "autre", "mentions_legales"])
+    .oneOf(["histoire", "seminaire", "autre", "mentions_legales", "cgv"])
     .required("Type requis"),
 });

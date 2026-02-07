@@ -110,6 +110,7 @@ export enum TypePublication {
   seminaire = "Séminaire",
   autre = "Autre",
   mentions_legales = "Mentions légales",
+  cgv = "CGV",
 }
 
 export type Partenaire = {
