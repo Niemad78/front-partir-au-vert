@@ -140,6 +140,27 @@ export type UtilisateurDto = {
   password: string;
 };
 
+export type Contact = {
+  id: string;
+  telephone: string;
+  email: string;
+  facebook: string | null;
+  instagram: string | null;
+  twitter: string | null;
+  linkedin: string | null;
+  tiktok: string | null;
+};
+
+export type ContactPayload = {
+  telephone: string;
+  email: string;
+  facebook?: string;
+  instagram?: string;
+  twitter?: string;
+  linkedin?: string;
+  tiktok?: string;
+};
+
 export type Article = {
   id: string;
   titre: string;
