@@ -12,16 +12,16 @@ import {
   BsTiktok,
 } from "react-icons/bs";
 
-export default async function FooterDesktop() {
+export default async function FooterMobile() {
   const resultData = await getPublications();
   const publications = resultData.ok ? resultData.data : [];
   const contactData = await getContact();
   const contact = contactData.ok ? contactData.data : null;
 
   return (
-    <footer className="from-primary hidden bg-gradient-to-b to-neutral-700 py-[20px] text-center text-white lg:block">
-      <div className="flex justify-center">
-        <div className="w-[350px]">
+    <footer className="from-primary block bg-gradient-to-b to-neutral-700 py-[20px] text-center text-white lg:hidden">
+      <div className="flex flex-col items-center">
+        <div>
           <h3 className="text-tertiary">Informations Pratiques</h3>
           <div className="mt-[10px] flex flex-col gap-y-[5px]">
             {havePublication({
@@ -42,8 +42,10 @@ export default async function FooterDesktop() {
             )}
           </div>
         </div>
-        <Divider layout="vertical" />
-        <div className="w-[350px]">
+        <div className="w-[50%]">
+          <Divider />
+        </div>
+        <div>
           <h3 className="text-tertiary">Contact</h3>
           <div className="mt-[10px] flex flex-col gap-y-[5px]">
             <a href={`mailto:${contact?.email}`}>{contact?.email}</a>
