@@ -8,7 +8,7 @@ type Publication = {
   id: string;
   titre: string;
   contenu: string;
-  type: "histoire" | "seminaire" | "autre" | "mentions_legales";
+  type: "histoire" | "seminaire" | "autre" | "mentions_legales" | "cgv";
 };
 
 type PopoverProps = {
@@ -27,7 +27,7 @@ export default function Popover({ className, publications }: PopoverProps) {
       >
         Notre expertise
       </div>
-      <OverlayPanel ref={op} className="bg-primary">
+      <OverlayPanel ref={op}>
         <div className="flex flex-col items-center gap-y-[20px]">
           <Link href="/notre-equipe">Notre équipe</Link>
           <Link href="/nos-partenaires">Nos partenaires</Link>
@@ -38,7 +38,8 @@ export default function Popover({ className, publications }: PopoverProps) {
                 (pub) =>
                   pub.type !== "histoire" &&
                   pub.type !== "seminaire" &&
-                  pub.type !== "mentions_legales",
+                  pub.type !== "mentions_legales" &&
+                  pub.type !== "cgv",
               )
               .sort((a, b) => a.titre.localeCompare(b.titre)),
           ].map((publication: Publication) => (

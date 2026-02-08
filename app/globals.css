@@ -49,3 +49,10 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.background-accueil {
+  background-image: url("/images/accueil.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
