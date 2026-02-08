@@ -12,7 +12,7 @@ type Publication = {
   id: string;
   titre: string;
   contenu: string;
-  type: "histoire" | "seminaire" | "autre" | "mentions_legales";
+  type: "histoire" | "seminaire" | "autre" | "mentions_legales" | "cgv";
 };
 
 type SideMenuProps = {

@@ -5,6 +5,13 @@ import { getThemes } from "@/lib/api/resources/theme";
 import { Dropdown } from "primereact/dropdown";
 import { useEffect, useState } from "react";
 import { Bouton } from "@/components/bouton";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import {
+  setTheme,
+  setDuree,
+  setPrix,
+  setNbPersonnes,
+} from "@/lib/store/filtreSlice";
 
 const dureeOptions = Object.entries(Duree).map(([key, label]) => ({
   label,
@@ -12,13 +19,12 @@ const dureeOptions = Object.entries(Duree).map(([key, label]) => ({
 }));
 
 export default function Filtre() {
-  const [themeChoisi, setThemeChoisi] = useState<number | null>(null);
-  const [dureeChoisie, setDureeChoisie] = useState<DureeKey | null>(null);
-  const [prix, setPrix] = useState<number | null>(null);
-  const [nbPersonnes, setNbPersonnes] = useState<number | null>(2);
-
+  const dispatch = useAppDispatch();
+  const { themeChoisi, dureeChoisie, prix, nbPersonnes } = useAppSelector(
+    (state) => state.filtre,
+  );
   const [themeOptions, setThemeOptions] = useState<
-    { label: string; value: number }[]
+    { label: string; value: string }[]
   >([]);
 
   const personnesOptions = [
@@ -59,8 +65,7 @@ export default function Filtre() {
       setThemeOptions(
         themes.map((theme) => ({
           label: theme.nom,
-          value:
-            typeof theme.id === "number" ? theme.id : Number(theme.id) || 0,
+          value: theme.id ?? "",
         })),
       );
     });
@@ -79,7 +84,7 @@ export default function Filtre() {
         <div className={`${segment} ${divider} w-[200px]`}>
           <Dropdown
             value={themeChoisi}
-            onChange={(e) => setThemeChoisi(e.value ?? null)}
+            onChange={(e) => dispatch(setTheme(e.value ?? null))}
             options={themeOptions}
             placeholder="Thème"
             className={dropdownRootFlat}
@@ -98,7 +103,7 @@ export default function Filtre() {
         <div className={`${segment} ${divider} w-[200px]`}>
           <Dropdown
             value={dureeChoisie}
-            onChange={(e) => setDureeChoisie(e.value ?? null)}
+            onChange={(e) => dispatch(setDuree(e.value ?? null))}
             options={dureeOptions}
             placeholder="Durée"
             className={dropdownRootFlat}
@@ -117,7 +122,7 @@ export default function Filtre() {
         <div className={`${segment} ${divider} w-[200px]`}>
           <Dropdown
             value={prix}
-            onChange={(e) => setPrix(e.value ?? null)}
+            onChange={(e) => dispatch(setPrix(e.value ?? null))}
             options={prixOptions}
             placeholder="Prix"
             className={dropdownRootFlat}
@@ -136,9 +141,9 @@ export default function Filtre() {
         <div className={`${segment} ${divider} w-[200px]`}>
           <Dropdown
             value={nbPersonnes}
-            onChange={(e) => setNbPersonnes(e.value ?? null)}
+            onChange={(e) => dispatch(setNbPersonnes(e.value ?? null))}
             options={personnesOptions}
-            placeholder="Nombre de personnes"
+            placeholder="Participants"
             className={dropdownRootFlat}
             pt={{
               root: { className: "w-full" },
