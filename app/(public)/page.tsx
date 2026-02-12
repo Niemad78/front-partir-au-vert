@@ -1,7 +1,12 @@
+import { getActivites } from "@/lib/api/resources/activite";
 import FiltreDesktop from "./_components/filtreDesktop";
 import FiltreMobile from "./_components/filtreMobile";
+import CarteActivite from "./_components/carteActivite";
 
-export default function Home() {
+export default async function Home() {
+  const activiteData = await getActivites();
+  const activites = activiteData.data ?? [];
+
   return (
     <section>
       <div className="background-accueil flex h-[500px] w-full flex-col items-center justify-end p-[50px] text-center">
@@ -18,6 +23,11 @@ export default function Home() {
         <div className="block lg:hidden">
           <FiltreMobile />
         </div>
+      </div>
+      <div className="mx-auto my-[50px] flex max-w-[1140px] flex-wrap justify-center gap-[30px]">
+        {activites.map((activite) => (
+          <CarteActivite key={activite.id} activite={activite} />
+        ))}
       </div>
     </section>
   );
