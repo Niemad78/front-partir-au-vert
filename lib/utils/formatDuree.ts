@@ -1,4 +1,4 @@
-import { Duree } from "../api/type";
+import { Duree } from "../api/resources/activite/type";
 
 export const dureeOptions = Object.entries(Duree).map(([key, value]) => ({
   label: value,

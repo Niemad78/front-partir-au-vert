@@ -43,12 +43,14 @@ export type LoginData = {
   prenom?: string;
 };
 
-export type BaseResult = {
-  ok?: boolean;
+export type BaseResult<TData> = {
+  ok: boolean;
   status?: number;
   message?: string;
   errorMessage?: string;
+  data?: TData;
 };
+
 export type Image = {
   id: string;
   nom: string;
@@ -65,32 +67,6 @@ export type Theme = {
   imageId: string;
   image?: Image;
 };
-
-export type Activite = {
-  id?: string;
-  nom: string;
-  description: string;
-  prix: number;
-  ville: string;
-  departement: number;
-  nbPersonnesMax: number;
-  duree: DureeKey | null;
-  themes: Theme[];
-  images?: Image[];
-  pointFort?: PointFort[];
-  latitude: number | null;
-  longitude: number | null;
-  adresse: string | null;
-  accessibilite: string | null;
-};
-
-export enum Duree {
-  journee = "Journée",
-  matinee = "Matinée",
-  apres_midi = "Après-midi",
-}
-
-export type DureeKey = keyof typeof Duree;
 
 export type Faq = {
   id?: string;

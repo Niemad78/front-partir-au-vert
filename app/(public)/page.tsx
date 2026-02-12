@@ -1,4 +1,4 @@
-import { getActivites } from "@/lib/api/resources/activite";
+import { getActivites } from "@/lib/api/resources/activite/activite";
 import FiltreDesktop from "./_components/filtreDesktop";
 import FiltreMobile from "./_components/filtreMobile";
 import CarteActivite from "./_components/carteActivite";

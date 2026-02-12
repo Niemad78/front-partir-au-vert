@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/breadcrumb";
 import { ListeActivites } from "./_components/liste";
-import { getActivites } from "@/lib/api/resources/activite";
+import { getActivites } from "@/lib/api/resources/activite/activite";
 
 export default async function ThemesPage() {
   const activites = await getActivites();

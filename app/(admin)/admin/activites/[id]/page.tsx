@@ -1,4 +1,4 @@
-import { getActiviteById } from "@/lib/api/resources/activite";
+import { getActiviteById } from "@/lib/api/resources/activite/activite";
 import { getThemes } from "@/lib/api/resources/theme";
 import Panel from "./_components/panel";
 import Breadcrumb from "@/components/breadcrumb";

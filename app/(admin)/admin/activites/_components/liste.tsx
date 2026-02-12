@@ -1,7 +1,6 @@
 "use client";
 
 import { SuppressionActivite } from "./suppression";
-import { Image, Theme } from "@/lib/api/type";
 import * as Table from "@/components/table";
 import { useState } from "react";
 import { InputText } from "primereact/inputtext";
@@ -9,24 +8,10 @@ import { Bouton } from "@/components/bouton";
 import { FaPen } from "react-icons/fa";
 import Link from "next/link";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import { dureeFormatee, DureeKey } from "@/lib/utils/formatDuree";
+import { dureeFormatee } from "@/lib/utils/formatDuree";
+import { Activite } from "@/lib/api/resources/activite/type";
 
-type ListeActivitesProps = {
-  activites: {
-    id: string;
-    nom: string;
-    description: string;
-    prix: number;
-    ville: string;
-    departement: string;
-    nbPersonnesMax: number;
-    themes: Theme[];
-    images?: Image[];
-    duree: DureeKey | null;
-  }[];
-};
-
-export function ListeActivites({ activites }: ListeActivitesProps) {
+export function ListeActivites({ activites }: { activites: Activite[] }) {
   const [filtre, setFiltre] = useState("");
 
   return (

@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useToast } from "@/components/toast";
 import { NouvelleActiviteSchema } from "@/lib/schema/activites";
-import { Activite, Theme } from "@/lib/api/type";
+import { Theme } from "@/lib/api/type";
 import FormActivite from "../../_components/form";
+import { Activite } from "@/lib/api/resources/activite/type";
 
 type Props = {
   activite: Activite;

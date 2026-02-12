@@ -1,22 +1,16 @@
-import { DELETE, GET, POST, PUT } from "../client";
-import { Activite, BaseResult, DureeKey, Theme } from "../type";
-
-type ActiviteListe = BaseResult & {
-  activites: {
-    id: string;
-    nom: string;
-    description: string;
-    prix: number;
-    ville: string;
-    departement: string;
-    nbPersonnesMax: number;
-    themes: Theme[];
-    duree: DureeKey | null;
-  }[];
-};
+import { DELETE, GET, POST, PUT } from "../../client";
+import { BaseResult } from "../../type";
+import type {
+  Activite,
+  ActiviteAjoutImage,
+  ActiviteListeResponse,
+  ActiviteResponse,
+  ModificationActivite,
+  NouvelleActivite,
+} from "./type";
 
 export async function getActivites() {
-  const response = await GET<ActiviteListe>("/activites/liste", {
+  const response = await GET<ActiviteListeResponse>("/activites/liste", {
     cache: "no-store",
   });
 
@@ -34,12 +28,8 @@ export async function getActivites() {
   };
 }
 
-type ActiviteUnique = BaseResult & {
-  activite: Activite;
-};
-
 export async function getActiviteById(activiteId: string) {
-  const response = await GET<ActiviteUnique>(`/activites/${activiteId}`, {
+  const response = await GET<ActiviteResponse>(`/activites/${activiteId}`, {
     cache: "no-store",
   });
 
@@ -57,29 +47,19 @@ export async function getActiviteById(activiteId: string) {
   };
 }
 
-type NouvelleActivite = {
-  data: Activite;
+type NouvelleActiviteProps = {
+  data: NouvelleActivite;
   token?: string;
 };
 
-type CreationActiviteResult = BaseResult & {
-  activite: {
-    id: string;
-  };
-};
-
-export async function nouvelleActivite({
-  data,
-  token,
-}: NouvelleActivite): Promise<BaseResult & { id?: string }> {
-  const response = await POST<CreationActiviteResult, Activite>(
+export async function nouvelleActivite({ data, token }: NouvelleActiviteProps) {
+  const response = await POST<ActiviteResponse, NouvelleActivite>(
     "/activites/creation",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -99,18 +79,22 @@ export async function nouvelleActivite({
   };
 }
 
+type ModificationActiviteProps = {
+  data: ModificationActivite;
+  token?: string;
+};
+
 export async function modificationActivite({
   data,
   token,
-}: NouvelleActivite): Promise<BaseResult> {
-  const response = await PUT<BaseResult, Activite>(
+}: ModificationActiviteProps) {
+  const response = await PUT<ActiviteResponse, ModificationActivite>(
     `/activites/modification/${data.id}`,
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -135,23 +119,18 @@ type AjoutImageActiviteProps = {
   token?: string;
 };
 
-type ActiviteAjoutImage = {
-  imageIds?: string[];
-};
-
 export async function ajoutImageActivite({
   data,
   token,
-}: AjoutImageActiviteProps): Promise<BaseResult> {
+}: AjoutImageActiviteProps) {
   const values = { imageIds: data.imageIds };
-  const response = await POST<BaseResult, ActiviteAjoutImage>(
+  const response = await POST<ActiviteResponse, ActiviteAjoutImage>(
     `/activites/ajout-images/${data.id}`,
     values,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -171,14 +150,21 @@ export async function ajoutImageActivite({
   };
 }
 
-export async function deleteActivite(activiteId: string, token: string) {
-  const response = await DELETE<BaseResult>(
+type SuppressionActiviteProps = {
+  activiteId: string;
+  token?: string;
+};
+
+export async function deleteActivite({
+  activiteId,
+  token,
+}: SuppressionActiviteProps) {
+  const response = await DELETE<BaseResult<Activite>>(
     `/activites/suppression/${activiteId}`,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },

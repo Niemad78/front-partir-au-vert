@@ -1,6 +1,6 @@
 import { Bouton } from "@/components/bouton";
 import { ImageNext } from "@/components/image";
-import { Activite } from "@/lib/api/type";
+import { Activite } from "@/lib/api/resources/activite/type";
 
 type CarteActiviteProps = {
   activite: Activite;
