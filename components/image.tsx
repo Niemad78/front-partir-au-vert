@@ -1,38 +1,56 @@
 import Image from "next/image";
 import { IMAGE_URL } from "@/lib/constants";
 
-type ImageStrapiProps = {
+const FALLBACK_SRC = "/images/logo-1.jpg";
+
+type ImageFillProps = {
   src?: string;
   alt: string;
-  width?: number;
-  height?: number;
-  fill?: boolean;
-  overrideSrc?: string;
+  fill: true;
   className?: string;
-  blurDataUrl?: string;
+  sizes?: string;
+  priority?: boolean;
 };
 
-export const ImageNext = ({
-  src,
-  alt,
-  width,
-  height,
-  fill,
-  overrideSrc,
-  className,
-  blurDataUrl,
-}: ImageStrapiProps) => {
+type ImageSizedProps = {
+  src?: string;
+  alt: string;
+  fill?: false;
+  width: number;
+  height: number;
+  className?: string;
+  sizes?: string;
+  priority?: boolean;
+};
+
+type ImageNextProps = ImageFillProps | ImageSizedProps;
+
+export const ImageNext = (props: ImageNextProps) => {
+  const { src, alt, className, sizes, priority } = props;
+  const resolvedSrc = src ? getMedia(src) : FALLBACK_SRC;
+
+  if (props.fill) {
+    return (
+      <Image
+        src={resolvedSrc}
+        alt={alt}
+        fill
+        className={className}
+        sizes={sizes}
+        priority={priority}
+      />
+    );
+  }
+
   return (
     <Image
-      src={src ? getMedia(src) : "/images/logo-1.jpg"}
+      src={resolvedSrc}
       alt={alt}
-      width={width}
-      height={height}
-      fill={fill}
-      overrideSrc={overrideSrc}
+      width={props.width}
+      height={props.height}
       className={className}
-      placeholder="blur"
-      blurDataURL={getMedia(blurDataUrl || "")}
+      sizes={sizes}
+      priority={priority}
     />
   );
 };
