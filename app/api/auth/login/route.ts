@@ -1,11 +1,11 @@
 import type { NextRequest } from "next/server";
-import { login } from "@/lib/api/resources/auth";
 import { NODE_ENV } from "@/lib/constants";
 import { cookies } from "next/headers";
+import { login } from "@/lib/api/resources/auth/auth";
 
 export async function POST(request: NextRequest) {
   const data = await request.json();
-  const response = await login(data);
+  const response = await login({ data });
 
   if (!response.ok) {
     return new Response(
