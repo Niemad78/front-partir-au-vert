@@ -130,12 +130,3 @@ export type ContactPayload = {
   linkedin?: string;
   tiktok?: string;
 };
-
-export type Article = {
-  id: string;
-  titre: string;
-  contenu: string;
-  createdAt: string;
-  images: Image[];
-  user: Utilisateur;
-};

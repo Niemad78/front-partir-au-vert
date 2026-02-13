@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/breadcrumb";
-import { getArticles } from "@/lib/api/resources/blog";
+import { getArticles } from "@/lib/api/resources/blog/blog";
 import { ListeArticles } from "./_components/liste";
 
 export default async function BlogPage() {

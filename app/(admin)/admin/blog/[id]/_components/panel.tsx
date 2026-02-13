@@ -1,7 +1,8 @@
 import { TabView, TabPanel } from "primereact/tabview";
 import Form from "./form";
-import { Article, Utilisateur } from "@/lib/api/type";
+import { Utilisateur } from "@/lib/api/type";
 import ArticleImages from "./images";
+import { Article } from "@/lib/api/resources/blog/type";
 
 type Props = {
   article: Article;

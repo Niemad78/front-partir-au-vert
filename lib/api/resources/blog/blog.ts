@@ -1,12 +1,16 @@
-import { DELETE, GET, POST, PUT } from "../client";
-import { Article, BaseResult } from "../type";
-
-type ArticleListe = BaseResult & {
-  articles: Article[];
-};
+import { DELETE, GET, POST, PUT } from "../../client";
+import { BaseResult } from "../../type";
+import {
+  Article,
+  ArticleAjoutImage,
+  ArticleListeResponse,
+  ArticleResponse,
+  ModificationArticle,
+  NouvelleArticle,
+} from "./type";
 
 export async function getArticles() {
-  const response = await GET<ArticleListe>("/articles/liste", {
+  const response = await GET<ArticleListeResponse>("/articles/liste", {
     cache: "no-store",
   });
 
@@ -24,12 +28,8 @@ export async function getArticles() {
   };
 }
 
-type ArticleUnique = BaseResult & {
-  article: Article;
-};
-
 export async function getArticleById(articleId: string) {
-  const response = await GET<ArticleUnique>(`/articles/${articleId}`, {
+  const response = await GET<ArticleResponse>(`/articles/${articleId}`, {
     cache: "no-store",
   });
 
@@ -47,29 +47,19 @@ export async function getArticleById(articleId: string) {
   };
 }
 
-type NouvelArticle = {
-  data: Article;
+type NouvelArticleProps = {
+  data: NouvelleArticle;
   token?: string;
 };
 
-type CreationArticleResult = BaseResult & {
-  article: {
-    id: string;
-  };
-};
-
-export async function nouvelArticle({
-  data,
-  token,
-}: NouvelArticle): Promise<BaseResult & { id?: string }> {
-  const response = await POST<CreationArticleResult, Article>(
+export async function nouvelArticle({ data, token }: NouvelArticleProps) {
+  const response = await POST<ArticleResponse, NouvelleArticle>(
     "/articles/creation",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -89,18 +79,22 @@ export async function nouvelArticle({
   };
 }
 
+type modificationArticleProps = {
+  data: ModificationArticle;
+  token?: string;
+};
+
 export async function modificationArticle({
   data,
   token,
-}: NouvelArticle): Promise<BaseResult> {
-  const response = await PUT<BaseResult, Article>(
+}: modificationArticleProps) {
+  const response = await PUT<ArticleResponse, ModificationArticle>(
     `/articles/modification/${data.id}`,
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -125,23 +119,18 @@ type AjoutImageArticleProps = {
   token?: string;
 };
 
-type ArticleAjoutImage = {
-  imageIds?: string[];
-};
-
 export async function ajoutImageArticle({
   data,
   token,
-}: AjoutImageArticleProps): Promise<BaseResult> {
+}: AjoutImageArticleProps) {
   const values = { imageIds: data.imageIds };
-  const response = await POST<BaseResult, ArticleAjoutImage>(
+  const response = await POST<ArticleResponse, ArticleAjoutImage>(
     `/articles/ajout-images/${data.id}`,
     values,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -161,14 +150,21 @@ export async function ajoutImageArticle({
   };
 }
 
-export async function deleteArticle(articleId: string, token: string) {
-  const response = await DELETE<BaseResult>(
+type SuppressionArticleProps = {
+  articleId: string;
+  token?: string;
+};
+
+export async function deleteArticle({
+  articleId,
+  token,
+}: SuppressionArticleProps) {
+  const response = await DELETE<BaseResult<Article>>(
     `/articles/suppression/${articleId}`,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
