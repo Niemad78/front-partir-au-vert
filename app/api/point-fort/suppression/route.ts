@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { deletePointFort } from "@/lib/api/resources/pointFort";
+import { deletePointFort } from "@/lib/api/resources/pointfort/pointFort";
 
 export async function DELETE(request: NextRequest) {
   const cookieStore = await cookies();

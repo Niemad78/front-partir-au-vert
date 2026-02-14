@@ -1,23 +1,20 @@
-import { DELETE, POST, PUT } from "../client";
-import { BaseResult, PointFort } from "../type";
+import { DELETE, POST, PUT } from "@/lib/api/client";
+import { BaseResult } from "@/lib/api/type";
+import { ModificationPointFort, NouveauPointFort, PointFort } from "./type";
 
-type NouveauPointFort = {
-  data: PointFort;
+type NouveauPointFortProps = {
+  data: NouveauPointFort;
   token?: string;
 };
 
-export async function nouveauPointFort({
-  data,
-  token,
-}: NouveauPointFort): Promise<BaseResult> {
-  const response = await POST<BaseResult, PointFort>(
+export async function nouveauPointFort({ data, token }: NouveauPointFortProps) {
+  const response = await POST<BaseResult<PointFort>, NouveauPointFort>(
     "/points-fort/creation",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -37,18 +34,22 @@ export async function nouveauPointFort({
   };
 }
 
+type ModificationPointFortProps = {
+  data: ModificationPointFort;
+  token?: string;
+};
+
 export async function modificationPointFort({
   data,
   token,
-}: NouveauPointFort): Promise<BaseResult> {
-  const response = await PUT<BaseResult, PointFort>(
+}: ModificationPointFortProps) {
+  const response = await PUT<BaseResult<PointFort>, ModificationPointFort>(
     `/points-fort/modification/${data.id}`,
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -69,13 +70,12 @@ export async function modificationPointFort({
 }
 
 export async function deletePointFort(pointFortId: string, token: string) {
-  const response = await DELETE<BaseResult>(
+  const response = await DELETE<BaseResult<PointFort>>(
     `/points-fort/suppression/${pointFortId}`,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },

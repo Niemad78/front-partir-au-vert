@@ -46,11 +46,6 @@ export type BaseResult<TData> = {
   data?: TData;
 };
 
-export type PointFort = {
-  id?: string;
-  nom: string;
-};
-
 export type Theme = {
   id?: string;
   nom: string;
