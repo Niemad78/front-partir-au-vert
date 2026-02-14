@@ -1,4 +1,4 @@
-import { getThemes } from "@/lib/api/resources/theme";
+import { getThemes } from "@/lib/api/resources/theme/theme";
 import Form from "./_components/form";
 import Breadcrumb from "@/components/breadcrumb";
 

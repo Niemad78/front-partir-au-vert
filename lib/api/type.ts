@@ -46,13 +46,6 @@ export type BaseResult<TData> = {
   data?: TData;
 };
 
-export type Theme = {
-  id?: string;
-  nom: string;
-  imageId: string;
-  image?: Image;
-};
-
 export type Faq = {
   id?: string;
   question: string;

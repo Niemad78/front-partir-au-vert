@@ -1,6 +1,6 @@
 "use client";
 
-import { getThemes } from "@/lib/api/resources/theme";
+import { getThemes } from "@/lib/api/resources/theme/theme";
 import { Dropdown } from "primereact/dropdown";
 import { Sidebar } from "primereact/sidebar";
 import { useEffect, useState } from "react";

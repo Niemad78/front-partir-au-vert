@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import Form from "./_components/form";
-import { getThemeById } from "@/lib/api/resources/theme";
+import { getThemeById } from "@/lib/api/resources/theme/theme";
 import Breadcrumb from "@/components/breadcrumb";
 
 export default async function Modifier({

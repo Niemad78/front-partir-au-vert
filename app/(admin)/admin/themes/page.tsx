@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
-import { getThemes } from "@/lib/api/resources/theme";
+import { getThemes } from "@/lib/api/resources/theme/theme";
 import { ListeThemes } from "./_components/liste";
 import Breadcrumb from "@/components/breadcrumb";
 
 export default async function ThemesPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
-  const themes = await getThemes(token || "");
+  const themes = await getThemes();
 
   return (
     <section>

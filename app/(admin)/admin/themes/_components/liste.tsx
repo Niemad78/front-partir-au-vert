@@ -1,7 +1,7 @@
 "use client";
 
 import { SuppressionTheme } from "./suppressionTheme";
-import { Theme } from "@/lib/api/type";
+import { Theme } from "@/lib/api/resources/theme/type";
 import { ImageNext } from "@/components/image";
 import * as Table from "@/components/table";
 import { useState } from "react";

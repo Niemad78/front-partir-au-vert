@@ -1,7 +1,8 @@
 import { DureeKey } from "@/lib/utils/formatDuree";
-import { BaseResult, Theme } from "@/lib/api/type";
+import { BaseResult } from "@/lib/api/type";
 import type { Image } from "@/lib/api/resources/image/type";
 import { PointFort } from "@/lib/api/resources/pointfort/type";
+import { Theme } from "@/lib/api/resources/theme/type";
 
 export type Activite = {
   id: string;

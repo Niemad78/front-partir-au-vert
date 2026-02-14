@@ -6,7 +6,7 @@ export type Image = {
 };
 
 export type ImageResponse = BaseResult<Image> & {
-  image: Image;
+  imageId: string;
 };
 
 export type ImagesResponse = BaseResult<string[]> & {

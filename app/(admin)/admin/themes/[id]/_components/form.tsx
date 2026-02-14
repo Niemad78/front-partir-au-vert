@@ -8,7 +8,7 @@ import { useToast } from "@/components/toast";
 import { NouveauThemeSchema } from "@/lib/schema/themes";
 import { ImageUploader } from "@/components/imageUploader";
 import { FloatLabel } from "primereact/floatlabel";
-import { Theme } from "@/lib/api/type";
+import { Theme } from "@/lib/api/resources/theme/type";
 import { ImageNext } from "@/components/image";
 
 export default function Form({ theme }: { theme: Theme }) {
