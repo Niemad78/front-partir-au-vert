@@ -1,31 +1,24 @@
-import { DELETE, POST } from "../client";
-import { BaseResult } from "../type";
+import { DELETE, POST } from "@/lib/api/client";
+import { BaseResult } from "@/lib/api/type";
+import { ImageResponse, ImagesResponse } from "./type";
 
-type NouvelleImage = {
+type NouvelleImageProps = {
   image: File;
   token?: string;
 };
 
-type ImageResult = BaseResult & {
-  imageId?: string;
-};
-
-export async function nouvelleImage({
-  image,
-  token,
-}: NouvelleImage): Promise<ImageResult> {
+export async function nouvelleImage({ image, token }: NouvelleImageProps) {
   const formData = new FormData();
 
   formData.append("image", image);
 
-  const response = await POST<ImageResult, FormData>(
+  const response = await POST<ImageResponse, FormData>(
     "/images/telecharger",
     formData,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -41,37 +34,29 @@ export async function nouvelleImage({
 
   return {
     ok: response.ok,
-    imageId: response.imageId,
+    imageId: response.image.id,
   };
 }
 
-type NouvellesImages = {
+type NouvellesImagesProps = {
   images: File[];
   token?: string;
 };
 
-type ImagesResult = BaseResult & {
-  imageIds?: string[];
-};
-
-export async function nouvellesImages({
-  images,
-  token,
-}: NouvellesImages): Promise<ImagesResult> {
+export async function nouvellesImages({ images, token }: NouvellesImagesProps) {
   const formData = new FormData();
 
   images.forEach((image) => {
     formData.append("images", image);
   });
 
-  const response = await POST<ImagesResult, FormData>(
+  const response = await POST<ImagesResponse, FormData>(
     "/images/telecharger-plusieurs",
     formData,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -91,15 +76,22 @@ export async function nouvellesImages({
   };
 }
 
-export async function deleteImage(imageId: string, token: string) {
-  const response = await DELETE<BaseResult>(`/images/suppression/${imageId}`, {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
+type SuppressionImageProps = {
+  imageId: string;
+  token?: string;
+};
+
+export async function deleteImage({ imageId, token }: SuppressionImageProps) {
+  const response = await DELETE<BaseResult<null>>(
+    `/images/suppression/${imageId}`,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!response.ok) {
     return {

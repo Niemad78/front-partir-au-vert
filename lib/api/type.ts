@@ -1,3 +1,5 @@
+import { Image } from "@/lib/api/resources/image/type";
+
 export enum RequestType {
   GET = "get",
   POST = "post",
@@ -42,11 +44,6 @@ export type BaseResult<TData> = {
   message?: string;
   errorMessage?: string;
   data?: TData;
-};
-
-export type Image = {
-  id: string;
-  nom: string;
 };
 
 export type PointFort = {

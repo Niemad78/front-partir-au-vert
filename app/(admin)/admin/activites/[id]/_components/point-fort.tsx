@@ -1,7 +1,7 @@
 "use client";
 
 import { Bouton } from "@/components/bouton";
-import { Activite } from "@/lib/api/type";
+import { Activite } from "@/lib/api/resources/activite/type";
 import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { SuppressionPointFort } from "./suppressionPointFort";

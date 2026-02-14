@@ -1,5 +1,6 @@
 import { TabView, TabPanel } from "primereact/tabview";
-import { Activite, Theme } from "@/lib/api/type";
+import { Activite } from "@/lib/api/resources/activite/type";
+import { Theme } from "@/lib/api/type";
 import Form from "./form";
 import PointFort from "./point-fort";
 import ActiviteImages from "./images";
