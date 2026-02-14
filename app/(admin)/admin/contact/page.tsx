@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/breadcrumb";
-import { getContact } from "@/lib/api/resources/contact";
+import { getContact } from "@/lib/api/resources/contact/contact";
 import Form from "./_components/form";
 
 export default async function Page() {

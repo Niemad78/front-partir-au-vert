@@ -7,7 +7,7 @@ import { FloatLabel } from "primereact/floatlabel";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 import { ContactSchema } from "@/lib/schema/contacts";
-import { Contact } from "@/lib/api/type";
+import { Contact } from "@/lib/api/resources/contact/type";
 
 type Props = {
   contact: Contact;

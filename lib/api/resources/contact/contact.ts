@@ -1,12 +1,8 @@
-import { GET, PUT } from "../client";
-import { BaseResult, Contact, ContactPayload } from "../type";
-
-type ContactResult = BaseResult & {
-  contact: Contact | null;
-};
+import { GET, PUT } from "@/lib/api/client";
+import { Contact, ContactResponse } from "./type";
 
 export async function getContact() {
-  const response = await GET<ContactResult>("/contacts", {
+  const response = await GET<ContactResponse>("/contacts", {
     cache: "no-store",
   });
 
@@ -24,27 +20,22 @@ export async function getContact() {
   };
 }
 
-type ModificationContact = {
-  data: ContactPayload;
+type ModificationContactProps = {
+  data: Contact;
   token?: string;
-};
-
-type ModificationContactResult = BaseResult & {
-  contact: Contact;
 };
 
 export async function modificationContact({
   data,
   token,
-}: ModificationContact): Promise<BaseResult> {
-  const response = await PUT<ModificationContactResult, ContactPayload>(
+}: ModificationContactProps) {
+  const response = await PUT<ContactResponse, Contact>(
     "/contacts/modification",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
