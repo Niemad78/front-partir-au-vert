@@ -1,12 +1,15 @@
-import { DELETE, GET, POST, PUT } from "../client";
-import { BaseResult, Faq } from "../type";
-
-type FaqListe = BaseResult & {
-  faq: Faq[];
-};
+import { DELETE, GET, POST, PUT } from "@/lib/api/client";
+import {
+  Faq,
+  FaqListeResponse,
+  FaqResponse,
+  ModificationFaq,
+  NouvelleFaq,
+} from "./type";
+import { BaseResult } from "@/lib/api/type";
 
 export async function getFaq() {
-  const response = await GET<FaqListe>("/faq/liste", {
+  const response = await GET<FaqListeResponse>("/faq/liste", {
     cache: "no-store",
   });
 
@@ -24,12 +27,12 @@ export async function getFaq() {
   };
 }
 
-type FaqUnique = BaseResult & {
-  faq: Faq;
+type FaqById = {
+  faqId: string;
 };
 
-export async function getFaqById(faqId: string) {
-  const response = await GET<FaqUnique>(`/faq/${faqId}`, {
+export async function getFaqById({ faqId }: FaqById) {
+  const response = await GET<FaqResponse>(`/faq/${faqId}`, {
     cache: "no-store",
   });
 
@@ -47,27 +50,16 @@ export async function getFaqById(faqId: string) {
   };
 }
 
-type NouvelleFaq = {
-  data: {
-    question: string;
-    reponse: string;
-  };
+type NouvelleFaqProps = {
+  data: NouvelleFaq;
   token?: string;
 };
 
-type CreationFaqResult = BaseResult & {
-  faq: Faq;
-};
-
-export async function nouvelleFaq({
-  data,
-  token,
-}: NouvelleFaq): Promise<BaseResult & { id?: string }> {
-  const response = await POST<CreationFaqResult, Faq>("/faq/creation", data, {
+export async function nouvelleFaq({ data, token }: NouvelleFaqProps) {
+  const response = await POST<FaqResponse, NouvelleFaq>("/faq/creation", data, {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
     },
     cache: "no-store",
   });
@@ -86,27 +78,19 @@ export async function nouvelleFaq({
   };
 }
 
-type ModificationFaq = {
-  data: {
-    id: string;
-    question: string;
-    reponse: string;
-  };
+type ModificationFaqProps = {
+  data: ModificationFaq;
   token?: string;
 };
 
-export async function modificationFaq({
-  data,
-  token,
-}: ModificationFaq): Promise<BaseResult> {
-  const response = await PUT<BaseResult, Faq>(
+export async function modificationFaq({ data, token }: ModificationFaqProps) {
+  const response = await PUT<FaqResponse, ModificationFaq>(
     `/faq/modification/${data.id}`,
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -126,12 +110,16 @@ export async function modificationFaq({
   };
 }
 
-export async function deleteFaq(faqId: string, token: string) {
-  const response = await DELETE<BaseResult>(`/faq/suppression/${faqId}`, {
+type DeleteFaqProps = {
+  faqId: string;
+  token: string;
+};
+
+export async function deleteFaq({ faqId, token }: DeleteFaqProps) {
+  const response = await DELETE<BaseResult<Faq>>(`/faq/suppression/${faqId}`, {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
     },
     cache: "no-store",
   });

@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/breadcrumb";
 import { ListeFaq } from "./_components/liste";
-import { getFaq } from "@/lib/api/resources/faq";
+import { getFaq } from "@/lib/api/resources/faq/faq";
 
 export default async function FaqPage() {
   const faq = await getFaq();

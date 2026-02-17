@@ -1,7 +1,7 @@
 "use client";
 
 import { SuppressionFaq } from "./suppression";
-import { Faq } from "@/lib/api/type";
+import { Faq } from "@/lib/api/resources/faq/type";
 import * as Table from "@/components/table";
 import { useState } from "react";
 import { InputText } from "primereact/inputtext";

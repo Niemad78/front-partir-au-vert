@@ -6,7 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
 import { FloatLabel } from "primereact/floatlabel";
-import { Faq } from "@/lib/api/type";
+import { Faq } from "@/lib/api/resources/faq/type";
 import { InputTextarea } from "primereact/inputtextarea";
 import { NouvelleFaqSchema } from "@/lib/schema/faq";
 

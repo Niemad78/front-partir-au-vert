@@ -46,12 +46,6 @@ export type BaseResult<TData> = {
   data?: TData;
 };
 
-export type Faq = {
-  id?: string;
-  question: string;
-  reponse: string;
-};
-
 export type Publication = {
   id: string;
   titre: string;

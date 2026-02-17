@@ -1,6 +1,6 @@
 import Form from "./_components/form";
 import Breadcrumb from "@/components/breadcrumb";
-import { getFaqById } from "@/lib/api/resources/faq";
+import { getFaqById } from "@/lib/api/resources/faq/faq";
 
 export default async function Modifier({
   params,
@@ -8,7 +8,7 @@ export default async function Modifier({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const faq = await getFaqById(id);
+  const faq = await getFaqById({ faqId: id });
 
   if (!faq.ok) {
     return (
