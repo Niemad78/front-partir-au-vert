@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import Form from "./_components/form";
 import Breadcrumb from "@/components/breadcrumb";
-import { getEquipeById } from "@/lib/api/resources/equipe";
+import { getEquipeById } from "@/lib/api/resources/equipe/equipe";
 
 export default async function Modifier({
   params,
@@ -11,7 +11,7 @@ export default async function Modifier({
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
   const { id } = await params;
-  const equipe = await getEquipeById(token || "", id);
+  const equipe = await getEquipeById({ id, token });
 
   if (!equipe.ok) {
     return (

@@ -74,13 +74,6 @@ export type Partenaire = {
   image: Image;
 };
 
-export type Equipe = {
-  id: string;
-  nom: string;
-  description: string;
-  image: Image;
-};
-
 export type Utilisateur = {
   id: string;
   nom: string;
@@ -93,14 +86,4 @@ export type UtilisateurDto = {
   prenom: string;
   email: string;
   password: string;
-};
-
-export type ContactPayload = {
-  telephone: string;
-  email: string;
-  facebook?: string;
-  instagram?: string;
-  twitter?: string;
-  linkedin?: string;
-  tiktok?: string;
 };

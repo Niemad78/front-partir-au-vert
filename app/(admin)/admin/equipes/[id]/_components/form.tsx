@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useToast } from "@/components/toast";
 import FormEquipe from "../../_components/form";
-import { Equipe } from "@/lib/api/type";
+import { Equipe } from "@/lib/api/resources/equipe/type";
 import { NouvelleEquipeSchema } from "@/lib/schema/equipes";
 
 export default function Form({ equipe }: { equipe: Equipe }) {

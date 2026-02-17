@@ -1,17 +1,14 @@
-import { DELETE, GET, POST, PUT } from "../client";
-import { BaseResult, Equipe } from "../type";
+import { DELETE, GET, POST, PUT } from "@/lib/api/client";
+import {
+  EquipeListeResponse,
+  EquipeResponse,
+  ModificationEquipe,
+  NouvelleEquipe,
+} from "./type";
+import { BaseResult } from "@/lib/api/type";
 
-type EquipeListe = BaseResult & {
-  equipes: Equipe[];
-};
-
-export async function getEquipes(token?: string) {
-  const response = await GET<EquipeListe>("/equipes/liste", {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
-    },
+export async function getEquipes() {
+  const response = await GET<EquipeListeResponse>("/equipes/liste", {
     cache: "no-store",
   });
 
@@ -29,16 +26,16 @@ export async function getEquipes(token?: string) {
   };
 }
 
-type EquipeById = BaseResult & {
-  equipe: Equipe;
+type EquipeByIdProps = {
+  id: string;
+  token?: string;
 };
 
-export async function getEquipeById(token: string, id: string) {
-  const response = await GET<EquipeById>(`/equipes/${id}`, {
+export async function getEquipeById({ id, token }: EquipeByIdProps) {
+  const response = await GET<EquipeResponse>(`/equipes/${id}`, {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
     },
     cache: "no-store",
   });
@@ -57,50 +54,19 @@ export async function getEquipeById(token: string, id: string) {
   };
 }
 
-type NouvelleEquipe = {
-  data: Equipe;
+type NouvelleEquipeProps = {
+  data: NouvelleEquipe;
   token?: string;
 };
 
-export async function nouvelleEquipe({
-  data,
-  token,
-}: NouvelleEquipe): Promise<BaseResult> {
-  const response = await POST<BaseResult, Equipe>("/equipes/creation", data, {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
-    },
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    return {
-      ok: response.ok,
-      status: response.status ?? 500,
-      errorMessage: response.errorMessage ?? "Une erreur est survenue",
-    };
-  }
-
-  return {
-    ok: response.ok,
-    message: response.message,
-  };
-}
-
-export async function modifierEquipe({
-  data,
-  token,
-}: NouvelleEquipe): Promise<BaseResult> {
-  const response = await PUT<BaseResult, Equipe>(
-    `/equipes/modification/${data.id}`,
+export async function nouvelleEquipe({ data, token }: NouvelleEquipeProps) {
+  const response = await POST<EquipeResponse, NouvelleEquipe>(
+    "/equipes/creation",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -120,8 +86,45 @@ export async function modifierEquipe({
   };
 }
 
-export async function deleteEquipe(equipeId: string, token: string) {
-  const response = await DELETE<BaseResult>(
+type ModifierEquipeProps = {
+  data: ModificationEquipe;
+  token?: string;
+};
+
+export async function modifierEquipe({ data, token }: ModifierEquipeProps) {
+  const response = await PUT<EquipeResponse, ModificationEquipe>(
+    `/equipes/modification/${data.id}`,
+    data,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
+  };
+}
+
+type DeleteEquipeProps = {
+  equipeId: string;
+  token?: string;
+};
+
+export async function deleteEquipe({ equipeId, token }: DeleteEquipeProps) {
+  const response = await DELETE<BaseResult<EquipeResponse>>(
     `/equipes/suppression/${equipeId}`,
     {
       credentials: "include",

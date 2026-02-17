@@ -6,7 +6,7 @@ import { ImageUploader } from "@/components/imageUploader";
 import { FloatLabel } from "primereact/floatlabel";
 import Quill from "@/components/quill";
 import { ImageNext } from "@/components/image";
-import { Equipe } from "@/lib/api/type";
+import { Equipe } from "@/lib/api/resources/equipe/type";
 
 type FormProps = {
   formik: any;
