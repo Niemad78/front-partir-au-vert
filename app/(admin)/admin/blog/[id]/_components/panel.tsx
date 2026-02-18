@@ -1,6 +1,6 @@
 import { TabView, TabPanel } from "primereact/tabview";
 import Form from "./form";
-import { Utilisateur } from "@/lib/api/type";
+import { Utilisateur } from "@/lib/api/resources/user/type";
 import ArticleImages from "./images";
 import { Article } from "@/lib/api/resources/blog/type";
 

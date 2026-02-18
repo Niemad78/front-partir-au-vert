@@ -5,7 +5,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Bouton } from "@/components/bouton";
 import { FloatLabel } from "primereact/floatlabel";
 import { MultiSelect } from "primereact/multiselect";
-import { Theme } from "@/lib/api/type";
+import { Theme } from "@/lib/api/resources/theme/type";
 import Quill from "@/components/quill";
 import { Dropdown } from "primereact/dropdown";
 import { dureeOptions } from "@/lib/utils/formatDuree";

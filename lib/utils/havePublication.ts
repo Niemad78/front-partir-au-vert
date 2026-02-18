@@ -1,4 +1,4 @@
-import { TypePublication } from "../api/type";
+import { TypePublication } from "../api/resources/publication/type";
 import { normalizePublication, TypePublicationKey } from "./formatPublication";
 
 type HavePublicationParams = {

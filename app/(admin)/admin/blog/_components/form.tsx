@@ -4,7 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
 import { FloatLabel } from "primereact/floatlabel";
 import Quill from "@/components/quill";
-import { Utilisateur } from "@/lib/api/type";
+import { Utilisateur } from "@/lib/api/resources/user/type";
 import { Dropdown } from "primereact/dropdown";
 import { cn } from "@/lib/utils/cn";
 

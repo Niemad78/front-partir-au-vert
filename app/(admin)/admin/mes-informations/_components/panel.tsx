@@ -1,5 +1,5 @@
 import { TabView, TabPanel } from "primereact/tabview";
-import { Utilisateur } from "@/lib/api/type";
+import { Utilisateur } from "@/lib/api/resources/user/type";
 import FormEmail from "./formEmail";
 import FormPassword from "./formPassword";
 import FormNomPrenom from "./formNomPrenom";

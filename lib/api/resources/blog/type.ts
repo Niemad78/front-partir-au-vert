@@ -1,4 +1,5 @@
-import { BaseResult, Utilisateur } from "@/lib/api/type";
+import { BaseResult } from "@/lib/api/type";
+import { Utilisateur } from "@/lib/api/resources/user/type";
 import { Image } from "@/lib/api/resources/image/type";
 
 export type Article = {

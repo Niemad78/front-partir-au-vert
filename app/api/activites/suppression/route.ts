@@ -7,7 +7,10 @@ export async function DELETE(request: NextRequest) {
   const token = cookieStore.get("session")?.value;
 
   const data = await request.json();
-  const response = await deleteActivite(data.activiteId, token || "");
+  const response = await deleteActivite({
+    activiteId: data.activiteId,
+    token: token || "",
+  });
 
   if (!response.ok) {
     return new Response(

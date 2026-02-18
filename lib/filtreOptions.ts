@@ -1,4 +1,5 @@
-import { Duree, DureeKey } from "./api/resources/activite/type";
+import { Duree } from "./api/resources/activite/type";
+import { DureeKey } from "./utils/formatDuree";
 
 export const dureeOptions = Object.entries(Duree).map(([key, label]) => ({
   label,

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useToast } from "@/components/toast";
 import { NouvelArticleSchema } from "@/lib/schema/articles";
-import { Utilisateur } from "@/lib/api/type";
+import { Utilisateur } from "@/lib/api/resources/user/type";
 import FormArticle from "../../_components/form";
 
 type FormProps = {

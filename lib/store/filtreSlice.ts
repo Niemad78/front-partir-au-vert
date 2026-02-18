@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DureeKey } from "@/lib/api/type";
+import { DureeKey } from "@/lib/utils/formatDuree";
 
 type FiltreState = {
   themeChoisi: string | null;
