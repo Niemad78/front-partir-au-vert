@@ -1,12 +1,12 @@
 import Breadcrumb from "@/components/breadcrumb";
 import { cookies } from "next/headers";
-import { getUtilisateurById } from "@/lib/api/resources/user";
+import { getUtilisateurById } from "@/lib/api/resources/user/user";
 import Panel from "./_components/panel";
 
 export default async function Page() {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
-  const utilisateur = await getUtilisateurById(token!);
+  const utilisateur = await getUtilisateurById({ token: token ?? "" });
 
   if (!utilisateur.ok || !utilisateur.data) {
     return (

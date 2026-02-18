@@ -1,16 +1,21 @@
-import { DELETE, GET, POST, PUT } from "../client";
-import { BaseResult, Utilisateur, UtilisateurDto } from "../type";
-
-type UtilisateurListe = BaseResult & {
-  users: Utilisateur[];
-};
+import { DELETE, GET, POST, PUT } from "@/lib/api/client";
+import {
+  ModificationEmail,
+  ModificationInfo,
+  ModificationPassword,
+  NouvelUtilisateur,
+  RoleResponse,
+  Utilisateur,
+  UtilisateurListeResponse,
+  UtilisateurResponse,
+} from "./type";
+import { BaseResult } from "@/lib/api/type";
 
 export async function getUtilisateurs(token: string) {
-  const response = await GET<UtilisateurListe>("/utilisateurs/liste", {
+  const response = await GET<UtilisateurListeResponse>("/utilisateurs/liste", {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
     },
     cache: "no-store",
   });
@@ -29,16 +34,15 @@ export async function getUtilisateurs(token: string) {
   };
 }
 
-type UtilisateurUnique = BaseResult & {
-  user: Utilisateur;
+type UtilisateurByIdProps = {
+  token: string;
 };
 
-export async function getUtilisateurById(token: string) {
-  const response = await GET<UtilisateurUnique>("/utilisateurs/me", {
+export async function getUtilisateurById({ token }: UtilisateurByIdProps) {
+  const response = await GET<UtilisateurResponse>("/utilisateurs/me", {
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
     },
     cache: "no-store",
   });
@@ -57,15 +61,21 @@ export async function getUtilisateurById(token: string) {
   };
 }
 
-export async function verifyMe(token: string): Promise<BaseResult> {
-  const response = await GET<BaseResult>("/utilisateurs/me/verification", {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
+type TokenProps = {
+  token: string;
+};
+
+export async function verifyMe({ token }: TokenProps) {
+  const response = await GET<BaseResult<Utilisateur>>(
+    "/utilisateurs/me/verification",
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!response.ok) {
     return {
@@ -81,20 +91,14 @@ export async function verifyMe(token: string): Promise<BaseResult> {
   };
 }
 
-export async function getMyRole(
-  token: string,
-): Promise<BaseResult & { role?: string }> {
-  const response = await GET<BaseResult & { role?: string }>(
-    "/utilisateurs/me/role",
-    {
-      credentials: "include",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
-      },
-      cache: "no-store",
+export async function getMyRole({ token }: TokenProps) {
+  const response = await GET<RoleResponse>("/utilisateurs/me/role", {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     return {
@@ -110,32 +114,22 @@ export async function getMyRole(
   };
 }
 
-type NouvelUtilisateur = {
-  data: {
-    email: string;
-    password: string;
-    nom: string;
-    prenom: string;
-  };
+type NouvelUtilisateurProps = {
+  data: NouvelUtilisateur;
   token?: string;
-};
-
-type CreationUtilisateurResult = BaseResult & {
-  utilisateur: Utilisateur;
 };
 
 export async function nouvelUtilisateur({
   data,
   token,
-}: NouvelUtilisateur): Promise<BaseResult & { id?: string }> {
-  const response = await POST<CreationUtilisateurResult, UtilisateurDto>(
+}: NouvelUtilisateurProps) {
+  const response = await POST<UtilisateurResponse, NouvelUtilisateur>(
     "/utilisateurs/nouvel-utilisateur",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -155,25 +149,22 @@ export async function nouvelUtilisateur({
   };
 }
 
-type modificationPassword = {
-  data: {
-    password: string;
-  };
+type ModificationPasswordProps = {
+  data: ModificationPassword;
   token?: string;
 };
 
-export async function updatePassword({
+export async function modificationPassword({
   data,
   token,
-}: modificationPassword): Promise<BaseResult> {
-  const response = await PUT<BaseResult, { password: string }>(
+}: ModificationPasswordProps) {
+  const response = await PUT<BaseResult<null>, ModificationPassword>(
     "/utilisateurs/me/password",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -193,25 +184,22 @@ export async function updatePassword({
   };
 }
 
-type modificationEmail = {
-  data: {
-    email: string;
-  };
+type ModificationEmailProps = {
+  data: ModificationEmail;
   token?: string;
 };
 
-export async function updateEmail({
+export async function modificationEmail({
   data,
   token,
-}: modificationEmail): Promise<BaseResult> {
-  const response = await PUT<BaseResult, { email: string }>(
+}: ModificationEmailProps) {
+  const response = await PUT<BaseResult<null>, ModificationEmail>(
     "/utilisateurs/me/email",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -231,26 +219,22 @@ export async function updateEmail({
   };
 }
 
-type modificationInfos = {
-  data: {
-    nom: string;
-    prenom: string;
-  };
+type ModificationInfosProps = {
+  data: ModificationInfo;
   token?: string;
 };
 
-export async function updateInfos({
+export async function modificationInfos({
   data,
   token,
-}: modificationInfos): Promise<BaseResult> {
-  const response = await PUT<BaseResult, { nom: string; prenom: string }>(
+}: ModificationInfosProps) {
+  const response = await PUT<BaseResult<null>, ModificationInfo>(
     "/utilisateurs/me/infos",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -270,7 +254,7 @@ export async function updateInfos({
   };
 }
 
-type SuppressionUtilisateur = {
+type SuppressionUtilisateurProps = {
   utilisateurId: string;
   token?: string;
 };
@@ -278,14 +262,13 @@ type SuppressionUtilisateur = {
 export async function deleteUser({
   utilisateurId,
   token,
-}: SuppressionUtilisateur) {
-  const response = await DELETE<BaseResult>(
+}: SuppressionUtilisateurProps) {
+  const response = await DELETE<BaseResult<null>>(
     `/utilisateurs/suppression/${utilisateurId}`,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },

@@ -2,7 +2,7 @@ import Panel from "./_components/panel";
 import Breadcrumb from "@/components/breadcrumb";
 import { getArticleById } from "@/lib/api/resources/blog/blog";
 import { cookies } from "next/headers";
-import { getUtilisateurs } from "@/lib/api/resources/user";
+import { getUtilisateurs } from "@/lib/api/resources/user/user";
 
 export default async function Article({
   params,

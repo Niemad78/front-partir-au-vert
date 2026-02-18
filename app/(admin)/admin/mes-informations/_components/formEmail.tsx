@@ -7,7 +7,7 @@ import { FloatLabel } from "primereact/floatlabel";
 import { EmailSchema } from "@/lib/schema/utilisateurs";
 import { Bouton } from "@/components/bouton";
 import { useToast } from "@/components/toast";
-import { Utilisateur } from "@/lib/api/type";
+import { Utilisateur } from "@/lib/api/resources/user/type";
 
 type MesInformationsFormProps = {
   utilisateur: Utilisateur;

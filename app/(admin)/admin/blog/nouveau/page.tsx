@@ -1,4 +1,4 @@
-import { getUtilisateurs } from "@/lib/api/resources/user";
+import { getUtilisateurs } from "@/lib/api/resources/user/user";
 import Form from "./_components/form";
 import Breadcrumb from "@/components/breadcrumb";
 import { cookies } from "next/headers";

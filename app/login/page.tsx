@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { verifyMe } from "@/lib/api/resources/user";
+import { verifyMe } from "@/lib/api/resources/user/user";
 import LoginForm from "./_components/form";
 
 export default async function LoginPage() {
@@ -9,7 +9,7 @@ export default async function LoginPage() {
   const token = cookieStore.get("session")?.value;
 
   if (token) {
-    const res = await verifyMe(token);
+    const res = await verifyMe({ token });
 
     if (res.ok) {
       redirect("/admin");

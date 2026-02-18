@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
 import { BoutonLogout } from "@/app/(admin)/admin/_components/boutonLogout";
-import { getMyRole } from "@/lib/api/resources/user";
+import { getMyRole } from "@/lib/api/resources/user/user";
 import Link from "next/link";
 
 export async function AdminMenu() {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
-  const role = await getMyRole(token || "");
+  const role = await getMyRole({ token: token || "" });
 
   return (
     <nav className="bg-primary fixed top-0 left-0 h-[100vh] w-[300px] text-white">

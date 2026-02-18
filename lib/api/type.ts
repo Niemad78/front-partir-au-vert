@@ -43,17 +43,3 @@ export type BaseResult<TData> = {
   errorMessage?: string;
   data?: TData;
 };
-
-export type Utilisateur = {
-  id: string;
-  nom: string;
-  prenom: string;
-  email: string;
-};
-
-export type UtilisateurDto = {
-  nom: string;
-  prenom: string;
-  email: string;
-  password: string;
-};

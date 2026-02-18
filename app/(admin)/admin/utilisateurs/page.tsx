@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { getUtilisateurs } from "@/lib/api/resources/user";
+import { getUtilisateurs } from "@/lib/api/resources/user/user";
 import { ListeUtilisateurs } from "./_components/liste";
 import Breadcrumb from "@/components/breadcrumb";
 

@@ -1,13 +1,13 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { updatePassword } from "@/lib/api/resources/user";
+import { modificationPassword } from "@/lib/api/resources/user/user";
 
 export async function PUT(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   const data = await request.json();
-  const response = await updatePassword({ data, token });
+  const response = await modificationPassword({ data, token });
 
   if (!response.ok) {
     return new Response(

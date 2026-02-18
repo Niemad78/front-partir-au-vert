@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import * as Table from "@/components/table";
 import { SuppressionUtilisateur } from "./suppression";
-import { Utilisateur } from "@/lib/api/type";
+import { Utilisateur } from "@/lib/api/resources/user/type";
 import { InputText } from "primereact/inputtext";
 import Link from "next/link";
 import { Bouton } from "@/components/bouton";
