@@ -23,7 +23,6 @@ export async function nouvelleImage({ image, token }: NouvelleImageProps) {
       cache: "no-store",
     },
   );
-  console.log("🚀 ~ nouvelleImage ~ response:", response);
 
   if (!response.ok) {
     return {

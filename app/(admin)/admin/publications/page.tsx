@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/breadcrumb";
-import { getPublications } from "@/lib/api/resources/publication";
+import { getPublications } from "@/lib/api/resources/publication/publication";
 import { ListePublications } from "./_components/liste";
 
 export default async function PublicationsPage() {

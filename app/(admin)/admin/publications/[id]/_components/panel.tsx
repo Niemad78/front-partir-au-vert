@@ -1,5 +1,5 @@
 import { TabView, TabPanel } from "primereact/tabview";
-import { Publication } from "@/lib/api/type";
+import { Publication } from "@/lib/api/resources/publication/type";
 import Form from "./form";
 import PublicationImages from "./images";
 

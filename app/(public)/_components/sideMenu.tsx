@@ -5,7 +5,7 @@ import { Sidebar } from "primereact/sidebar";
 import { Bouton } from "@/components/bouton";
 import { MdOutlineMenu, MdSubdirectoryArrowRight } from "react-icons/md";
 import { havePublication } from "@/lib/utils/havePublication";
-import { TypePublication } from "@/lib/api/type";
+import { TypePublication } from "@/lib/api/resources/publication/type";
 import Link from "next/link";
 
 type Publication = {

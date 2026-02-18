@@ -1,5 +1,5 @@
-import { getPublications } from "@/lib/api/resources/publication";
-import { TypePublication } from "@/lib/api/type";
+import { getPublications } from "@/lib/api/resources/publication/publication";
+import { TypePublication } from "@/lib/api/resources/publication/type";
 import { havePublication } from "@/lib/utils/havePublication";
 import Image from "next/image";
 import Link from "next/link";

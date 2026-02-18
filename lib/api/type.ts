@@ -1,5 +1,3 @@
-import { Image } from "@/lib/api/resources/image/type";
-
 export enum RequestType {
   GET = "get",
   POST = "post",
@@ -45,22 +43,6 @@ export type BaseResult<TData> = {
   errorMessage?: string;
   data?: TData;
 };
-
-export type Publication = {
-  id: string;
-  titre: string;
-  contenu: string;
-  type: TypePublication;
-  images?: Image[];
-};
-
-export enum TypePublication {
-  histoire = "Histoire",
-  seminaire = "Séminaire",
-  autre = "Autre",
-  mentions_legales = "Mentions légales",
-  cgv = "CGV",
-}
 
 export type Utilisateur = {
   id: string;

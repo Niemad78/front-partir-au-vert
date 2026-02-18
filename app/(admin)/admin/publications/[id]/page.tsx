@@ -1,4 +1,4 @@
-import { getPublicationById } from "@/lib/api/resources/publication";
+import { getPublicationById } from "@/lib/api/resources/publication/publication";
 import Breadcrumb from "@/components/breadcrumb";
 import Panel from "./_components/panel";
 
@@ -8,7 +8,7 @@ export default async function Modifier({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const publication = await getPublicationById(id);
+  const publication = await getPublicationById({ publicationId: id });
 
   if (!publication.ok) {
     return (

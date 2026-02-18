@@ -3,8 +3,8 @@ import { cookies } from "next/headers";
 import {
   getPublicationsByType,
   nouvellePublication,
-} from "@/lib/api/resources/publication";
-import { Publication, TypePublication } from "@/lib/api/type";
+} from "@/lib/api/resources/publication/publication";
+import { Publication } from "@/lib/api/resources/publication/type";
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
@@ -12,8 +12,8 @@ export async function POST(request: NextRequest) {
 
   const data: Publication = await request.json();
 
-  if (data.type !== ("autre" as TypePublication)) {
-    const verification = await getPublicationsByType(data.type);
+  if (data.type !== "autre") {
+    const verification = await getPublicationsByType({ type: data.type });
 
     if (verification.ok && verification.data.length >= 1) {
       return new Response(

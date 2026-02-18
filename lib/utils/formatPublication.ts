@@ -1,4 +1,4 @@
-import { TypePublication } from "../api/type";
+import { TypePublication } from "@/lib/api/resources/publication/type";
 
 export const publicationOptions = Object.entries(TypePublication).map(
   ([key, value]) => ({

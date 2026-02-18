@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useToast } from "@/components/toast";
-import { Publication } from "@/lib/api/type";
+import { Publication } from "@/lib/api/resources/publication/type";
 import { NouvellePublicationSchema } from "@/lib/schema/publications";
 import FormPublication from "../../_components/form";
 

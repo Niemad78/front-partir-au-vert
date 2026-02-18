@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPublications } from "@/lib/api/resources/publication";
+import { getPublications } from "@/lib/api/resources/publication/publication";
 import Image from "next/image";
 import SideMenu from "./sideMenu";
 

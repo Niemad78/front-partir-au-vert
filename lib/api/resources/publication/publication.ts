@@ -1,18 +1,17 @@
 import { TypePublicationKey } from "@/lib/utils/formatPublication";
-import { DELETE, GET, POST, PUT } from "../client";
-import { BaseResult, Publication, TypePublication } from "../type";
-
-type PublicationListe = BaseResult & {
-  publications: {
-    id: string;
-    titre: string;
-    contenu: string;
-    type: TypePublicationKey;
-  }[];
-};
+import { DELETE, GET, POST, PUT } from "@/lib/api/client";
+import {
+  ModificationPublication,
+  NouvellePublication,
+  Publication,
+  PublicationAjoutImage,
+  PublicationListeResponse,
+  PublicationResponse,
+} from "./type";
+import { BaseResult } from "@/lib/api/type";
 
 export async function getPublications() {
-  const response = await GET<PublicationListe>("/publications/liste", {
+  const response = await GET<PublicationListeResponse>("/publications/liste", {
     cache: "no-store",
   });
 
@@ -30,32 +29,13 @@ export async function getPublications() {
   };
 }
 
-export async function getPublicationsByType(type: TypePublication) {
-  const response = await GET<PublicationListe>(`/publications/liste/${type}`, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    return {
-      ok: response.ok,
-      status: response.status ?? 500,
-      errorMessage: response.errorMessage ?? "Une erreur est survenue",
-    };
-  }
-
-  return {
-    ok: response.ok,
-    data: response.publications,
-  };
-}
-
-type PublicationUnique = BaseResult & {
-  publications: Publication;
+type PublicationByTypeProps = {
+  type: TypePublicationKey;
 };
 
-export async function getPublicationById(publicationId: string) {
-  const response = await GET<PublicationUnique>(
-    `/publications/${publicationId}`,
+export async function getPublicationsByType({ type }: PublicationByTypeProps) {
+  const response = await GET<PublicationListeResponse>(
+    `/publications/liste/${type}`,
     {
       cache: "no-store",
     },
@@ -75,29 +55,50 @@ export async function getPublicationById(publicationId: string) {
   };
 }
 
-type NouvellePublication = {
-  data: Publication;
-  token?: string;
+type PublicationByIdProps = {
+  publicationId: string;
 };
 
-type CreationPublicationResult = BaseResult & {
-  publication: {
-    id: string;
+export async function getPublicationById({
+  publicationId,
+}: PublicationByIdProps) {
+  const response = await GET<PublicationResponse>(
+    `/publications/${publicationId}`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    data: response.publication,
   };
+}
+
+type NouvellePublicationProps = {
+  data: NouvellePublication;
+  token?: string;
 };
 
 export async function nouvellePublication({
   data,
   token,
-}: NouvellePublication): Promise<BaseResult & { id?: string }> {
-  const response = await POST<CreationPublicationResult, Publication>(
+}: NouvellePublicationProps) {
+  const response = await POST<PublicationResponse, NouvellePublication>(
     "/publications/creation",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -117,18 +118,22 @@ export async function nouvellePublication({
   };
 }
 
+type ModificationPublicationProps = {
+  data: ModificationPublication;
+  token?: string;
+};
+
 export async function modificationPublication({
   data,
   token,
-}: NouvellePublication): Promise<BaseResult> {
-  const response = await PUT<BaseResult, Publication>(
+}: ModificationPublicationProps) {
+  const response = await PUT<PublicationResponse, ModificationPublication>(
     `/publications/modification/${data.id}`,
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -153,23 +158,18 @@ type AjoutImagePublicationProps = {
   token?: string;
 };
 
-type PublicationAjoutImage = {
-  imageIds?: string[];
-};
-
 export async function ajoutImagePublication({
   data,
   token,
-}: AjoutImagePublicationProps): Promise<BaseResult> {
+}: AjoutImagePublicationProps) {
   const values = { imageIds: data.imageIds };
-  const response = await POST<BaseResult, PublicationAjoutImage>(
+  const response = await POST<PublicationResponse, PublicationAjoutImage>(
     `/publications/ajout-images/${data.id}`,
     values,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -189,14 +189,21 @@ export async function ajoutImagePublication({
   };
 }
 
-export async function deletePublication(publicationId: string, token: string) {
-  const response = await DELETE<BaseResult>(
+type DeletePublicationProps = {
+  publicationId: string;
+  token: string;
+};
+
+export async function deletePublication({
+  publicationId,
+  token,
+}: DeletePublicationProps) {
+  const response = await DELETE<BaseResult<Publication>>(
     `/publications/suppression/${publicationId}`,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },

@@ -3,7 +3,7 @@
 import { ImageNext } from "@/components/image";
 import { ImageUploader } from "@/components/imageUploader";
 import { useToast } from "@/components/toast";
-import { Publication } from "@/lib/api/type";
+import { Publication } from "@/lib/api/resources/publication/type";
 import { useRouter } from "next/navigation";
 import { SuppressionImage } from "./suppressionImage";
 import { ConfirmDialog } from "primereact/confirmdialog";

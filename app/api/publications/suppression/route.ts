@@ -1,13 +1,16 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { deletePublication } from "@/lib/api/resources/publication";
+import { deletePublication } from "@/lib/api/resources/publication/publication";
 
 export async function DELETE(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   const data = await request.json();
-  const response = await deletePublication(data.publicationId, token || "");
+  const response = await deletePublication({
+    publicationId: data.publicationId,
+    token: token || "",
+  });
 
   if (!response.ok) {
     return new Response(
