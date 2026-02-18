@@ -1,13 +1,16 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { deletePartenaire } from "@/lib/api/resources/partenaire";
+import { deletePartenaire } from "@/lib/api/resources/partenaire/partenaire";
 
 export async function DELETE(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   const data = await request.json();
-  const response = await deletePartenaire(data.partenaireId, token || "");
+  const response = await deletePartenaire({
+    id: data.partenaireId,
+    token: token || "",
+  });
 
   if (!response.ok) {
     return new Response(

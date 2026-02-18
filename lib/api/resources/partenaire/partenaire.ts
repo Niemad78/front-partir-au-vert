@@ -1,12 +1,14 @@
-import { DELETE, GET, POST } from "../client";
-import { BaseResult, Partenaire } from "../type";
-
-type PartenaireListe = BaseResult & {
-  partenaires: Partenaire[];
-};
+import { DELETE, GET, POST } from "@/lib/api/client";
+import {
+  NouveauPartenaire,
+  Partenaire,
+  PartenaireListeResponse,
+  PartenaireResponse,
+} from "./type";
+import { BaseResult } from "../../type";
 
 export async function getPartenaires() {
-  const response = await GET<PartenaireListe>("/partenaires/liste", {
+  const response = await GET<PartenaireListeResponse>("/partenaires/liste", {
     cache: "no-store",
   });
 
@@ -24,32 +26,22 @@ export async function getPartenaires() {
   };
 }
 
-type PartenairePayload = {
-  nom: string;
-  imageId: string;
-};
-
-type NouveauPartenaire = {
-  data: PartenairePayload;
+type NouveauPartenaireProps = {
+  data: NouveauPartenaire;
   token?: string;
-};
-
-type CreationPartenaireResult = BaseResult & {
-  partenaire: Partenaire;
 };
 
 export async function nouveauPartenaire({
   data,
   token,
-}: NouveauPartenaire): Promise<BaseResult & { data?: Partenaire }> {
-  const reponse = await POST<CreationPartenaireResult, PartenairePayload>(
+}: NouveauPartenaireProps) {
+  const reponse = await POST<PartenaireResponse, NouveauPartenaire>(
     "/partenaires/creation",
     data,
     {
       credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
-        Cookie: `session=${token}`,
       },
       cache: "no-store",
     },
@@ -69,18 +61,22 @@ export async function nouveauPartenaire({
   };
 }
 
-export async function deletePartenaire(
-  id: string,
-  token?: string,
-): Promise<BaseResult> {
-  const response = await DELETE<BaseResult>(`/partenaires/suppression/${id}`, {
-    credentials: "include",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Cookie: `session=${token}`,
+type DeletePartenaireProps = {
+  id: string;
+  token?: string;
+};
+
+export async function deletePartenaire({ id, token }: DeletePartenaireProps) {
+  const response = await DELETE<BaseResult<Partenaire>>(
+    `/partenaires/suppression/${id}`,
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!response.ok) {
     return {

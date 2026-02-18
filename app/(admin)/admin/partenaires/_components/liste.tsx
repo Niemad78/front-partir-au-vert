@@ -1,7 +1,7 @@
 "use client";
 
 import { SuppressionPartenaire } from "./suppression";
-import { Partenaire } from "@/lib/api/type";
+import { Partenaire } from "@/lib/api/resources/partenaire/type";
 import * as Table from "@/components/table";
 import { useState } from "react";
 import { InputText } from "primereact/inputtext";

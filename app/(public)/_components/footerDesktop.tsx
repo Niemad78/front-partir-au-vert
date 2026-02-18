@@ -1,4 +1,4 @@
-import { getContact } from "@/lib/api/resources/contact";
+import { getContact } from "@/lib/api/resources/contact/contact";
 import { getPublications } from "@/lib/api/resources/publication";
 import { TypePublication } from "@/lib/api/type";
 import { havePublication } from "@/lib/utils/havePublication";

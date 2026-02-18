@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/breadcrumb";
 import { ListePartenaire } from "./_components/liste";
-import { getPartenaires } from "@/lib/api/resources/partenaire";
+import { getPartenaires } from "@/lib/api/resources/partenaire/partenaire";
 
 export default async function PartenairePage() {
   const partenaires = await getPartenaires();

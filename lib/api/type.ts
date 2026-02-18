@@ -62,12 +62,6 @@ export enum TypePublication {
   cgv = "CGV",
 }
 
-export type Partenaire = {
-  id?: string;
-  nom: string;
-  image: Image;
-};
-
 export type Utilisateur = {
   id: string;
   nom: string;
