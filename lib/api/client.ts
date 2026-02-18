@@ -11,7 +11,8 @@ async function client<TResponse, TBody = unknown>(
   endpoint: string,
   options: RequestOptions<TBody> = {},
 ): Promise<TResponse> {
-  const { headers, cache, revalidateSeconds, credentials, body } = options;
+  const { headers, cache, revalidateSeconds, credentials, body, tags } =
+    options;
 
   const url = makeUrl(endpoint);
 
@@ -28,14 +29,18 @@ async function client<TResponse, TBody = unknown>(
 
   const finalBody = isFormData ? body : body ? JSON.stringify(body) : undefined;
 
-  const params: RequestInit & { next?: { revalidate?: number } } = {
+  const params: RequestInit & {
+    next?: { revalidate?: number; tags?: string[] };
+  } = {
     method,
     headers: finalHeaders,
     body: finalBody,
     cache,
     credentials,
-    next:
-      revalidateSeconds != null ? { revalidate: revalidateSeconds } : undefined,
+    next: {
+      ...(revalidateSeconds != null ? { revalidate: revalidateSeconds } : {}),
+      ...(tags?.length ? { tags } : {}),
+    },
   };
 
   try {

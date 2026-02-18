@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Amatic_SC, Manrope } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { ToastProvider } from "@/components/toast";
 import "./globals.css";
 import "primereact/resources/primereact.min.css";
@@ -10,13 +10,6 @@ import "primeicons/primeicons.css";
 const manrope = Manrope({
   weight: ["400"],
   variable: "--font-manrope",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const amatic = Amatic_SC({
-  weight: ["400"],
-  variable: "--font-amatic",
   subsets: ["latin"],
   display: "swap",
 });

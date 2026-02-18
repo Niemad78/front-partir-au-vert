@@ -1,13 +1,13 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { deleteFaq } from "@/lib/api/resources/faq";
+import { deleteFaq } from "@/lib/api/resources/faq/faq";
 
 export async function DELETE(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   const data = await request.json();
-  const response = await deleteFaq(data.faqId, token || "");
+  const response = await deleteFaq({ faqId: data.faqId, token: token || "" });
 
   if (!response.ok) {
     return new Response(

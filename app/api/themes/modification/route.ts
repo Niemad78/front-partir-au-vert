@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { modifierTheme } from "@/lib/api/resources/theme";
+import { modifierTheme } from "@/lib/api/resources/theme/theme";
 
 export async function PUT(request: NextRequest) {
   const cookieStore = await cookies();

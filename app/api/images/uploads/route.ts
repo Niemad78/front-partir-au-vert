@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { nouvellesImages } from "@/lib/api/resources/image";
+import { nouvellesImages } from "@/lib/api/resources/image/image";
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();

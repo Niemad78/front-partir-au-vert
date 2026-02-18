@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { deleteTheme } from "@/lib/api/resources/theme";
+import { deleteTheme } from "@/lib/api/resources/theme/theme";
 
 export async function DELETE(request: NextRequest) {
   const cookieStore = await cookies();

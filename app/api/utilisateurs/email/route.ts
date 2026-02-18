@@ -1,13 +1,13 @@
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { updateEmail } from "@/lib/api/resources/user";
+import { modificationEmail } from "@/lib/api/resources/user/user";
 
 export async function PUT(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   const data = await request.json();
-  const response = await updateEmail({ data, token });
+  const response = await modificationEmail({ data, token });
 
   if (!response.ok) {
     return new Response(
