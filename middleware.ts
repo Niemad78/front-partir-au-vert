@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getMyRole, verifyMe } from "./lib/api/resources/user";
+import { getMyRole, verifyMe } from "./lib/api/resources/user/user";
 
 const PUBLIC_ENABLED = process.env.PUBLIC_ENABLED === "true";
 
@@ -37,7 +37,7 @@ export async function middleware(request: NextRequest) {
     }
 
     try {
-      const payload = await verifyMe(token);
+      const payload = await verifyMe({ token });
 
       if (request.nextUrl.pathname.startsWith("/admin")) {
         if (!payload.ok) {
@@ -62,7 +62,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  const role = await getMyRole(token);
+  const role = await getMyRole({ token });
 
   if (!role.ok) {
     url.pathname = "/maintenance";

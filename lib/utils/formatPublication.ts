@@ -1,4 +1,4 @@
-import { TypePublication } from "../api/type";
+import { TypePublication } from "@/lib/api/resources/publication/type";
 
 export const publicationOptions = Object.entries(TypePublication).map(
   ([key, value]) => ({
@@ -12,3 +12,15 @@ export const publicationFormatee = (type: keyof typeof TypePublication) => {
 };
 
 export type TypePublicationKey = keyof typeof TypePublication;
+
+export const normalizePublication = (
+  type: string | null,
+): TypePublicationKey | null => {
+  if (!type) return null;
+
+  const entry = Object.entries(TypePublication).find(
+    ([, value]) => value.toLowerCase() === type.toLowerCase(),
+  );
+
+  return entry ? (entry[0] as TypePublicationKey) : null;
+};

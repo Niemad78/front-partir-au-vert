@@ -148,7 +148,7 @@ export function ImageUploader({
       uploadHandler={handleUpload}
       onSelect={handleSelect}
       accept="image/*"
-      maxFileSize={1000000}
+      maxFileSize={10000000}
       chooseLabel={chooseLabel}
       cancelLabel={cancelLabel}
       emptyTemplate={<p className="m-0">Glissez une image ici</p>}
