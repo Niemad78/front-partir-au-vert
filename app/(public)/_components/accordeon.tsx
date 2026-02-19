@@ -18,7 +18,7 @@ export default function Accordeon({ faqs }: AccordeonProps) {
             headerAction: { className: "!bg-secondary !text-white" },
           }}
         >
-          <p className="m-0">{faq.reponse}</p>
+          <p>{faq.reponse}</p>
         </AccordionTab>
       ))}
     </Accordion>
