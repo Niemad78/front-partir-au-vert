@@ -8,7 +8,6 @@ import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
 import { FaPen } from "react-icons/fa";
 import Link from "next/link";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
 type ListeFaqProps = {
   faqs: Faq[];
@@ -19,8 +18,6 @@ export function ListeFaq({ faqs }: ListeFaqProps) {
 
   return (
     <>
-      <ConfirmDialog />
-
       <Table.Table className="text-primary mt-[50px] w-full">
         <Table.Header className="bg-secondary">
           <Table.Row>

@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { SuppressionPointFort } from "./suppressionPointFort";
 import { useToast } from "@/components/toast";
 import { useRouter } from "next/navigation";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
 export default function PointFort({ activite }: { activite: Activite }) {
   const [pointForts, setPointForts] = useState([...(activite.pointFort || [])]);
@@ -76,8 +75,6 @@ export default function PointFort({ activite }: { activite: Activite }) {
 
   return (
     <>
-      <ConfirmDialog />
-
       <div className="flex w-full flex-col items-center">
         {pointForts?.map((pointFort) => (
           <div key={pointFort.id} className="mb-4 flex gap-[10px]">

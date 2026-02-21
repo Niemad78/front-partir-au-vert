@@ -5,6 +5,10 @@ export type Image = {
   nom: string;
 };
 
+export type NombreImagesNonLieesResponse = BaseResult<number> & {
+  nombre: number;
+};
+
 export type ImageResponse = BaseResult<Image> & {
   imageId: string;
 };
