@@ -1,6 +1,10 @@
-import { DELETE, POST } from "@/lib/api/client";
+import { DELETE, GET, POST } from "@/lib/api/client";
 import { BaseResult } from "@/lib/api/type";
-import { ImageResponse, ImagesResponse } from "./type";
+import {
+  ImageResponse,
+  ImagesResponse,
+  NombreImagesNonLieesResponse,
+} from "./type";
 
 type NouvelleImageProps = {
   image: File;
@@ -35,6 +39,36 @@ export async function nouvelleImage({ image, token }: NouvelleImageProps) {
   return {
     ok: response.ok,
     imageId: response.imageId,
+  };
+}
+
+type GetImageNonLieesProps = {
+  token?: string;
+};
+
+export async function getImageNonLiees({ token }: GetImageNonLieesProps) {
+  const response = await GET<NombreImagesNonLieesResponse>(
+    "/images/non-liees/nombre",
+    {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    nombre: response.nombre,
   };
 }
 
@@ -92,6 +126,33 @@ export async function deleteImage({ imageId, token }: SuppressionImageProps) {
       cache: "no-store",
     },
   );
+
+  if (!response.ok) {
+    return {
+      ok: response.ok,
+      status: response.status ?? 500,
+      errorMessage: response.errorMessage ?? "Une erreur est survenue",
+    };
+  }
+
+  return {
+    ok: response.ok,
+    message: response.message,
+  };
+}
+
+type SuppressionNonLieesProps = {
+  token?: string;
+};
+
+export async function deleteNonLiees({ token }: SuppressionNonLieesProps) {
+  const response = await DELETE<BaseResult<null>>("/images/non-liees", {
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     return {

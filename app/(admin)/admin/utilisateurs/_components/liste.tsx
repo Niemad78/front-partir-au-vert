@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ConfirmDialog } from "primereact/confirmdialog";
 import * as Table from "@/components/table";
 import { SuppressionUtilisateur } from "./suppression";
 import { Utilisateur } from "@/lib/api/resources/user/type";
@@ -18,8 +17,6 @@ export function ListeUtilisateurs({ utilisateurs }: ListeUtilisateursProps) {
 
   return (
     <>
-      <ConfirmDialog />
-
       <Table.Table className="text-primary mt-[50px] w-full">
         <Table.Header className="bg-secondary">
           <Table.Row>

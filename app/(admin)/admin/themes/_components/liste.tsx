@@ -9,7 +9,6 @@ import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
 import { FaPen } from "react-icons/fa";
 import Link from "next/link";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
 type ListeThemesProps = {
   themes: Theme[];
@@ -20,8 +19,6 @@ export function ListeThemes({ themes }: ListeThemesProps) {
 
   return (
     <>
-      <ConfirmDialog />
-
       <Table.Table className="text-primary mt-[50px] w-full">
         <Table.Header className="bg-secondary">
           <Table.Row>
