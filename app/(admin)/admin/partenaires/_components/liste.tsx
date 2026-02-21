@@ -7,7 +7,6 @@ import { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
 import Link from "next/link";
-import { ConfirmDialog } from "primereact/confirmdialog";
 import { ImageNext } from "@/components/image";
 
 type ListePartenaireProps = {
@@ -19,8 +18,6 @@ export function ListePartenaire({ partenaires }: ListePartenaireProps) {
 
   return (
     <>
-      <ConfirmDialog />
-
       <Table.Table className="text-primary mt-[50px] w-full">
         <Table.Header className="bg-secondary">
           <Table.Row>

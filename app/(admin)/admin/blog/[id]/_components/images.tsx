@@ -6,7 +6,6 @@ import { useToast } from "@/components/toast";
 import { Article } from "@/lib/api/resources/blog/type";
 import { useRouter } from "next/navigation";
 import { SuppressionImage } from "./suppressionImage";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
 export default function ArticleImages({ article }: { article: Article }) {
   const { show } = useToast();
@@ -43,8 +42,6 @@ export default function ArticleImages({ article }: { article: Article }) {
 
   return (
     <>
-      <ConfirmDialog />
-
       <div className="flex flex-col items-center">
         <div className="w-[750px]">
           <ImageUploader

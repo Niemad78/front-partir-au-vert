@@ -1,5 +1,6 @@
 import { AdminMenu } from "@/app/(admin)/admin/_components/adminMenu";
 import type { Metadata } from "next";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 export const metadata: Metadata = {
   title: "Admin - Partir au Vert",
@@ -13,6 +14,8 @@ export default function AdminLayout({
   return (
     <section>
       <AdminMenu />
+      <ConfirmDialog />
+
       <div className="ml-[300px] px-[30px] py-[30px]">{children}</div>
     </section>
   );

@@ -6,7 +6,6 @@ import { useToast } from "@/components/toast";
 import { Activite } from "@/lib/api/resources/activite/type";
 import { useRouter } from "next/navigation";
 import { SuppressionImage } from "./suppressionImage";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
 export default function ActiviteImages({ activite }: { activite: Activite }) {
   const { show } = useToast();
@@ -43,8 +42,6 @@ export default function ActiviteImages({ activite }: { activite: Activite }) {
 
   return (
     <>
-      <ConfirmDialog />
-
       <div className="flex flex-col items-center">
         <div className="w-[750px]">
           <ImageUploader

@@ -7,7 +7,6 @@ import { InputText } from "primereact/inputtext";
 import { Bouton } from "@/components/bouton";
 import { FaPen } from "react-icons/fa";
 import Link from "next/link";
-import { ConfirmDialog } from "primereact/confirmdialog";
 import { dureeFormatee } from "@/lib/utils/formatDuree";
 import { Activite } from "@/lib/api/resources/activite/type";
 
@@ -16,8 +15,6 @@ export function ListeActivites({ activites }: { activites: Activite[] }) {
 
   return (
     <>
-      <ConfirmDialog />
-
       <Table.Table className="text-primary mt-[50px] w-full">
         <Table.Header className="bg-secondary">
           <Table.Row>
