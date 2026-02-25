@@ -175,48 +175,6 @@ export default function FormActivite({ formik, fonction, themes }: Props) {
           placeholder="Description"
         />
       </div>
-      <div className="col-span-1">
-        <FloatLabel>
-          <InputNumber
-            id="latitude"
-            name="latitude"
-            value={formik.values.latitude}
-            onValueChange={formik.handleChange}
-            invalid={!!formik.errors.latitude}
-            aria-errormessage={formik.errors.latitude}
-            className="w-full"
-            showButtons={false}
-            maxFractionDigits={10}
-            min={0}
-            max={50}
-          />
-          <span id="latitude-error" className="p-error pl-[5px]">
-            {formik.errors.latitude}
-          </span>
-          <label htmlFor="latitude">Latitude</label>
-        </FloatLabel>
-      </div>
-      <div className="col-span-1">
-        <FloatLabel>
-          <InputNumber
-            id="longitude"
-            name="longitude"
-            value={formik.values.longitude}
-            onValueChange={formik.handleChange}
-            invalid={!!formik.errors.longitude}
-            aria-errormessage={formik.errors.longitude}
-            className="w-full"
-            showButtons={false}
-            maxFractionDigits={10}
-            min={0}
-            max={50}
-          />
-          <span id="longitude-error" className="p-error pl-[5px]">
-            {formik.errors.longitude}
-          </span>
-          <label htmlFor="longitude">Longitude</label>
-        </FloatLabel>
-      </div>
       <div className="col-span-2">
         <Quill
           name="accessibilite"

@@ -3,6 +3,7 @@ import { BaseResult } from "@/lib/api/type";
 import type { Image } from "@/lib/api/resources/image/type";
 import { PointFort } from "@/lib/api/resources/pointfort/type";
 import { Theme } from "@/lib/api/resources/theme/type";
+import { Coordonnees } from "../point-gps/type";
 
 export type Activite = {
   id: string;
@@ -16,10 +17,9 @@ export type Activite = {
   themes: Theme[];
   images?: Image[];
   pointFort?: PointFort[];
-  latitude: number | null;
-  longitude: number | null;
   adresse: string | null;
   accessibilite: string | null;
+  coordonnees: Coordonnees[];
 };
 
 export enum Duree {
@@ -46,8 +46,6 @@ export type ModificationActivite = {
   nbPersonnesMax: number;
   duree: DureeKey | null;
   themeIds: Theme[];
-  latitude: number | null;
-  longitude: number | null;
   adresse: string | null;
   accessibilite: string | null;
 };
