@@ -74,33 +74,31 @@ export default function PointFort({ activite }: { activite: Activite }) {
   };
 
   return (
-    <>
-      <div className="flex w-full flex-col items-center">
-        {pointForts?.map((pointFort) => (
-          <div key={pointFort.id} className="mb-4 flex gap-[10px]">
-            <InputText
-              id={pointFort.id}
-              name={pointFort.id}
-              value={pointFort.nom}
-              onChange={handleChange}
-              className="w-[500px]"
-              placeholder="Point fort"
-            />
-            <Bouton
-              type="button"
-              onClick={() => savePointFort(pointFort.id ?? "")}
-            >
-              Enregistrer
-            </Bouton>
-            {pointFort.id && !pointFort.id.startsWith("temp-") ? (
-              <SuppressionPointFort pointFortId={pointFort.id ?? ""} />
-            ) : null}
-          </div>
-        ))}
-        <Bouton type="button" onClick={addPointFort}>
-          +
-        </Bouton>
-      </div>
-    </>
+    <div className="flex w-full flex-col items-center">
+      {pointForts?.map((pointFort) => (
+        <div key={pointFort.id} className="mb-4 flex gap-[10px]">
+          <InputText
+            id={pointFort.id}
+            name={pointFort.id}
+            value={pointFort.nom}
+            onChange={handleChange}
+            className="w-[500px]"
+            placeholder="Point fort"
+          />
+          <Bouton
+            type="button"
+            onClick={() => savePointFort(pointFort.id ?? "")}
+          >
+            Enregistrer
+          </Bouton>
+          {pointFort.id && !pointFort.id.startsWith("temp-") ? (
+            <SuppressionPointFort pointFortId={pointFort.id ?? ""} />
+          ) : null}
+        </div>
+      ))}
+      <Bouton type="button" onClick={addPointFort}>
+        +
+      </Bouton>
+    </div>
   );
 }
