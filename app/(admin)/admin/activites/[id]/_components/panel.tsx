@@ -4,6 +4,7 @@ import { Theme } from "@/lib/api/resources/theme/type";
 import Form from "./form";
 import PointFort from "./point-fort";
 import ActiviteImages from "./images";
+import PointGps from "./point-gps";
 
 type Props = {
   activite: Activite;
@@ -18,6 +19,9 @@ export default function Panel({ activite, themes }: Props) {
       </TabPanel>
       <TabPanel header="Points forts">
         <PointFort activite={activite} />
+      </TabPanel>
+      <TabPanel header="Points GPS">
+        <PointGps activite={activite} />
       </TabPanel>
       <TabPanel header="Images">
         <ActiviteImages activite={activite} />

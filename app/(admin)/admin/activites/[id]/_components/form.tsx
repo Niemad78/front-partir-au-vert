@@ -27,8 +27,6 @@ export default function Form({ activite, themes }: Props) {
       nbPersonnesMax: activite.nbPersonnesMax || null,
       themeIds: activite.themes.map((theme) => theme.id) || [],
       duree: activite.duree || null,
-      latitude: activite.latitude || null,
-      longitude: activite.longitude || null,
       adresse: activite.adresse || null,
       accessibilite: activite.accessibilite || null,
     },
